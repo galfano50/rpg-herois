@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ala do Mestre - RPG</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script type="module">
+    // Importando Firebase
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+    import { getDatabase, ref, push, onChildAdded, remove, get } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+
+    // Configuração do Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyD_vM-tbAj_Gc2gv1XBa6GMOYpe9zNSv7s",
+      authDomain: "bar-do-truta-rpg-online.firebaseapp.com",
+      databaseURL: "https://bar-do-truta-rpg-online-default-rtdb.firebaseio.com",
+      projectId: "bar-do-truta-rpg-online",
+      storageBucket: "bar-do-truta-rpg-online.appspot.com",
+      messagingSenderId: "109187771317",
+      appId: "1:109187771317:web:13add20ef2fa8da2da07fc"
+    };
+
+    // Inicializando Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const fichasRef = ref(db, 'fichas');
+
+    // Referências ao DOM
+    const formFicha = document.getElementById('formFicha');
+    const listaFichas = document.getElementById('listaFichas');
+
+    // Função para salvar ficha no Firebase
+    function salvarFicha(nome, classe, nivel, historia) {
+      push(fichasRef, { nome, classe, nivel, historia });
+    }
+
+    // Função para atualizar lista de fichas
+    function atualizarListaFichas() {
+      listaFichas.innerHTML = '';
+      get(fichasRef).then(snapshot => {
+        if (snapshot.exists()) {
+          snapshot.forEach(childSnapshot => {
+            const ficha = childSnapshot.val();
+            const fichaId = childSnapshot.key;
+            const li = document.createElement('li');
+            li.innerHTML = `
+              <strong>${ficha.nome}</strong> - ${ficha.classe} (Nível ${ficha.nivel})<br>
+              História: ${ficha.historia}<br>
+              <button onclick="abrirFicha('${fichaId}')">Abrir Ficha</button>
+              <button onclick="deletarFicha('${fichaId}')">Excluir</button>
+            `;
+            listaFichas.appendChild(li);
+          });
+        }
+      });
+    }
+
+    // Função para abrir ficha em nova aba
+    window.abrirFicha = function (id) {
+      get(ref(db, `fichas/${id}`)).then(snapshot => {
+        if (snapshot.exists()) {
+          const ficha = snapshot.val();
+          const urlFicha = `Ficha-Heróis.html?nome=${encodeURIComponent(ficha.nome)}&classe=${encodeURIComponent(ficha.classe)}&nivel=${encodeURIComponent(ficha.nivel)}&historia=${encodeURIComponent(ficha.historia)}`;
+          window.open(urlFicha, '_blank');
+        }
+      });
+    };
+
+    // Função para deletar ficha
+    window.deletarFicha = function (id) {
+      if (confirm('Tem certeza de que deseja excluir esta ficha?')) {
+        remove(ref(db, `fichas/${id}`)).then(() => {
+          atualizarListaFichas();
+        });
+      }
+    };
+
+    // Monitorar novas fichas adicionadas em tempo real
+    onChildAdded(fichasRef, (snapshot) => {
+      atualizarListaFichas();
+    });
+
+    // Evento de envio do formulário
+    formFicha.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const nome = document.getElementById('nome').value;
+      const classe = document.getElementById('classe').value;
+      const nivel = document.getElementById('nivel').value;
+      const historia = document.getElementById('historia').value;
+
+      salvarFicha(nome, classe, nivel, historia);
+      formFicha.reset();
+    });
+
+    // Atualiza a lista de fichas ao carregar a página
+    atualizarListaFichas();
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h2>Ala do Mestre</h2>
+    <p>Preencha as informações do herói e clique em 'Criar Ficha' para salvar:</p>
+
+    <!-- Formulário de Criação de Ficha -->    <form id="formFicha">
+      <label for="nome">Nome do Herói:</label>
+      <input type="text" id="nome" required />
+      
+      <label for="classe">Classe:</label>
+      <input type="text" id="classe" required />
+      
+      <label for="nivel">Nível:</label>
+      <input type="number" id="nivel" required />
+      
+      <label for="historia">História:</label>
+      <textarea id="historia" required></textarea>
+
+      <button type="submit">Criar Ficha</button>
+    </form>
+
+    <div id="fichasCriadas">
+      <h3>Fichas Criadas:</h3>
+      <ul id="listaFichas"></ul>
+    </div>
+  </div>
+</body>
+</html>

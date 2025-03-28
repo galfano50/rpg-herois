@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home - RPG</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="container">
+    <h2>Bem-vindo ao RPG</h2>
+    <p>Escolha uma das opções abaixo:</p>
+    
+    <!-- Botões principais -->
+    <button onclick="window.open('Ficha-Heróis.html', '_blank')">Criar Ficha</button>
+    <button onclick="window.open('Mapas.html', '_blank')">Mapas</button>
+
+    <!-- Botão para acessar a "Ala do Mestre" -->
+    <button onclick="abrirAlaMestre()">Ala do Mestre</button>
+    <!-- Botão para acessar o Livro de Regras -->
+    <button onclick="abrirLivroDeRegras()">Livro de Regras</button>
+    
+    <!-- Área para exibir as rolagens em tempo real -->
+    <div id="rolagensContainer" style="margin-top:20px; font-weight:bold; color:#fcf9f9;">
+      <h3>Rolagens Recentes:</h3>
+      <ul id="listaRolagens"></ul>
+    </div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js"></script>
+  
+  <!-- Scripts -->
+  <script src="java/script.js"></script>
+  <script src="java/ChamarRolador.js"></script>
+
+  <script>
+    // Funções para abrir outras páginas
+    function abrirAlaMestre() {
+      firebase.auth().onAuthStateChanged(user => {
+        if (user && user.email === "helder_galfano@hotmail.com") {
+          window.open('aladomestre.html', '_blank');
+        } else {
+          alert("Acesso negado! Apenas o Mestre pode acessar esta área.");
+        }
+      });
+    }
+
+    function abrirLivroDeRegras() {
+      window.open('https://docs.google.com/document/d/1sncOGRxOUxP0b2kggRyJvKMyS0gAJjdZ_1NItily99I/preview', '_blank');
+    }
+
+    // Monitoramento de rolagens em tempo real
+    function adicionarRolagem(rolagem) {
+      const ul = document.getElementById('listaRolagens');
+      const li = document.createElement('li');
+      li.textContent = `${new Date(rolagem.timestamp).toLocaleString()} - ${rolagem.resultado}`;
+      ul.prepend(li);
+    }
+
+    // Iniciar monitoramento das rolagens
+    monitorarRolagens(adicionarRolagem);
+  </script>
+</body>
+</html>

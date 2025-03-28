@@ -1,0 +1,35 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #222;
+  color: #fff;
+  text-align: center;
+  margin-top: 50px;
+}
+
+h1 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+select {
+  padding: 10px;
+  background-color: #444;
+  color: white;
+  border: 1px solid #555;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+#mapaContainer img {
+  width: 80%;
+  max-width: 600px;
+  margin-top: 20px;
+  border-radius: 8px;
+  transition: opacity 0.5s ease;
+}
+
+#mapaContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

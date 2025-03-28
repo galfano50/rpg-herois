@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ficha de Personagem</title>
+</head>
+<style>
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Times New Roman', serif;
+}
+
+/* Configuração Geral */
+body {
+    background-color: #2c2a2a; /* Fundo escuro com tons suaves de madeira */
+    color: #f1e5b3; /* Cor dourada suave para o texto */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Alteração na cor de fundo dos inputs ao focar */
+input[type="text"]:focus, input[type="number"]:focus {
+    background-color: #4f4b4b; /* Fundo mais escuro com aspecto de couro envelhecido */
+    color: #dcd2b1; /* Texto suave como pergaminho antigo */
+    border-color: #8b5e3c; /* Dourado para destacar */
+}
+
+/* Faz os <textarea> crescerem conforme o conteúdo */
+textarea {
+    min-height: 40px;
+    resize: none; /* Impede redimensionamento manual */
+    overflow-y: hidden; /* Oculta barra de rolagem */
+    height: auto; /* Ajuste dinâmico conforme o conteúdo */
+    padding: 8px;
+}
+
+/* Quando o campo estiver em foco ou tiver conteúdo, ajusta o tamanho */
+textarea:focus, textarea:not(:placeholder-shown) {
+    min-height: 40px;
+    height: auto; /* Ajuste dinâmico conforme o conteúdo */
+}
+
+/* Header: display lado a lado */
+.header {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+/* Ajustando as labels e inputs para ficarem lado a lado */
+.header label, .header input {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.header input {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #5a4b4b; /* Borda suave e escura */
+    border-radius: 4px;
+}
+
+/* Estilização dos inputs */
+.header input[type="text"], .header input[type="number"] {
+    width: 100%; /* Faz os inputs ocuparem toda a largura disponível */
+    height: 30px;
+    font-size: 16px;
+}
+
+/* Responsividade para telas pequenas */
+@media (max-width: 768px) {
+    .header {
+        grid-template-columns: repeat(2, 1fr); /* Lado a lado, mas com 2 colunas */
+        gap: 5px;
+    }
+
+    .header input[type="text"], .header input[type="number"] {
+        width: 100%; /* Ocupará todo o espaço disponível */
+        height: 30px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        grid-template-columns: 1fr; /* Apenas uma coluna */
+        text-align: center;
+    }
+
+    .header label {
+        font-size: 14px;
+    }
+
+    .header input[type="text"], .header input[type="number"] {
+        width: 100%;
+        height: 35px;
+        font-size: 14px;
+    }
+}
+
+.container {
+    background-color: #3d3a3a; /* Fundo de pedra ou tijolo */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(154, 22, 22, 0.2);
+    width: 900px;
+    border: 2px solid #5e4a29; /* Cor de borda em tom madeira */
+}
+
+/* Títulos */
+h3 {
+    border-bottom: 2px solid #8b5e3c; /* Linha dourada */
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+    color: #f1e5b3; /* Cor dourada suave */
+}
+
+/* Inputs e Textareas */
+input, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 5px;
+    background: #4f4b4b; /* Cor de fundo de couro envelhecido */
+    color: #dcd2b1; /* Cor suave como pergaminho */
+    border: 1px solid #5a4b4b; /* Borda sutil de tom madeira */
+}
+
+/* Ajuste dinâmico dos <textarea> */
+textarea {
+    min-height: 40px;
+    resize: none;
+    overflow-y: hidden;
+    height: auto;
+}
+
+/* Organização das Seções */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.atributos, .extras, .poder, .totais, .section {
+    background-color: #5a4a29; /* Fundo terra de tom medieval */
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #4b3927; /* Bordas escuras com aparência antiga */
+}
+
+/* Ajuste de Inputs nas Seções */
+.atributos input, .extras input, .section input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #4a3c2f;
+    font-size: 14px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .atributos, .extras, .poder, .totais {
+        flex: 1 1 100%;
+    }
+
+    input, textarea {
+        width: 100%;
+        height: auto;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        flex-direction: column;
+    }
+
+    .container {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    input, textarea {
+        font-size: 14px;
+    }
+
+    .pontos-distribuir {
+        font-size: 0.9em;
+    }
+}
+
+/* Estilização dos Botões */
+button {
+    background-color: #8b5e3c; /* Dourado envelhecido */
+    color: #dcd2b1; /* Texto suave e contrastante */
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+    background-color: #b77f56; /* Tom mais dourado */
+    transform: scale(1.05);
+}
+
+button:active {
+    background-color: #6f4f29; /* Mais escuro ao clicar */
+    transform: scale(0.95);
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Centraliza botões */
+.botao-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+    button {
+        font-size: 14px;
+        padding: 10px 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .botao-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    button {
+        width: 90%;
+        padding: 12px;
+        font-size: 16px;
+    }
+}
+
+/* Estilização das Seções de Armas, Características, Poderes, etc */
+.armas, .Aprimoramentos, .Caracteristicas, .Poderes, .Itens, .Golpes, .mochila-section {
+    background-color: #4f4b4b; /* Fundo escuro e couro */
+    border: 2px solid #8b5e3c; /* Bordas douradas */
+    padding: 20px;
+    border-radius: 5px;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+/* Ajustes de Textareas dentro das Seções */
+.armas textarea, .Aprimoramentos textarea, .Caracteristicas textarea, .Poderes textarea, .Itens textarea, .Golpes textarea {
+    width: 100%;
+    min-height: 40px;
+    font-size: 14px;
+    padding: 10px;
+    border: 1px solid #4a3c2f;
+    border-radius: 3px;
+    resize: none;
+    box-sizing: border-box;
+}
+
+.armas textarea:focus, .Aprimoramentos textarea:focus, .Caracteristicas textarea:focus, .Poderes textarea:focus, .Itens textarea:focus, .Golpes textarea:focus {
+    border-color: #f1e5b3;
+    outline: none;
+    background-color: #6f4f29;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .armas, .Aprimoramentos, .Caracteristicas, .Poderes, .Itens, .Golpes {
+        width: 100%;
+    }
+
+    .mochila-section {
+        width: 100%;
+    }
+}
+
+/* Seção de Perícias */
+.pericia-section {
+    margin-top: 20px;
+    background: #3b3b3b; /* Fundo de pedra envelhecida */
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #444;
+}
+
+.pericia-section table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.pericia-section th, .pericia-section td {
+    border: 1px solid #555;
+    padding: 8px;
+    text-align: left;
+}
+
+.pericia-section input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #5a4b4b;
+}
+
+/* Estilização do Bloco de Mochila */
+.mochila-section {
+    background-color: #3b3b3b; /* Fundo escuro e místico */
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.mochila-section input[type="text"], .mochila-section textarea {
+    font-size: 1rem;
+    border: 1px solid #555;
+    border-radius: 4px;
+}
+
+.mochila-section input[type="text"]:focus, .mochila-section textarea:focus {
+    border-color: #007bff;
+}
+
+/* Ajuste das Seções de Status e Atributos */
+.status, .stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 768px) {
+    .status, .stats {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+<script src="java/ficha.js"></script>
+<body>
+    <div class="container">
+        <div class="header">
+            <label>Nome: <input type="text" id="nome"></label>
+            <label>Raça: <input type="text" id="raca"></label>
+            <label>Classe: <input type="text" id="classe"></label>
+            <label>Nível: <input type="number" id="nivel" min="1" max="50" oninput="atualizarValores()"></label>
+            <label>Vida: <input type="number" id="vida" readonly></label>
+            <label>Energia: <input type="number" id="energia" readonly></label>
+            <label>Índice de Proteção: <input type="number" id="indice_protecao" min="0"></label>
+            <label>Xp: <input type="number" id="xp" min="0"></label>
+            <label>Pontos Heróicos: <input type="number" id="p_heroi" min="0" max="100"></label>
+            <label>Pontos Vilanescos: <input type="number" id="p_vilao" min="0" max="100"></label>
+            <label>Dano sofrido: <input type="number" id="extra11" value="0" oninput="modificarPontos(); atualizarVidaEnergia()"></label>
+            <label>Gasto de Energia: <input type="number" id="extra12" value="0" oninput="modificarPontos(); atualizarVidaEnergia()"></label>
+        </div>
+
+        <div class="pontos-distribuir" id="pontos">Pontos: 81</div>
+
+        <div class="stats">
+            <div class="atributos">
+                <h3>Atributos</h3><br>
+                <label>Força: <input type="number" id="forca" min="0" value="0" oninput="modificarPontos()"></label><br>
+                <label>Constituição: <input type="number" id="constituicao" min="0" value="0" oninput="modificarPontos()"></label><br>
+                <label>Destreza: <input type="number" id="destreza" min="0" value="0" oninput="modificarPontos()"></label><br>
+                <label>Agilidade: <input type="number" id="agilidade" min="0" value="0" oninput="modificarPontos()"></label><br>
+                <label>Inteligência: <input type="number" id="inteligencia" min="0" value="0" oninput="modificarPontos()"></label><br>
+                <label>Percepção: <input type="number" id="percepcao" min="0" value="0" oninput="modificarPontos()"></label><br>
+                <label>Vontade: <input type="number" id="vontade" min="0" value="0" oninput="modificarPontos()"></label><br>
+                <label>Carisma: <input type="number" id="carisma" min="0" value="0" oninput="modificarPontos()"></label>
+            </div>	
+            <div class="extras">
+                <h3>Extras</h3><br>
+		        <label>Fr Extra: <input type="number" id="extra1" value="0" oninput="modificarPontos()"></label><br>
+			    <label>Cons Extra: <input type="number" id="extra2" value="0" oninput="modificarPontos()"></label><br>
+			    <label>Dex Extra: <input type="number" id="extra3" value="0" oninput="modificarPontos()"></label><br>
+			    <label>Agil Extra: <input type="number" id="extra4" value="0" oninput="modificarPontos()"></label><br>
+			    <label>Int Extra: <input type="number" id="extra5" value="0" oninput="modificarPontos()"></label><br>
+			    <label>Perc Extra: <input type="number" id="extra6" value="0" oninput="modificarPontos()"></label><br>
+			    <label>Vont Extra: <input type="number" id="extra7" value="0" oninput="modificarPontos()"></label><br>
+			    <label>Cari Extra: <input type="number" id="extra8" value="0" oninput="modificarPontos()"></label><br>
+			    <label>Vida Extra: <input type="number" id="extra9" value="0" oninput="modificarPontos(); atualizarVidaEnergia()"></label><br>
+			    <label>Energia Extra: <input type="number" id="extra10" value="0" oninput="modificarPontos(); atualizarVidaEnergia()"></label><br>
+			</div>	
+            <div class="section">
+                <h3>Poder</h3><br>
+                <label>Fr Poder: <input type="number" id="poder1" min="0" value="0" oninput="modificarPontos(); atualizarVidaEnergia()"></label><br>
+                <label>Cons Poder: <input type="number" id="poder2" min="0" value="0" oninput="modificarPontos(); atualizarVidaEnergia()"></label><br>
+                <label>Dex Poder: <input type="number" id="poder3" min="0" value="0" oninput="modificarPontos()"></label><br>
+                <label>Agil Poder: <input type="number" id="poder4" min="0" value="0" oninput="modificarPontos()"></label><br>
+                <label>Int Poder: <input type="number" id="poder5" min="0" value="0" oninput="modificarPontos()"></label><br>
+                <label>Perc Poder: <input type="number" id="poder6" min="0" value="0" oninput="modificarPontos()"></label><br>
+                <label>Vont Poder: <input type="number" id="poder7" min="0" value="0" oninput="modificarPontos(); atualizarVidaEnergia()"></label><br>
+                <label>Cari Poder: <input type="number" id="poder8" min="0" value="0" oninput="modificarPontos()"></label><br>
+                <label>Pvs Poder: <input type="number" id="poder9" min="0" value="0" oninput="modificarPontos(); atualizarVidaEnergia()"></label><br>
+            </div>
+            <div class="totais">
+                <h3>Total</h3><br>
+                <p>Fr Total: <span id="soma1">0</span oninput="modificarPontos()"></p>
+                <p>Cons Total: <span id="soma2">0</span oninput="modificarPontos()"></p>
+                <p>Dex Total: <span id="soma3">0</span oninput="modificarPontos()"></p>
+                <p>Agil Total: <span id="soma4">0</span oninput="modificarPontos()"></p>
+                <p>Int Total: <span id="soma5">0</span oninput="modificarPontos()"></p>
+                <p>Perc Total: <span id="soma6">0</span oninput="modificarPontos()"></p>
+                <p>Vont Total: <span id="soma7">0</span oninput="modificarPontos()"></p>
+                <p>Cari Total: <span id="soma8">0</span oninput="modificarPontos()"></p>
+            </div>
+        </div>
+
+        <div class="dice-roller">
+            <h2>Rolador de Dados</h2>
+            <input type="text" id="diceInput" placeholder="Ex: 1d10+5d20+3d6">
+            <button type="button" onclick="rollDice()">Rolar</button>
+            <div id="result" class="result" style="display: block;"></div>
+        </div>
+
+        <div class="individualidades">
+            <div class="Aprimoramentos">
+                <h3>Aprimoramentos</h3> <br>
+                <label>Aprimoramento1: <textarea id="aprimoramento1"></textarea></label><br>
+                <label>Aprimoramento2: <textarea id="Aprimoramento2"></textarea></label><br>
+                <label>Aprimoramento3: <textarea id="aprimoramento3"></textarea></label><br>
+                <label>Aprimoramento4: <textarea id="aprimoramento4"></textarea></label>
+            </div>
+            <div class="Caracteristicas">
+                <h3>Características do personagem</h3> <br>
+                <label>Positivo: <textarea id="positivo"></textarea></label><br>
+                <label>Negativo: <textarea id="negativo"></textarea></label><br>
+                <label>História: <textarea id="historia"></textarea></label>
+            </div>
+        </div>   
+        
+        <div class="combate">
+            <div class="armas">
+                <h3>Armas</h3> <br>
+                <label>Primária: <textarea id="primaria"></textarea></label><br>
+                <label>Secundária: <textarea id="secundaria"></textarea></label>
+            </div>
+        </div>        
+
+        <div class="status">
+            <div class="Poderes">
+                <h3>Poderes</h3><br>
+                <label>Poder 1: <textarea id="power1"></textarea></label><br>
+                <label>Poder 2: <textarea id="power2"></textarea></label><br>
+                <label>Poder 3: <textarea id="power3"></textarea></label><br>
+                <label>Poder 4: <textarea id="power4"></textarea></label><br>
+                <label>Poder 5: <textarea id="power5"></textarea></label><br>
+            </div>
+
+            <div class="Golpes">
+                <h3>Golpes</h3><br>
+                <label>Golpes: <textarea id="golpes"></textarea></label><br>
+            </div>
+
+            <div class="Itens">
+                <h3>Itens</h3><br>
+                <label>Item 1: <textarea id="item1"></textarea></label><br>
+                <label>Item 2: <textarea id="item2"></textarea></label><br>
+                <label>Item 3: <textarea id="item3"></textarea></label><br>
+                <label>Item 4: <textarea id="item4"></textarea></label><br>
+                <label>Item 5: <textarea id="item5"></textarea></label><br>
+            </div>
+        </div>
+        
+
+        <div class="pericia-section">
+            <h3>Perícias</h3>
+            <table>
+                <tr>
+                    <th>Perícia</th>
+                    <th>Att atrelado</th>
+                    <th>Pts</th>
+                </tr>
+                <!-- Gerando 15 linhas -->
+                <script>
+                    for (let i = 0; i < 20; i++) {
+                        document.write(`
+                            <tr>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                                <td><input type="number"></td>
+                            </tr>
+                        `);
+                    }
+                </script>
+            </table>
+        </div>
+
+        <div class="mochila-section">
+            <h3>Mochila</h3>
+            <table>
+                <tr>
+                    <th>Item</th>
+                </tr>
+                <!-- Gerando 20 linhas -->
+                <script>
+                    for (let i = 0; i < 20; i++) {
+                        document.write(`
+                            <tr>
+                                <textarea oninput="autoResize(this)"></textarea>
+                            </tr>
+                        `);
+                    }
+                </script>
+            </table>
+        </div>      
+
+        <div class="botao-container">
+            <button onclick="salvarFicha()">Salvar Ficha</button>
+            <button onclick="carregarFicha()">Carregar Ficha</button>
+            <button onclick="resetarFicha()">Resetar Ficha</button>
+        </div>
+        
+    </div>
+
+    <script>
+        // Função para atualizar Vida e Energia com base no nível e atributos
+        function atualizarVidaEnergia() {
+    // Obter o nível do personagem
+    let nivelElemento = document.getElementById("nivel");
+    if (!nivelElemento) return; // Evita erro se o elemento não existir
+
+    let nivel = parseInt(nivelElemento.value) || 1;  // Valor padrão 1 caso o nível não seja informado
+
+    // Valores base para Vida e Energia
+    let vidaBase = 31;
+    let energiaBase = 21;
+    let vidaExtra = 0;
+    let energiaExtra = 0;
+
+    // Cálculo de bônus por nível
+    if (nivel <= 10) {
+        vidaExtra = nivel - 1;
+        energiaExtra = nivel - 1;
+    } else if (nivel <= 25) {
+        vidaExtra = 9 + (nivel - 10) * 2;
+        energiaExtra = 9 + (nivel - 10);
+    } else {
+        vidaExtra = 39 + (nivel - 25) * 3;
+        energiaExtra = 24 + (nivel - 25) * 2;
+    }
+
+    // Lista de atributos e poderes para calcular bônus
+    let atributos = ["forca", "constituicao", "vontade"];
+    let poderes = ["poder1", "poder2", "poder7", "poder9"];
+    let extras = ["extra9", "extra10", "extra11", "extra12"];
+
+    // Inicializar o objeto de valores
+    let valores = {};
+
+    // Coletar valores de atributos, poderes e extras
+    atributos.forEach(atributo => {
+        let elemento = document.getElementById(atributo);
+        valores[atributo] = elemento ? parseInt(elemento.value) || 0 : 0;
+    });
+
+    extras.forEach(extra => {
+        let elemento = document.getElementById(extra);
+        valores[extra] = elemento ? parseInt(elemento.value) || 0 : 0;
+    });
+
+    poderes.forEach(poder => {
+        let elemento = document.getElementById(poder);
+        valores[poder] = elemento ? parseInt(elemento.value) || 0 : 0;
+    });
+
+    // Calcular os bônus finais para Vida e Energia
+    let bonusVida = valores["forca"] + valores["constituicao"] + valores["poder1"] + valores["poder2"] + valores["poder9"] + valores["extra9"] - valores["extra11"];
+    let bonusEnergia = valores["vontade"] + valores["poder7"] + valores["extra10"] - valores["extra12"];
+
+    // Atualizar os campos de Vida e Energia, se existirem
+    let vidaElemento = document.getElementById("vida");
+    let energiaElemento = document.getElementById("energia");
+
+    if (vidaElemento) vidaElemento.value = vidaBase + vidaExtra + bonusVida;
+    if (energiaElemento) energiaElemento.value = energiaBase + energiaExtra + bonusEnergia;
+
+    // Opcional: Atualizar os valores no Firebase (se necessário)
+    if (vidaElemento && energiaElemento) {
+        const heroRef = ref(db, 'herois/' + nome);  // Usar o nome para identificar o herói
+        set(heroRef, {
+            vida: vidaBase + vidaExtra + bonusVida,
+            energia: energiaBase + energiaExtra + bonusEnergia
+        }).then(() => {
+            console.log("Valores de vida e energia atualizados no Firebase.");
+        }).catch((error) => {
+            console.error("Erro ao atualizar no Firebase: ", error);
+        });
+    }
+}
+
+function atualizarValores() {
+    // Obtém o nível do personagem (valor padrão 1 caso não exista ou seja inválido)
+    let nivel = parseInt(document.getElementById("nivel").value) || 1;
+
+    // Cálculo dos Pontos para Distribuir
+    let pontosBase = 81;
+    let pontosExtras = (nivel <= 25) ? nivel - 1 : 24 + (nivel - 25) * 2;
+    let totalPontos = pontosBase + pontosExtras;
+
+    // Atualiza os pontos restantes após a distribuição nos atributos
+    let pontosGastos = calcularPontosGastos();  // Função que calcula os pontos já gastos nos atributos
+    let pontosRestantes = totalPontos - pontosGastos;
+
+    // Atualiza o texto dos pontos restantes no DOM
+    let pontosElemento = document.getElementById("pontos");
+    if (pontosElemento) {
+        pontosElemento.textContent = `Pontos: ${pontosRestantes}`;
+    }
+
+    // Cálculo de Vida e Energia por Nível
+    let vidaBase = 30;
+    let energiaBase = 20;
+    let vidaExtra = 0;
+    let energiaExtra = 0;
+
+    // Lógica para calcular o bônus de vida e energia com base no nível
+    if (nivel <= 10) {
+        vidaExtra = nivel - 1;  // +1 de Vida por nível até o 10
+        energiaExtra = nivel - 1; // +1 de Energia por nível até o 10
+    } else if (nivel <= 25) {
+        vidaExtra = 9 + (nivel - 10) * 2; // +2 de Vida por nível até o 25
+        energiaExtra = 9 + (nivel - 10);  // +1 de Energia por nível até o 25
+    } else {
+        vidaExtra = 39 + (nivel - 25) * 3; // +3 de Vida por nível após o 25
+        energiaExtra = 24 + (nivel - 25) * 2;  // +2 de Energia por nível após o 25
+    }
+
+    // Total de Vida e Energia
+    let vidaTotal = vidaBase + vidaExtra;
+    let energiaTotal = energiaBase + energiaExtra;
+
+    // Atualiza os campos de Vida e Energia no DOM, se os elementos existirem
+    let vidaElemento = document.getElementById("vida");
+    let energiaElemento = document.getElementById("energia");
+
+    if (vidaElemento) vidaElemento.value = vidaTotal;
+    if (energiaElemento) energiaElemento.value = energiaTotal;
+
+    // Atualiza Vida e Energia de acordo com os atributos (Força, Constituição, Vontade)
+    atualizarVidaEnergia(); // Mantém a relação com Força, Constituição e Vontade
+}
+
+function calcularPontosGastos() {
+    // Lista de atributos para os quais os pontos são distribuídos
+    let atributos = [
+        "forca", "constituicao", "destreza", "agilidade", 
+        "inteligencia", "percepcao", "vontade", "carisma"
+    ];
+
+    let pontosGastos = 0;
+
+    // Somar pontos gastos em Atributos
+    atributos.forEach((atributo) => {
+        // Obtém o valor do atributo e garante que é um número ou 0 se não for fornecido
+        let valor = parseInt(document.getElementById(atributo).value) || 0;
+
+        // Verifica se o valor é válido (não negativo) antes de somar
+        if (valor >= 0) {
+            pontosGastos += valor;
+        }
+    });
+
+    // Ignora pontos extras, pois não fazem parte da soma de pontos gastos
+    
+    return pontosGastos;
+}
+
+        // Função para ajustar a altura do <textarea> conforme o conteúdo
+            function ajustarAlturaTextarea() {
+    this.style.height = 'auto'; // Reseta a altura para ajustar corretamente
+    this.style.height = (this.scrollHeight) + 'px'; // Ajusta a altura com base no conteúdo
+}
+
+// Adicionando o evento de input aos campos <textarea>
+document.querySelectorAll('textarea').forEach(textarea => {
+    // Verifica se o elemento já existe antes de adicionar o evento
+    if (textarea) {
+        textarea.addEventListener('input', ajustarAlturaTextarea);
+    }
+});
+
+function modificarPontos() {
+    // Lista de atributos que são utilizados no cálculo de pontos
+    const atributos = ["forca", "constituicao", "destreza", "agilidade", "inteligencia", "percepcao", "vontade", "carisma"];
+    
+    atributos.forEach((atributo, index) => {
+        // Captura os valores de cada atributo, extra e poder. Se não houver valor, será considerado 0.
+        let base = parseInt(document.getElementById(atributo).value) || 0;
+        let extra = parseInt(document.getElementById(`extra${index + 1}`).value) || 0;
+        let poder = parseInt(document.getElementById(`poder${index + 1}`).value) || 0;
+    
+        // Calcula o total considerando os valores base, extra e poder.
+        let total = base + extra + poder;
+    
+        // Atualiza a soma do atributo no DOM
+        document.getElementById(`soma${index + 1}`).textContent = total;
+    });
+    
+    // Chama as funções para atualizar a Vida, Energia e os pontos restantes.
+    atualizarVidaEnergia(); // Atualiza os valores de Vida e Energia baseados nos atributos.
+    atualizarValores(); // Recalcula os pontos restantes com base no nível e atributos.
+}
+// Rolador de Dados
+// Rolador de Dados
+function rollDice() {
+    const input = document.getElementById("diceInput").value.replace(/\s+/g, ""); // Remove espaços extras
+    const resultDiv = document.getElementById("result");
+    const diceRegex = /(-?\d*)d(\d+)/g; // Regex para encontrar padrões de dados (ex: 2d6, -3d10)
+    const numberRegex = /([-+]?\d+)/g; // Regex para encontrar números isolados
+    let total = 0; // Acumulador do total
+    let rolls = []; // Array para armazenar os resultados das rolagens
+    
+    let match;
+    
+    // Processando as expressões de dados (ex: 2d6, -3d10)
+    while ((match = diceRegex.exec(input)) !== null) {
+        let count = match[1] ? parseInt(match[1]) : 1; // Caso não tenha número, assume 1 dado
+        let sides = parseInt(match[2]); // Número de lados do dado
+        
+        for (let i = 0; i < Math.abs(count); i++) {
+            let roll = Math.floor(Math.random() * sides) + 1; // Rolagem de dado
+            rolls.push(count < 0 ? -roll : roll); // Se count for negativo, a rolagem será negativa
+            total += count < 0 ? -roll : roll; // Adiciona ou subtrai ao total
+        }
+    }
+    
+    // Processando números isolados (ex: +5, -3)
+    input.replace(diceRegex, "+").match(numberRegex)?.forEach(num => {
+        let parsedNum = parseInt(num); // Converte a string para número
+        total += parsedNum; // Adiciona o número ao total
+        rolls.push(parsedNum); // Adiciona ao array de rolagens
+    });
+    
+    // Exibe o resultado na tela
+    resultDiv.textContent = `Rolagens: ${rolls.join(", ")} | Total: ${total}`;
+    resultDiv.classList.add("show"); // Adiciona a classe para mostrar o resultado
+    
+    // Remove a exibição após 3 segundos
+    setTimeout(() => {
+        resultDiv.classList.remove("show");
+    }, 3000);
+}
+
+// Adicionar evento para rolar ao pressionar Enter
+document.getElementById("diceInput").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        rollDice();
+    }
+});
+
+// Função para salvar a ficha no Firestore
+function salvarFicha() {
+    // Coleta os dados dos campos
+    const ficha = {
+        nome: document.getElementById('nome').value,
+        raca: document.getElementById('raca').value,
+        classe: document.getElementById('classe').value,
+        nivel: document.getElementById('nivel').value,
+        vida: document.getElementById('vida').value,
+        energia: document.getElementById('energia').value,
+        indice_protecao: document.getElementById('indice_protecao').value,  
+        xp: document.getElementById('xp').value,  
+        p_heroi: document.getElementById('p_heroi').value,
+        p_vilao: document.getElementById('p_vilao').value,
+        extra11: document.getElementById('extra11').value,
+        extra12: document.getElementById('extra12').value,
+        // Pontos
+        pontos: document.getElementById("pontos").innerText,      
+        // Atributos
+        forca: document.getElementById('forca').value,
+        constituicao: document.getElementById('constituicao').value,
+        destreza: document.getElementById('destreza').value,
+        agilidade: document.getElementById('agilidade').value,
+        inteligencia: document.getElementById('inteligencia').value,
+        percepcao: document.getElementById('percepcao').value,
+        vontade: document.getElementById('vontade').value,
+        carisma: document.getElementById('carisma').value,
+        // Extras, poderes, totais, características, etc
+        extra1: document.getElementById('extra1').value,
+        extra2: document.getElementById('extra2').value,
+        extra3: document.getElementById('extra3').value,
+        extra4: document.getElementById('extra4').value,
+        extra5: document.getElementById('extra5').value,
+        extra6: document.getElementById('extra6').value,
+        extra7: document.getElementById('extra7').value,
+        extra8: document.getElementById('extra8').value,
+        extra9: document.getElementById('extra9').value,
+        extra10: document.getElementById('extra10').value,
+        poder1: document.getElementById('poder1').value,
+        poder2: document.getElementById('poder2').value,
+        poder3: document.getElementById('poder3').value,
+        poder4: document.getElementById('poder4').value,
+        poder5: document.getElementById('poder5').value,
+        poder6: document.getElementById('poder6').value,
+        poder7: document.getElementById('poder7').value,
+        poder8: document.getElementById('poder8').value,
+        poder9: document.getElementById('poder9').value,
+        soma1: document.getElementById('soma1').textContent,
+        soma2: document.getElementById('soma2').textContent,
+        soma3: document.getElementById('soma3').textContent,
+        soma4: document.getElementById('soma4').textContent,
+        soma5: document.getElementById('soma5').textContent,
+        soma6: document.getElementById('soma6').textContent,
+        soma7: document.getElementById('soma7').textContent,
+        soma8: document.getElementById('soma8').textContent,
+        aprimoramento1: document.getElementById('aprimoramento1').value,
+        aprimoramento2: document.getElementById('Aprimoramento2').value,
+        aprimoramento3: document.getElementById('aprimoramento3').value,
+        aprimoramento4: document.getElementById('aprimoramento4').value,
+        positivo: document.getElementById('positivo').value,
+        negativo: document.getElementById('negativo').value,
+        historia: document.getElementById('historia').value,
+        primaria: document.getElementById('primaria').value,
+        secundaria: document.getElementById('secundaria').value,
+        // Itens e poderes adicionais
+        power1: document.getElementById('power1').value,
+        power2: document.getElementById('power2').value,
+        power3: document.getElementById('power3').value,
+        power4: document.getElementById('power4').value,
+        power5: document.getElementById('power5').value,
+        item1: document.getElementById('item1').value,
+        item2: document.getElementById('item2').value,
+        item3: document.getElementById('item3').value,
+        item4: document.getElementById('item4').value,
+        item5: document.getElementById('item5').value,
+        golpes: document.getElementById('golpes').value
+    };
+
+    // Coletando as Perícias
+    const pericias = [];
+    for (let i = 0; i < 20; i++) {
+        const pericia = {
+            nome: document.querySelectorAll('.pericia-section input[type="text"]')[i * 2].value,
+            att_atrelado: document.querySelectorAll('.pericia-section input[type="text"]')[i * 2 + 1].value,
+            pontos: document.querySelectorAll('.pericia-section input[type="number"]')[i].value
+        };
+        pericias.push(pericia);
+    }
+
+    ficha.pericias = pericias;
+
+    // Coletando mochila
+    const mochila = [];
+    const mochilas = document.querySelectorAll('.mochila-section textarea');
+    for (let i = 0; i < 20; i++) {
+        const itemMochila = {
+            nome: mochilas[i]?.value || ''
+        };
+        mochila.push(itemMochila);
+    }
+
+    ficha.mochila = mochila;
+
+    // Salva no Firestore
+    const db = firebase.firestore();
+    db.collection('fichas')  // Coleção no Firestore onde as fichas serão armazenadas
+        .add(ficha)  // Adiciona a ficha como um novo documento
+        .then(() => {
+            alert('Ficha salva no Firebase com sucesso!');
+        })
+        .catch((error) => {
+            console.error("Erro ao salvar no Firebase: ", error);
+            alert('Erro ao salvar ficha no Firebase!');
+        });
+} 
+
+function carregarFicha() {
+    // Pega o ID da ficha (pode ser a ID do documento Firestore)
+    const fichaId = 'ID_DA_FICHA_AQUI';  // Aqui você deve colocar o ID do documento da ficha a ser carregada.
+
+    // Obtém os dados do Firestore
+    const db = firebase.firestore();
+    db.collection('fichas').doc(fichaId).get()
+        .then((doc) => {
+            if (doc.exists) {
+                const ficha = doc.data();
+
+                // Preenche os campos com os dados da ficha
+                document.getElementById('nome').value = ficha.nome || '';
+                document.getElementById('raca').value = ficha.raca || '';
+                document.getElementById('classe').value = ficha.classe || '';
+                document.getElementById('nivel').value = ficha.nivel || '';
+                document.getElementById('vida').value = ficha.vida || '';
+                document.getElementById('energia').value = ficha.energia || '';
+                document.getElementById('indice_protecao').value = ficha.indice_protecao || '';
+                document.getElementById('xp').value = ficha.xp || '';
+                document.getElementById('p_heroi').value = ficha.p_heroi || '';
+                document.getElementById('p_vilao').value = ficha.p_vilao || '';
+                document.getElementById('extra11').value = ficha.extra11 || '';
+                document.getElementById('extra12').value = ficha.extra12 || '';
+
+                // Pontos
+                document.getElementById("pontos").innerText = ficha.pontos || '';
+
+                // Preenche os outros campos conforme os dados salvos
+                document.getElementById('forca').value = ficha.forca || '';
+                document.getElementById('constituicao').value = ficha.constituicao || '';
+                document.getElementById('destreza').value = ficha.destreza || '';
+                document.getElementById('agilidade').value = ficha.agilidade || '';
+                document.getElementById('inteligencia').value = ficha.inteligencia || '';
+                document.getElementById('percepcao').value = ficha.percepcao || '';
+                document.getElementById('vontade').value = ficha.vontade || '';
+                document.getElementById('carisma').value = ficha.carisma || '';
+
+                // Preenche os campos extras, poderes, totais, características, etc
+                document.getElementById('extra1').value = ficha.extra1 || '';
+                document.getElementById('extra2').value = ficha.extra2 || '';
+                document.getElementById('extra3').value = ficha.extra3 || '';
+                document.getElementById('extra4').value = ficha.extra4 || '';
+                document.getElementById('extra5').value = ficha.extra5 || '';
+                document.getElementById('extra6').value = ficha.extra6 || '';
+                document.getElementById('extra7').value = ficha.extra7 || '';
+                document.getElementById('extra8').value = ficha.extra8 || '';
+                document.getElementById('extra9').value = ficha.extra9 || '';
+                document.getElementById('extra10').value = ficha.extra10 || '';
+                document.getElementById('poder1').value = ficha.poder1 || '';
+                document.getElementById('poder2').value = ficha.poder2 || '';
+                document.getElementById('poder3').value = ficha.poder3 || '';
+                document.getElementById('poder4').value = ficha.poder4 || '';
+                document.getElementById('poder5').value = ficha.poder5 || '';
+                document.getElementById('poder6').value = ficha.poder6 || '';
+                document.getElementById('poder7').value = ficha.poder7 || '';
+                document.getElementById('poder8').value = ficha.poder8 || '';
+                document.getElementById('poder9').value = ficha.poder9 || '';
+
+                // Soma
+                document.getElementById('soma1').textContent = ficha.soma1 || '';
+                document.getElementById('soma2').textContent = ficha.soma2 || '';
+                document.getElementById('soma3').textContent = ficha.soma3 || '';
+                document.getElementById('soma4').textContent = ficha.soma4 || '';
+                document.getElementById('soma5').textContent = ficha.soma5 || '';
+                document.getElementById('soma6').textContent = ficha.soma6 || '';
+                document.getElementById('soma7').textContent = ficha.soma7 || '';
+                document.getElementById('soma8').textContent = ficha.soma8 || '';
+                document.getElementById('aprimoramento1').value = ficha.aprimoramento1 || '';
+                document.getElementById('Aprimoramento2').value = ficha.aprimoramento2 || '';
+                document.getElementById('aprimoramento3').value = ficha.aprimoramento3 || '';
+                document.getElementById('aprimoramento4').value = ficha.aprimoramento4 || '';
+                document.getElementById('positivo').value = ficha.positivo || '';
+                document.getElementById('negativo').value = ficha.negativo || '';
+                document.getElementById('historia').value = ficha.historia || '';
+                document.getElementById('primaria').value = ficha.primaria || '';
+                document.getElementById('secundaria').value = ficha.secundaria || '';
+                document.getElementById('power1').value = ficha.power1 || '';
+                document.getElementById('power2').value = ficha.power2 || '';
+                document.getElementById('power3').value = ficha.power3 || '';
+                document.getElementById('power4').value = ficha.power4 || '';
+                document.getElementById('power5').value = ficha.power5 || '';
+                document.getElementById('item1').value = ficha.item1 || '';
+                document.getElementById('item2').value = ficha.item2 || '';
+                document.getElementById('item3').value = ficha.item3 || '';
+                document.getElementById('item4').value = ficha.item4 || '';
+                document.getElementById('item5').value = ficha.item5 || '';
+                document.getElementById('golpes').value = ficha.golpes || '';
+
+                // Carregando as Perícias
+                if (ficha.pericias) {
+                    for (let i = 0; i < 20; i++) {
+                        document.querySelectorAll('.pericia-section input[type="text"]')[i * 2].value = ficha.pericias[i]?.nome || '';
+                        document.querySelectorAll('.pericia-section input[type="text"]')[i * 2 + 1].value = ficha.pericias[i]?.att_atrelado || '';
+                        document.querySelectorAll('.pericia-section input[type="number"]')[i].value = ficha.pericias[i]?.pontos || '';
+                    }
+                }
+
+                // Carregando mochila
+                if (ficha.mochila) {
+                    const mochilas = document.querySelectorAll('.mochila-section textarea');
+                    for (let i = 0; i < 20; i++) {
+                        mochilas[i].value = ficha.mochila[i]?.nome || '';
+                    }
+                }
+
+                // Mensagem de sucesso
+                alert('Ficha carregada com sucesso!');
+            } else {
+                alert('Ficha não encontrada no Firebase.');
+            }
+        })
+        .catch((error) => {
+            console.error("Erro ao carregar ficha: ", error);
+            alert('Erro ao carregar ficha do Firebase!');
+        });
+}
+
+ // Função para resetar a ficha no Firestore
+function resetarFichaFirestore(fichaId) {
+    const db = firebase.firestore();
+
+    // Pega o documento da ficha com o ID
+    db.collection('fichas').doc(fichaId).delete()
+        .then(() => {
+            alert('Ficha apagada do Firestore!');
+        })
+        .catch((error) => {
+            console.error("Erro ao apagar a ficha:", error);
+            alert('Erro ao apagar a ficha.');
+        });
+}
+
+window.onload = function() {
+    const urlParams = new URLSearchParams(window.location.search);
+
+    // Captura os parâmetros da URL
+    const nome = urlParams.get('nome');
+    const classe = urlParams.get('classe');
+    const nivel = urlParams.get('nivel');
+    const historia = urlParams.get('historia');
+
+    // Verifica se os parâmetros existem na URL
+    if (nome) document.getElementById('nome').value = nome;
+    if (classe) document.getElementById('classe').value = classe;
+    if (nivel) document.getElementById('nivel').value = nivel;
+
+    // Para o campo historia, é importante fazer a decodificação e verificar se existe
+    if (historia) {
+        document.getElementById('historia').value = decodeURIComponent(historia);
+    }
+};
+export function rollDice() {
+    // Lógica para rolar os dados
+    const input = document.getElementById("diceInput").value;
+    console.log(`Rolando dados para: ${input}`);
+    // Aqui você pode adicionar a lógica de rolagem de dados
+}
+    </script>
+
+</body>
+</html>
