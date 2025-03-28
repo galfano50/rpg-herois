@@ -26,26 +26,57 @@
   <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"></script>
   <script src="java/script.js"></script>
   <script>
-    // Script para capturar parâmetros da URL
+    // Inicializar Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyD_vM-tbAj_Gc2gv1XBa6GMOYpe9zNSv7s",
+      authDomain: "bar-do-truta-rpg-online.firebaseapp.com",
+      databaseURL: "https://bar-do-truta-rpg-online-default-rtdb.firebaseio.com",
+      projectId: "bar-do-truta-rpg-online",
+      storageBucket: "bar-do-truta-rpg-online.firebasestorage.app",
+      messagingSenderId: "109187771317",
+      appId: "1:109187771317:web:13add20ef2fa8da2da07fc"
+    };
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // Captura de parâmetros da URL
     const urlParams = new URLSearchParams(window.location.search);
-    const email = urlParams.get('email');
-    const senha = urlParams.get('senha');
+    const emailParam = urlParams.get('email');
+    const senhaParam = urlParams.get('senha');
       
-    if (email && senha) {
-        // Tentativa de login automático
-        firebase.auth().signInWithEmailAndPassword(email, senha)
+    if (emailParam && senhaParam) {
+        // Login automático com parâmetros
+        auth.signInWithEmailAndPassword(emailParam, senhaParam)
             .then((userCredential) => {
-                // Usuário autenticado com sucesso
                 const user = userCredential.user;
-                window.location.href = "aladomestre.html";  // Redireciona para a "Ala do Mestre"
+                window.location.href = "aladomestre.html";  // Redireciona após login bem-sucedido
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 console.log(errorCode, errorMessage);
-                // Aqui você pode mostrar uma mensagem de erro caso a autenticação falhe
             });
     }
+
+    // Login manual via formulário
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Impede o envio normal do formulário
+
+        const email = document.getElementById("email").value;
+        const senha = document.getElementById("senha").value;
+
+        auth.signInWithEmailAndPassword(email, senha)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                window.location.href = "home.html";  // Redireciona após login bem-sucedido
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorCode, errorMessage);
+                document.getElementById("mensagem").textContent = "Erro de login: " + errorMessage;
+            });
+    });
   </script>
 </body>
 </html>
