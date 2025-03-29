@@ -715,8 +715,7 @@ button:active {
             setTimeout(() => {
                 resultDiv.classList.remove("show");
             }, 3000);
-        }
-        
+        }       
         // Adicionar evento para rolar ao pressionar Enter
         document.getElementById("diceInput").addEventListener("keypress", function(event) {
             if (event.key === "Enter") {
@@ -800,7 +799,7 @@ button:active {
             item5: document.getElementById('item5').value,
             golpes: document.getElementById('golpes').value,
 
-        };
+            };
 
             // Coletando as Perícias
             const pericias = [];
@@ -833,140 +832,137 @@ button:active {
 
             ficha.mochila = mochila;
 
-            // Salva os dados no localStorage
-            localStorage.setItem('fichaPersonagem', JSON.stringify(ficha));
+            const fichaRef = push(ref(db, "fichas"));
+              set(fichaRef, ficha)
+                .then(() => alert("Ficha salva com sucesso!"))
+                .catch((error) => alert("Erro ao salvar ficha: " + error));
+        }
 
-            // Mensagem de sucesso
-            alert('Ficha salva com sucesso!');           
-        }    
+            document.getElementById("salvarBtn").addEventListener("click", salvarFicha);         
+      
 
         function autoResize(textarea) {
             textarea.style.height = "auto"; // Reseta a altura antes de calcular
             textarea.style.height = textarea.scrollHeight + "px"; // Ajusta para o conteúdo
         }
 
+        // Função para carregar ficha do Firebase
         function carregarFicha() {
-        // Tenta pegar os dados da ficha do localStorage
-        const fichaSalva = localStorage.getItem('fichaPersonagem');
-            
-        if (fichaSalva) {
-            // Se a ficha foi encontrada, converte de volta para um objeto JavaScript
-            const ficha = JSON.parse(fichaSalva);
-
-            // Preenche os campos com os dados salvos
-            document.getElementById('nome').value = ficha.nome || '';
-            document.getElementById('raca').value = ficha.raca || '';
-            document.getElementById('classe').value = ficha.classe || '';
-            document.getElementById('nivel').value = ficha.nivel || '';
-            document.getElementById('vida').value = ficha.vida || '';
-            document.getElementById('energia').value = ficha.energia || '';
-            document.getElementById('indice_protecao').value = ficha.indice_protecao || '';
-            document.getElementById('xp').value = ficha.xp || '';
-            document.getElementById('p_heroi').value = ficha.p_heroi || '';
-            document.getElementById('p_vilao').value = ficha.p_vilao || '';
-            document.getElementById('extra11').value = ficha.extra11 || '';
-            document.getElementById('extra12').value = ficha.extra12 || '';
-
-            //pontos
-            document.getElementById("pontos").innerText = ficha.pontos || '';
-
-            // Preenche os outros campos conforme os dados salvos
-            document.getElementById('forca').value = ficha.forca || '';
-            document.getElementById('constituicao').value = ficha.constituicao || '';
-            document.getElementById('destreza').value = ficha.destreza || '';
-            document.getElementById('agilidade').value = ficha.agilidade || '';
-            document.getElementById('inteligencia').value = ficha.inteligencia || '';
-            document.getElementById('percepcao').value = ficha.percepcao || '';
-            document.getElementById('vontade').value = ficha.vontade || '';
-            document.getElementById('carisma').value = ficha.carisma || '';
-
-            // Preenche os campos extras, poderes, totais, características, etc
-            document.getElementById('extra1').value = ficha.extra1 || '';
-            document.getElementById('extra2').value = ficha.extra2 || '';
-            document.getElementById('extra3').value = ficha.extra3 || '';
-            document.getElementById('extra4').value = ficha.extra4 || '';
-            document.getElementById('extra5').value = ficha.extra5 || '';
-            document.getElementById('extra6').value = ficha.extra6 || '';
-            document.getElementById('extra7').value = ficha.extra7 || '';
-            document.getElementById('extra8').value = ficha.extra8 || '';
-            document.getElementById('extra9').value = ficha.extra9 || '';
-            document.getElementById('extra10').value = ficha.extra10 || '';
-            document.getElementById('poder1').value = ficha.poder1 || '';
-            document.getElementById('poder2').value = ficha.poder2 || '';
-            document.getElementById('poder3').value = ficha.poder3 || '';
-            document.getElementById('poder4').value = ficha.poder4 || '';
-            document.getElementById('poder5').value = ficha.poder5 || '';
-            document.getElementById('poder6').value = ficha.poder6 || '';
-            document.getElementById('poder7').value = ficha.poder7 || '';
-            document.getElementById('poder8').value = ficha.poder8 || '';
-            document.getElementById('poder9').value = ficha.poder9 || '';
-
-            //soma
-            document.getElementById('soma1').textContent = ficha.soma1 || '';
-            document.getElementById('soma2').textContent = ficha.soma2 || '';
-            document.getElementById('soma3').textContent = ficha.soma3 || '';
-            document.getElementById('soma4').textContent = ficha.soma4 || '';
-            document.getElementById('soma5').textContent = ficha.soma5 || '';
-            document.getElementById('soma6').textContent = ficha.soma6 || '';
-            document.getElementById('soma7').textContent = ficha.soma7 || '';
-            document.getElementById('soma8').textContent = ficha.soma8 || '';
-            document.getElementById('aprimoramento1').value = ficha.aprimoramento1 || '';
-            document.getElementById('Aprimoramento2').value = ficha.aprimoramento2 || '';
-            document.getElementById('aprimoramento3').value = ficha.aprimoramento3 || '';
-            document.getElementById('aprimoramento4').value = ficha.aprimoramento4 || '';
-            document.getElementById('positivo').value = ficha.positivo || '';
-            document.getElementById('negativo').value = ficha.negativo || '';
-            document.getElementById('historia').value = ficha.historia || '';
-            document.getElementById('primaria').value = ficha.primaria || '';
-            document.getElementById('secundaria').value = ficha.secundaria || '';
-            document.getElementById('power1').value = ficha.power1 || '';
-            document.getElementById('power2').value = ficha.power2 || '';
-            document.getElementById('power3').value = ficha.power3 || '';
-            document.getElementById('power4').value = ficha.power4 || '';
-            document.getElementById('power5').value = ficha.power5 || '';
-            document.getElementById('item1').value = ficha.item1 || '';
-            document.getElementById('item2').value = ficha.item2 || '';
-            document.getElementById('item3').value = ficha.item3 || '';
-            document.getElementById('item4').value = ficha.item4 || '';
-            document.getElementById('item5').value = ficha.item5 || '';
-            document.getElementById('golpes').value = ficha.golpes || '';
-            // Carregando as Perícias
-            if (ficha.pericias) {
-                for (let i = 0; i < 20; i++) {
-                    document.querySelectorAll('.pericia-section input[type="text"]')[i * 2].value = ficha.pericias[i]?.nome || '';
-                    document.querySelectorAll('.pericia-section input[type="text"]')[i * 2 + 1].value = ficha.pericias[i]?.att_atrelado || '';
-                    document.querySelectorAll('.pericia-section input[type="number"]')[i].value = ficha.pericias[i]?.pontos || '';
-                }
-            }      
-
-            // Mensagem de sucesso
-            alert('Ficha carregada com sucesso!');
-
-            // Carregando mochila
-            if (ficha.mochila) {
-                const mochilas = document.querySelectorAll('.mochila-section textarea');
-                for (let i = 0; i < 20; i++) {
-                    mochilas[i].value = ficha.mochila[i]?.nome || '';
-                }
+            const fichaId = prompt("Digite o ID da ficha que deseja carregar:");
+        
+            if (!fichaId) {
+                alert("Nenhum ID informado.");
+                return;
             }
-
-            // Mensagem de sucesso
-            alert('Ficha carregada com sucesso!');
-        } 
-
-        else {
-            alert('Nenhuma ficha salva encontrada.');
+        
+            const fichaRef = ref(db, `fichas/${fichaId}`);
+        
+            get(fichaRef).then((snapshot) => {
+                if (snapshot.exists()) {
+                    const ficha = snapshot.val();
+                
+                    // Preenche os campos com os dados salvos
+                    document.getElementById('nome').value = ficha.nome || '';
+                    document.getElementById('raca').value = ficha.raca || '';
+                    document.getElementById('classe').value = ficha.classe || '';
+                    document.getElementById('nivel').value = ficha.nivel || '';
+                    document.getElementById('vida').value = ficha.vida || '';
+                    document.getElementById('energia').value = ficha.energia || '';
+                    document.getElementById('indice_protecao').value = ficha.indice_protecao || '';
+                    document.getElementById('xp').value = ficha.xp || '';
+                    document.getElementById('p_heroi').value = ficha.p_heroi || '';
+                    document.getElementById('p_vilao').value = ficha.p_vilao || '';
+                    document.getElementById('extra11').value = ficha.extra11 || '';
+                    document.getElementById('extra12').value = ficha.extra12 || '';
+                
+                    // Preenche os pontos
+                    document.getElementById("pontos").innerText = ficha.pontos || '';
+                
+                    // Preenche os atributos
+                    document.getElementById('forca').value = ficha.forca || '';
+                    document.getElementById('constituicao').value = ficha.constituicao || '';
+                    document.getElementById('destreza').value = ficha.destreza || '';
+                    document.getElementById('agilidade').value = ficha.agilidade || '';
+                    document.getElementById('inteligencia').value = ficha.inteligencia || '';
+                    document.getElementById('percepcao').value = ficha.percepcao || '';
+                    document.getElementById('vontade').value = ficha.vontade || '';
+                    document.getElementById('carisma').value = ficha.carisma || '';
+                
+                    // Campos extras e poderes
+                    for (let i = 1; i <= 10; i++) {
+                        document.getElementById(`extra${i}`).value = ficha[`extra${i}`] || '';
+                    }
+                    for (let i = 1; i <= 9; i++) {
+                        document.getElementById(`poder${i}`).value = ficha[`poder${i}`] || '';
+                    }
+                
+                    // Preenchendo soma
+                    for (let i = 1; i <= 8; i++) {
+                        document.getElementById(`soma${i}`).textContent = ficha[`soma${i}`] || '';
+                    }
+                
+                    // Preenchendo aprimoramentos e outros campos
+                    for (let i = 1; i <= 4; i++) {
+                        document.getElementById(`aprimoramento${i}`).value = ficha[`aprimoramento${i}`] || '';
+                    }
+                
+                    document.getElementById('positivo').value = ficha.positivo || '';
+                    document.getElementById('negativo').value = ficha.negativo || '';
+                    document.getElementById('historia').value = ficha.historia || '';
+                    document.getElementById('primaria').value = ficha.primaria || '';
+                    document.getElementById('secundaria').value = ficha.secundaria || '';
+                
+                    // Preenchendo poderes extras
+                    for (let i = 1; i <= 5; i++) {
+                        document.getElementById(`power${i}`).value = ficha[`power${i}`] || '';
+                    }
+                
+                    // Preenchendo itens
+                    for (let i = 1; i <= 5; i++) {
+                        document.getElementById(`item${i}`).value = ficha[`item${i}`] || '';
+                    }
+                
+                    document.getElementById('golpes').value = ficha.golpes || '';
+                
+                    // Preenchendo Perícias
+                    if (ficha.pericias) {
+                        const pericias = document.querySelectorAll('.pericia-section input[type="text"], .pericia-section input[type="number"]');
+                        for (let i = 0; i < 20; i++) {
+                            pericias[i * 3].value = ficha.pericias[i]?.nome || '';
+                            pericias[i * 3 + 1].value = ficha.pericias[i]?.att_atrelado || '';
+                            pericias[i * 3 + 2].value = ficha.pericias[i]?.pontos || '';
+                        }
+                    }
+                
+                    // Preenchendo Mochila
+                    if (ficha.mochila) {
+                        const mochilas = document.querySelectorAll('.mochila-section textarea');
+                        for (let i = 0; i < mochilas.length; i++) {
+                            mochilas[i].value = ficha.mochila[i]?.nome || '';
+                        }
+                    }
+                
+                    alert("Ficha carregada com sucesso!");
+                
+                } else {
+                    alert("Ficha não encontrada.");
+                }
+            }).catch((error) => {
+                alert("Erro ao carregar ficha: " + error);
+            });
         }
 
-    }
-            // Chama a função automaticamente ao carregar a página
+        // Chama a função automaticamente ao carregar a página
         document.addEventListener("DOMContentLoaded", carregarFicha);
 
-        // Função para resetar a ficha
+        // Função para resetar a ficha no Firebase
         function resetarFicha() {
-            localStorage.removeItem("fichaPersonagem");
-            alert("Ficha apagada!");
-        }   
+            if (confirm("Tem certeza de que deseja apagar todas as fichas? Esta ação não pode ser desfeita.")) {
+                remove(ref(db, "fichas"))
+                    .then(() => alert("Todas as fichas foram apagadas com sucesso!"))
+                    .catch((error) => alert("Erro ao apagar fichas: " + error));
+            }
+        } 
 
         window.onload = function() {
           const urlParams = new URLSearchParams(window.location.search);
@@ -985,6 +981,26 @@ button:active {
     </script>
 
     <script type="module">
+        // Importa e inicializa o Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+        import { getDatabase, ref, get, set, push, onValue } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+        
+        const firebaseConfig = {
+          apiKey: "AIzaSyCMWxGtooYe7UXzFop_FfCKu-M4ima5vMc",
+          authDomain: "hospedagem-rpg.firebaseapp.com",
+          databaseURL: "https://hospedagem-rpg-default-rtdb.firebaseio.com",
+          projectId: "hospedagem-rpg",
+          storageBucket: "hospedagem-rpg.firebasestorage.app",
+          messagingSenderId: "834126719159",
+          appId: "1:834126719159:web:f605f39f967f9bd2498532",
+          measurementId: "G-41LQB57W3X"
+        };
+    
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        console.log("Firebase conectado!");
+        
         import { rollDice } from './java/ChamarRolador.js';
         
         document.getElementById("diceInput").addEventListener("keypress", function(event) {
