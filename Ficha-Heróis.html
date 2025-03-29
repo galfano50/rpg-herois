@@ -723,6 +723,56 @@ button:active {
             }
         });
 
+        function autoResize(textarea) {
+            textarea.style.height = "auto"; // Reseta a altura antes de calcular
+            textarea.style.height = textarea.scrollHeight + "px"; // Ajusta para o conteúdo
+        }
+
+        window.onload = function() {
+          const urlParams = new URLSearchParams(window.location.search);
+          const nome = urlParams.get('nome');
+          const classe = urlParams.get('classe');
+          const nivel = urlParams.get('nivel');
+          const historia = urlParams.get('historia');
+
+          if (nome && classe && nivel && historia) {
+            document.getElementById('nome').value = nome;
+            document.getElementById('classe').value = classe;
+            document.getElementById('nivel').value = nivel;
+            document.getElementById('historia').value = decodeURIComponent(historia);
+          }
+        };
+    </script>
+
+    <script type="module">
+        // Importa e inicializa o Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+        import { getDatabase, ref, get, set, push, onValue, remove } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCMWxGtooYe7UXzFop_FfCKu-M4ima5vMc",
+            authDomain: "hospedagem-rpg.firebaseapp.com",
+            databaseURL: "https://hospedagem-rpg-default-rtdb.firebaseio.com",
+            projectId: "hospedagem-rpg",
+            storageBucket: "hospedagem-rpg.appspot.com",
+            messagingSenderId: "834126719159",
+            appId: "1:834126719159:web:f605f39f967f9bd2498532",
+            measurementId: "G-41LQB57W3X"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        console.log("Firebase conectado!");
+
+        import { rollDice } from './java/ChamarRolador.js';
+
+        document.getElementById("diceInput").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                rollDice();
+            }
+        });
+
         function salvarFicha() {
         // Coleta os dados dos campos
         const ficha = {
@@ -832,24 +882,19 @@ button:active {
 
             ficha.mochila = mochila;
 
+            // Referência única para cada ficha
             const fichaRef = push(ref(db, "fichas"));
-              set(fichaRef, ficha)
+            
+            // Salva os dados no Firebase
+            set(fichaRef, ficha)
                 .then(() => alert("Ficha salva com sucesso!"))
                 .catch((error) => alert("Erro ao salvar ficha: " + error));
-        }
-
-            document.getElementById("salvarBtn").addEventListener("click", salvarFicha);         
-      
-
-        function autoResize(textarea) {
-            textarea.style.height = "auto"; // Reseta a altura antes de calcular
-            textarea.style.height = textarea.scrollHeight + "px"; // Ajusta para o conteúdo
-        }
+        }       
 
         // Função para carregar ficha do Firebase
         function carregarFicha() {
             const fichaId = prompt("Digite o ID da ficha que deseja carregar:");
-        
+                
             if (!fichaId) {
                 alert("Nenhum ID informado.");
                 return;
@@ -943,7 +988,6 @@ button:active {
                     }
                 
                     alert("Ficha carregada com sucesso!");
-                
                 } else {
                     alert("Ficha não encontrada.");
                 }
@@ -951,63 +995,20 @@ button:active {
                 alert("Erro ao carregar ficha: " + error);
             });
         }
-
         // Chama a função automaticamente ao carregar a página
         document.addEventListener("DOMContentLoaded", carregarFicha);
 
-        // Função para resetar a ficha no Firebase
+        // Função para resetar todas as fichas no Firebase
         function resetarFicha() {
             if (confirm("Tem certeza de que deseja apagar todas as fichas? Esta ação não pode ser desfeita.")) {
                 remove(ref(db, "fichas"))
                     .then(() => alert("Todas as fichas foram apagadas com sucesso!"))
                     .catch((error) => alert("Erro ao apagar fichas: " + error));
             }
-        } 
+        }
 
-        window.onload = function() {
-          const urlParams = new URLSearchParams(window.location.search);
-          const nome = urlParams.get('nome');
-          const classe = urlParams.get('classe');
-          const nivel = urlParams.get('nivel');
-          const historia = urlParams.get('historia');
-
-          if (nome && classe && nivel && historia) {
-            document.getElementById('nome').value = nome;
-            document.getElementById('classe').value = classe;
-            document.getElementById('nivel').value = nivel;
-            document.getElementById('historia').value = decodeURIComponent(historia);
-          }
-        };
-    </script>
-
-    <script type="module">
-        // Importa e inicializa o Firebase
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-        import { getDatabase, ref, get, set, push, onValue } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
-        
-        const firebaseConfig = {
-          apiKey: "AIzaSyCMWxGtooYe7UXzFop_FfCKu-M4ima5vMc",
-          authDomain: "hospedagem-rpg.firebaseapp.com",
-          databaseURL: "https://hospedagem-rpg-default-rtdb.firebaseio.com",
-          projectId: "hospedagem-rpg",
-          storageBucket: "hospedagem-rpg.firebasestorage.app",
-          messagingSenderId: "834126719159",
-          appId: "1:834126719159:web:f605f39f967f9bd2498532",
-          measurementId: "G-41LQB57W3X"
-        };
-    
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-
-        console.log("Firebase conectado!");
-        
-        import { rollDice } from './java/ChamarRolador.js';
-        
-        document.getElementById("diceInput").addEventListener("keypress", function(event) {
-            if (event.key === "Enter") {
-                rollDice();
-            }
-        });
+        // Adiciona eventos aos botões
+        document.getElementById("salvarBtn").addEventListener("click", salvarFicha);
     </script>
 </body>
 </html>
