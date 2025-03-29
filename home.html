@@ -27,40 +27,34 @@
     </div>
   </div>
 
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js"></script>
-  
-  <!-- Scripts -->
-  <script src="java/script.js"></script>
-  <script src="java/ChamarRolador.js"></script>
-
   <script>
     // Funções para abrir outras páginas
     function abrirAlaMestre() {
-      firebase.auth().onAuthStateChanged(user => {
-        if (user && user.email === "helder_galfano@hotmail.com") {
-          window.open('aladomestre.html', '_blank');
-        } else {
-          alert("Acesso negado! Apenas o Mestre pode acessar esta área.");
-        }
-      });
+      window.open('aladomestre.html', '_blank');
     }
-
     function abrirLivroDeRegras() {
       window.open('https://docs.google.com/document/d/1sncOGRxOUxP0b2kggRyJvKMyS0gAJjdZ_1NItily99I/preview', '_blank');
     }
+  </script>
 
-    // Monitoramento de rolagens em tempo real
+  <!-- Scripts Firebase carregados pelo CDN -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+  
+  <!-- Monitoramento em tempo real -->
+  <script type="module">
+    import { monitorarRolagens } from './java/ChamarRolador.js';
+
+    // Callback para adicionar cada nova rolagem à lista
     function adicionarRolagem(rolagem) {
       const ul = document.getElementById('listaRolagens');
       const li = document.createElement('li');
+      // Formata a data e exibe o resultado
       li.textContent = `${new Date(rolagem.timestamp).toLocaleString()} - ${rolagem.resultado}`;
-      ul.prepend(li);
+      ul.prepend(li); // Adiciona no início da lista
     }
 
-    // Iniciar monitoramento das rolagens
+    // Inicia o monitoramento das rolagens
     monitorarRolagens(adicionarRolagem);
   </script>
 </body>

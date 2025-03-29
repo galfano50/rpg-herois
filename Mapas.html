@@ -5,51 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mapas</title>
   <link rel="stylesheet" href="css/mapas.css" />
-  <script type="module">
-    // Importar Firebase
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-    import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
-
-    // Configuração do Firebase
-    const firebaseConfig = {
-      apiKey: "AIzaSyD_vM-tbAj_Gc2gv1XBa6GMOYpe9zNSv7s",
-      authDomain: "bar-do-truta-rpg-online.firebaseapp.com",
-      databaseURL: "https://bar-do-truta-rpg-online-default-rtdb.firebaseio.com",
-      projectId: "bar-do-truta-rpg-online",
-      storageBucket: "bar-do-truta-rpg-online.appspot.com",
-      messagingSenderId: "109187771317",
-      appId: "1:109187771317:web:13add20ef2fa8da2da07fc"
-    };
-
-    // Inicializar Firebase
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-
-    // Selecionar elementos
-    const mapaSelect = document.getElementById("mapaSelect");
-    const mapaContainer = document.getElementById("mapaContainer");
-
-    // Carregar mapas do Firebase ao selecionar uma opção
-    mapaSelect.addEventListener("change", () => {
-      const mapaSelecionado = mapaSelect.value;
-
-      if (mapaSelecionado) {
-        get(ref(db, `mapas/${mapaSelecionado}`)).then(snapshot => {
-          if (snapshot.exists()) {
-            const mapaUrl = snapshot.val().url;
-            mapaContainer.innerHTML = `<img src="${mapaUrl}" alt="Mapa selecionado" style="max-width: 100%; height: auto;">`;
-          } else {
-            mapaContainer.innerHTML = "<p>Mapa não encontrado.</p>";
-          }
-        }).catch(error => {
-          console.error("Erro ao carregar o mapa:", error);
-          mapaContainer.innerHTML = "<p>Erro ao carregar o mapa.</p>";
-        });
-      } else {
-        mapaContainer.innerHTML = "";
-      }
-    });
-  </script>
 </head>
 <body>
   <h1>Mapas do RPG</h1>
@@ -78,5 +33,7 @@
   <div id="mapaContainer" style="margin-top: 20px;">
     <!-- A imagem será exibida aqui -->
   </div>
+
+  <script src="java/mapas.js"></script>
 </body>
 </html>

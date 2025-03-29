@@ -10,8 +10,8 @@
   <div class="container">
     <h2>Login</h2>
     <form id="loginForm">
-      <label for="email">E-mail:</label>
-      <input type="email" id="email" name="email" required />
+      <label for="login">Usuário:</label>
+      <input type="text" id="login" name="login" required />
 
       <label for="senha">Senha:</label>
       <input type="password" id="senha" name="senha" required />
@@ -21,62 +21,6 @@
     <p id="mensagem"></p>
   </div>
 
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"></script>
   <script src="java/script.js"></script>
-  <script>
-    // Inicializar Firebase
-    const firebaseConfig = {
-      apiKey: "AIzaSyD_vM-tbAj_Gc2gv1XBa6GMOYpe9zNSv7s",
-      authDomain: "bar-do-truta-rpg-online.firebaseapp.com",
-      databaseURL: "https://bar-do-truta-rpg-online-default-rtdb.firebaseio.com",
-      projectId: "bar-do-truta-rpg-online",
-      storageBucket: "bar-do-truta-rpg-online.firebasestorage.app",
-      messagingSenderId: "109187771317",
-      appId: "1:109187771317:web:13add20ef2fa8da2da07fc"
-    };
-    const app = firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-
-    // Captura de parâmetros da URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const emailParam = urlParams.get('email');
-    const senhaParam = urlParams.get('senha');
-      
-    if (emailParam && senhaParam) {
-        // Login automático com parâmetros
-        auth.signInWithEmailAndPassword(emailParam, senhaParam)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                window.location.href = "aladomestre.html";  // Redireciona após login bem-sucedido
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorCode, errorMessage);
-            });
-    }
-
-    // Login manual via formulário
-    document.getElementById("loginForm").addEventListener("submit", function(event) {
-        event.preventDefault(); // Impede o envio normal do formulário
-
-        const email = document.getElementById("email").value;
-        const senha = document.getElementById("senha").value;
-
-        auth.signInWithEmailAndPassword(email, senha)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                window.location.href = "home.html";  // Redireciona após login bem-sucedido
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorCode, errorMessage);
-                document.getElementById("mensagem").textContent = "Erro de login: " + errorMessage;
-            });
-    });
-  </script>
 </body>
 </html>

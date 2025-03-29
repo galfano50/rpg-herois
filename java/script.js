@@ -1,51 +1,60 @@
-// Configuração do Firebase
-const firebaseConfig = {
-  apiKey: "AIzaSyD_vM-tbAj_Gc2gv1XBa6GMOYpe9zNSv7s",
-  authDomain: "bar-do-truta-rpg-online.firebaseapp.com",
-  databaseURL: "https://bar-do-truta-rpg-online-default-rtdb.firebaseio.com",
-  projectId: "bar-do-truta-rpg-online",
-  storageBucket: "bar-do-truta-rpg-online.firebasestorage.app",
-  messagingSenderId: "109187771317",
-  appId: "1:109187771317:web:13add20ef2fa8da2da07fc"
-};
-
-// Inicializa o Firebase
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-
-// Manipula o formulário de login
 document.addEventListener("DOMContentLoaded", function () {
+  const cadastroForm = document.getElementById("cadastroForm");
   const loginForm = document.getElementById("loginForm");
+  const mensagem = document.getElementById("mensagem");
+  const usuarioSpan = document.getElementById("usuario");
 
+  // Cadastro
+  if (cadastroForm) {
+    cadastroForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      const login = document.getElementById("login").value;
+      const senha = document.getElementById("senha").value;
+
+      if (login && senha) {
+        const usuarios = JSON.parse(localStorage.getItem("usuarios")) || {};
+        if (usuarios[login]) {
+          mensagem.textContent = "Usuário já existe!";
+          mensagem.style.color = "red";
+        } else {
+          usuarios[login] = senha;
+          localStorage.setItem("usuarios", JSON.stringify(usuarios));
+          mensagem.textContent = "Cadastro realizado com sucesso!";
+          mensagem.style.color = "green";
+        }
+      } else {
+        mensagem.textContent = "Preencha todos os campos!";
+        mensagem.style.color = "red";
+      }
+    });
+  }
+
+  // Login
   if (loginForm) {
     loginForm.addEventListener("submit", function (event) {
       event.preventDefault();
-
-      const email = document.getElementById("email").value;
+      const login = document.getElementById("login").value;
       const senha = document.getElementById("senha").value;
-      const mensagem = document.getElementById("mensagem");
 
-      auth.signInWithEmailAndPassword(email, senha)
-        .then((userCredential) => {
-          mensagem.style.color = "green";
-          mensagem.textContent = "Login bem-sucedido!";
-          setTimeout(() => {
-            window.location.href = "home.html"; // Redireciona para a página inicial
-          }, 2000);
-        })
-        .catch((error) => {
-          mensagem.style.color = "red";
-          mensagem.textContent = "Erro: " + error.message;
-        });
+      const usuarios = JSON.parse(localStorage.getItem("usuarios")) || {};
+
+      if (usuarios[login] && usuarios[login] === senha) {
+        localStorage.setItem("usuarioLogado", login);
+        window.location.href = "home.html";
+      } else {
+        mensagem.textContent = "Usuário ou senha incorretos!";
+        mensagem.style.color = "red";
+      }
     });
   }
-});
 
-// Verifica se o usuário está autenticado
-auth.onAuthStateChanged((user) => {
-  if (user) {
-    console.log("Usuário logado:", user.email);
-  } else {
-    console.log("Nenhum usuário logado.");
+  // Personalizar a página home
+  if (window.location.href.includes("home.html")) {
+    const usuarioLogado = localStorage.getItem("usuarioLogado");
+    if (usuarioLogado) {
+      usuarioSpan.textContent = usuarioLogado;
+    } else {
+      window.location.href = "login.html"; // Redireciona se o usuário não estiver logado
+    }
   }
 });

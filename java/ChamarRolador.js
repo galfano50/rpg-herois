@@ -1,16 +1,17 @@
 // Importando os módulos do Firebase via CDN
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
-// Configuração do Firebase (Bar do Truta RPG Online)
+// Configuração do Firebase (substitua pelos seus dados do Firebase Console)
 const firebaseConfig = {
-  apiKey: "AIzaSyD_vM-tbAj_Gc2gv1XBa6GMOYpe9zNSv7s",
-  authDomain: "bar-do-truta-rpg-online.firebaseapp.com",
-  databaseURL: "https://bar-do-truta-rpg-online-default-rtdb.firebaseio.com",
-  projectId: "bar-do-truta-rpg-online",
-  storageBucket: "bar-do-truta-rpg-online.appspot.com",
-  messagingSenderId: "109187771317",
-  appId: "1:109187771317:web:13add20ef2fa8da2da07fc"
+  apiKey: "AIzaSyCMWxGtooYe7UXzFop_FfCKu-M4ima5vMc",
+  authDomain: "hospedagem-rpg.firebaseapp.com",
+  databaseURL: "https://hospedagem-rpg-default-rtdb.firebaseio.com",
+  projectId: "hospedagem-rpg",
+  storageBucket: "hospedagem-rpg.firebasestorage.app",
+  messagingSenderId: "834126719159",
+  appId: "1:834126719159:web:f605f39f967f9bd2498532",
+  measurementId: "G-41LQB57W3X"
 };
 
 // Inicializando o Firebase
@@ -22,14 +23,9 @@ const db = getDatabase(app);
  * Calcula o resultado com base no input do usuário e envia o resultado para o Firebase.
  */
 export function rollDice() {
+    // Recupera e formata o valor do input
     const input = document.getElementById("diceInput").value.replace(/\s+/g, "");
     const resultDiv = document.getElementById("result");
-    
-    if (!input) {
-        alert("Digite uma rolagem válida, como 2d6+3!");
-        return;
-    }
-
     const diceRegex = /(-?\d*)d(\d+)/g;
     const numberRegex = /([-+]?\d+)/g;
     let total = 0;
@@ -39,11 +35,6 @@ export function rollDice() {
     while ((match = diceRegex.exec(input)) !== null) {
         let count = match[1] ? parseInt(match[1]) : 1;
         let sides = parseInt(match[2]);
-
-        if (sides <= 0) {
-            alert("Número de lados do dado inválido!");
-            return;
-        }
 
         for (let i = 0; i < Math.abs(count); i++) {
             let roll = Math.floor(Math.random() * sides) + 1;
@@ -70,7 +61,7 @@ export function rollDice() {
       timestamp: Date.now()
     });
 
-    // Opcional: salva localmente se precisar de fallback
+    // Opcional: também salva localmente se precisar de fallback
     localStorage.setItem('dadoResultado', resultadoText);
 
     setTimeout(() => {
@@ -94,6 +85,7 @@ export function monitorarRolagens(callback) {
 
 /**
  * Função para exibir o resultado armazenado no localStorage.
+ * (Opcional – caso você queira usar como fallback)
  */
 export function exibirResultado() {
     const resultado = localStorage.getItem('dadoResultado');

@@ -5,55 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ficha do Herói</title>
   <link rel="stylesheet" href="css/style.css" />
-  <script type="module">
-    // Importar Firebase
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-    import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
-
-    // Configuração do Firebase
-    const firebaseConfig = {
-      apiKey: "AIzaSyD_vM-tbAj_Gc2gv1XBa6GMOYpe9zNSv7s",
-      authDomain: "bar-do-truta-rpg-online.firebaseapp.com",
-      databaseURL: "https://bar-do-truta-rpg-online-default-rtdb.firebaseio.com",
-      projectId: "bar-do-truta-rpg-online",
-      storageBucket: "bar-do-truta-rpg-online.appspot.com",
-      messagingSenderId: "109187771317",
-      appId: "1:109187771317:web:13add20ef2fa8da2da07fc"
-    };
-
-    // Inicializar Firebase
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-
-    // Obter ID da ficha a partir da URL
-    const params = new URLSearchParams(window.location.search);
-    const fichaId = params.get('id');
-
-    // Selecionar elementos da ficha
-    const nomeFicha = document.getElementById('nomeFicha');
-    const classeFicha = document.getElementById('classeFicha');
-    const nivelFicha = document.getElementById('nivelFicha');
-    const historiaFicha = document.getElementById('historiaFicha');
-
-    // Carregar dados do Firebase
-    if (fichaId) {
-      get(ref(db, `fichas/${fichaId}`)).then(snapshot => {
-        if (snapshot.exists()) {
-          const ficha = snapshot.val();
-          nomeFicha.textContent = ficha.nome;
-          classeFicha.textContent = ficha.classe;
-          nivelFicha.textContent = ficha.nivel;
-          historiaFicha.textContent = ficha.historia;
-        } else {
-          nomeFicha.textContent = "Ficha não encontrada!";
-        }
-      }).catch(error => {
-        console.error("Erro ao carregar a ficha:", error);
-      });
-    } else {
-      nomeFicha.textContent = "Nenhuma ficha selecionada!";
-    }
-  </script>
 </head>
 <body>
   <div class="container">
@@ -66,5 +17,19 @@
       <p><strong>História:</strong> <span id="historiaFicha"></span></p>
     </div>
   </div>
+
+  <script>
+    // Receber dados via URL e exibir na página
+    const params = new URLSearchParams(window.location.search);
+    const nome = params.get('nome');
+    const classe = params.get('classe');
+    const nivel = params.get('nivel');
+    const historia = params.get('historia');
+
+    document.getElementById('nomeFicha').textContent = nome;
+    document.getElementById('classeFicha').textContent = classe;
+    document.getElementById('nivelFicha').textContent = nivel;
+    document.getElementById('historiaFicha').textContent = historia;
+  </script>
 </body>
 </html>
