@@ -780,27 +780,27 @@ button:active {
         });
 
         function salvarFicha() {
-            // Garante que o Firebase foi inicializado
             if (!db || !firestore) {
                 console.error("Erro: Firebase não inicializado corretamente.");
                 alert("Erro ao salvar a ficha. Firebase não conectado.");
                 return;
             }
         
-            // Coleta os dados dos campos, evitando erros caso algum elemento não exista
             function getValor(id) {
                 const elemento = document.getElementById(id);
-                return elemento ? elemento.value : "";
+                return elemento ? elemento.value.trim() : "";
             }
         
             function getTexto(id) {
                 const elemento = document.getElementById(id);
-                return elemento ? elemento.textContent : "";
+                return elemento ? elemento.textContent.trim() : "";
             }
         
-            // Criando o objeto da ficha
+            // Gerar ID único se não existir
+            const idFicha = getValor("idFicha") || push(ref(db, "fichas")).key;
+        
             const ficha = {
-                id: getValor("idFicha") || push(ref(db, "fichas")).key, // ID único gerado se não for informado
+                id: idFicha,
                 nome: getValor("nome"),
                 raca: getValor("raca"),
                 classe: getValor("classe"),
@@ -811,8 +811,6 @@ button:active {
                 xp: getValor("xp"),
                 p_heroi: getValor("p_heroi"),
                 p_vilao: getValor("p_vilao"),
-                extra11: getValor("extra11"),
-                extra12: getValor("extra12"),
                 pontos: getTexto("pontos"),
                 forca: getValor("forca"),
                 constituicao: getValor("constituicao"),
@@ -822,95 +820,53 @@ button:active {
                 percepcao: getValor("percepcao"),
                 vontade: getValor("vontade"),
                 carisma: getValor("carisma"),
-                extra1: getValor("extra1"),
-                extra2: getValor("extra2"),
-                extra3: getValor("extra3"),
-                extra4: getValor("extra4"),
-                extra5: getValor("extra5"),
-                extra6: getValor("extra6"),
-                extra7: getValor("extra7"),
-                extra8: getValor("extra8"),
-                extra9: getValor("extra9"),
-                extra10: getValor("extra10"),
-                poder1: getValor("poder1"),
-                poder2: getValor("poder2"),
-                poder3: getValor("poder3"),
-                poder4: getValor("poder4"),
-                poder5: getValor("poder5"),
-                poder6: getValor("poder6"),
-                poder7: getValor("poder7"),
-                poder8: getValor("poder8"),
-                poder9: getValor("poder9"),
-                soma1: getTexto("soma1"),
-                soma2: getTexto("soma2"),
-                soma3: getTexto("soma3"),
-                soma4: getTexto("soma4"),
-                soma5: getTexto("soma5"),
-                soma6: getTexto("soma6"),
-                soma7: getTexto("soma7"),
-                soma8: getTexto("soma8"),
-                aprimoramento1: getValor("aprimoramento1"),
-                aprimoramento2: getValor("aprimoramento2"),
-                aprimoramento3: getValor("aprimoramento3"),
-                aprimoramento4: getValor("aprimoramento4"),
-                positivo: getValor("positivo"),
-                negativo: getValor("negativo"),
-                historia: getValor("historia"),
-                primaria: getValor("primaria"),
-                secundaria: getValor("secundaria"),
-                power1: getValor("power1"),
-                power2: getValor("power2"),
-                power3: getValor("power3"),
-                power4: getValor("power4"),
-                power5: getValor("power5"),
-                item1: getValor("item1"),
-                item2: getValor("item2"),
-                item3: getValor("item3"),
-                item4: getValor("item4"),
-                item5: getValor("item5"),
                 golpes: getValor("golpes"),
-                timestamp: new Date().toISOString() // Adiciona timestamp
+                timestamp: new Date().toISOString(),
+                pericias: [],
+                mochila: []
             };
         
-            // Coletando Perícias
-            const pericias = [];
+            // Captura as Perícias
             document.querySelectorAll(".pericia-section").forEach(section => {
-                const nome = section.querySelector("input[type='text']").value;
-                const att_atrelado = section.querySelectorAll("input[type='text']")[1].value;
-                const pontos = section.querySelector("input[type='number']").value;
-            
-                pericias.push({ nome, att_atrelado, pontos });
+                const inputs = section.querySelectorAll("input");
+                if (inputs.length >= 3) {
+                    ficha.pericias.push({
+                        nome: inputs[0].value.trim(),
+                        att_atrelado: inputs[1].value.trim(),
+                        pontos: inputs[2].value.trim()
+                    });
+                }
             });
         
-            ficha.pericias = pericias;
-        
-            // Coletando Mochila
-            const mochila = [];
+            // Captura os itens da Mochila
             document.querySelectorAll(".mochila-section textarea").forEach(textarea => {
-                mochila.push({ nome: textarea.value });
+                ficha.mochila.push({ nome: textarea.value.trim() });
             });
         
-            ficha.mochila = mochila;
-        
-            // Salva no **Realtime Database**
-            set(ref(db, "fichas/" + ficha.id), ficha)
+            // **Salvar no Realtime Database**
+            set(ref(db, "fichas/" + idFicha), ficha)
                 .then(() => console.log("Ficha salva no Realtime Database!"))
                 .catch(error => console.error("Erro ao salvar no Realtime Database:", error));
         
-            // Salva no **Firestore**
-            setDoc(doc(firestore, "fichas", ficha.id), ficha)
+            // **Salvar no Firestore**
+            setDoc(doc(firestore, "fichas", idFicha), ficha)
                 .then(() => alert("Ficha salva com sucesso no Firebase!"))
                 .catch(error => console.error("Erro ao salvar no Firestore:", error));
         }
 
         function carregarFicha(id) {
+            if (!db) {
+                console.error("Erro: Firebase não inicializado.");
+                alert("Erro ao carregar a ficha. Firebase não conectado.");
+                return;
+            }
+        
             const fichaRef = ref(db, "fichas/" + id);
-                
+        
             get(fichaRef).then(snapshot => {
                 if (snapshot.exists()) {
                     const ficha = snapshot.val();
                 
-                    // Funções auxiliares para preencher os campos
                     function setValor(id, valor) {
                         const elemento = document.getElementById(id);
                         if (elemento) elemento.value = valor;
@@ -921,7 +877,6 @@ button:active {
                         if (elemento) elemento.textContent = valor;
                     }
                 
-                    // Preenche os campos básicos
                     setValor("idFicha", ficha.id);
                     setValor("nome", ficha.nome);
                     setValor("raca", ficha.raca);
@@ -933,8 +888,6 @@ button:active {
                     setValor("xp", ficha.xp);
                     setValor("p_heroi", ficha.p_heroi);
                     setValor("p_vilao", ficha.p_vilao);
-                    setValor("extra11", ficha.extra11);
-                    setValor("extra12", ficha.extra12);
                     setTexto("pontos", ficha.pontos);
                     setValor("forca", ficha.forca);
                     setValor("constituicao", ficha.constituicao);
@@ -944,58 +897,12 @@ button:active {
                     setValor("percepcao", ficha.percepcao);
                     setValor("vontade", ficha.vontade);
                     setValor("carisma", ficha.carisma);
-                    setValor("extra1", ficha.extra1);
-                    setValor("extra2", ficha.extra2);
-                    setValor("extra3", ficha.extra3);
-                    setValor("extra4", ficha.extra4);
-                    setValor("extra5", ficha.extra5);
-                    setValor("extra6", ficha.extra6);
-                    setValor("extra7", ficha.extra7);
-                    setValor("extra8", ficha.extra8);
-                    setValor("extra9", ficha.extra9);
-                    setValor("extra10", ficha.extra10);
-                    setValor("poder1", ficha.poder1);
-                    setValor("poder2", ficha.poder2);
-                    setValor("poder3", ficha.poder3);
-                    setValor("poder4", ficha.poder4);
-                    setValor("poder5", ficha.poder5);
-                    setValor("poder6", ficha.poder6);
-                    setValor("poder7", ficha.poder7);
-                    setValor("poder8", ficha.poder8);
-                    setValor("poder9", ficha.poder9);
-                    setTexto("soma1", ficha.soma1);
-                    setTexto("soma2", ficha.soma2);
-                    setTexto("soma3", ficha.soma3);
-                    setTexto("soma4", ficha.soma4);
-                    setTexto("soma5", ficha.soma5);
-                    setTexto("soma6", ficha.soma6);
-                    setTexto("soma7", ficha.soma7);
-                    setTexto("soma8", ficha.soma8);
-                    setValor("aprimoramento1", ficha.aprimoramento1);
-                    setValor("aprimoramento2", ficha.aprimoramento2);
-                    setValor("aprimoramento3", ficha.aprimoramento3);
-                    setValor("aprimoramento4", ficha.aprimoramento4);
-                    setValor("positivo", ficha.positivo);
-                    setValor("negativo", ficha.negativo);
-                    setValor("historia", ficha.historia);
-                    setValor("primaria", ficha.primaria);
-                    setValor("secundaria", ficha.secundaria);
-                    setValor("power1", ficha.power1);
-                    setValor("power2", ficha.power2);
-                    setValor("power3", ficha.power3);
-                    setValor("power4", ficha.power4);
-                    setValor("power5", ficha.power5);
-                    setValor("item1", ficha.item1);
-                    setValor("item2", ficha.item2);
-                    setValor("item3", ficha.item3);
-                    setValor("item4", ficha.item4);
-                    setValor("item5", ficha.item5);
                     setValor("golpes", ficha.golpes);
                 
-                    // Limpa e preenche a lista de Perícias
+                    // Limpar e preencher Perícias
                     const periciasContainer = document.querySelector(".pericia-container");
                     if (periciasContainer) {
-                        periciasContainer.innerHTML = ""; // Limpa a lista antes de adicionar
+                        periciasContainer.innerHTML = "";
                         ficha.pericias.forEach(pericia => {
                             const section = document.createElement("div");
                             section.classList.add("pericia-section");
@@ -1008,10 +915,10 @@ button:active {
                         });
                     }
                 
-                    // Limpa e preenche a Mochila
+                    // Limpar e preencher Mochila
                     const mochilaContainer = document.querySelector(".mochila-container");
                     if (mochilaContainer) {
-                        mochilaContainer.innerHTML = ""; // Limpa antes de adicionar
+                        mochilaContainer.innerHTML = "";
                         ficha.mochila.forEach(item => {
                             const textarea = document.createElement("textarea");
                             textarea.value = item.nome;
@@ -1022,7 +929,7 @@ button:active {
                     console.log("Ficha carregada com sucesso!");
                     alert("Ficha carregada com sucesso!");
                 } else {
-                    console.warn("Nenhuma ficha encontrada com esse ID.");
+                    console.warn("Nenhuma ficha encontrada.");
                     alert("Nenhuma ficha encontrada!");
                 }
             }).catch(error => {
@@ -1040,8 +947,18 @@ button:active {
             }
         }
 
-        // Adiciona eventos aos botões
+         // Adiciona eventos aos botões
         document.getElementById("salvarBtn").addEventListener("click", salvarFicha);
+            
+        // Se houver um botão para carregar ficha, adicione este evento também
+        document.getElementById("carregarBtn").addEventListener("click", () => {
+            const idFicha = document.getElementById("idFicha").value.trim();
+            if (idFicha) {
+                carregarFicha(idFicha);
+            } else {
+                alert("Digite o ID da ficha para carregar.");
+            }
+        });
     </script>
 </body>
 </html>
