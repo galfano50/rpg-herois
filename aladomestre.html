@@ -11,7 +11,6 @@
     <h2>Ala do Mestre</h2>
     <p>Preencha as informações do herói e clique em 'Criar Ficha' para salvar:</p>
 
-    <!-- Formulário de Criação de Ficha -->
     <form id="formFicha">
       <label for="nome">Nome do Herói:</label>
       <input type="text" id="nome" required />
@@ -49,21 +48,25 @@
 
     function atualizarListaFichas() {
       listaFichas.innerHTML = '';
-      fichas.forEach((ficha) => {
+      fichas.forEach((ficha, index) => {
         const li = document.createElement('li');
         li.innerHTML = `
           <strong>${ficha.nome}</strong> - ${ficha.classe} (Nível ${ficha.nivel})<br>
           História: ${ficha.historia}<br>
-          <button onclick="abrirFicha(${ficha.id})">Abrir Ficha</button>
+          <button onclick="abrirFicha(${index})">Abrir Ficha</button>
         `;
         listaFichas.appendChild(li);
       });
     }
 
     function abrirFicha(index) {
-      const ficha = fichas[index];
-      const urlFicha = `Ficha-Heróis.html?nome=${encodeURIComponent(ficha.nome)}&classe=${encodeURIComponent(ficha.classe)}&nivel=${encodeURIComponent(ficha.nivel)}&historia=${encodeURIComponent(ficha.historia)}`;
-      window.open(urlFicha, '_blank');
+      if (index >= 0 && index < fichas.length) {
+        const ficha = fichas[index];
+        const urlFicha = `Ficha-Heróis.html?nome=${encodeURIComponent(ficha.nome)}&classe=${encodeURIComponent(ficha.classe)}&nivel=${encodeURIComponent(ficha.nivel)}&historia=${encodeURIComponent(ficha.historia)}`;
+        window.open(urlFicha, '_blank');
+      } else {
+        alert("Erro ao abrir a ficha. Índice inválido.");
+      }
     }
 
     formFicha.addEventListener('submit', (e) => {
@@ -74,13 +77,11 @@
       const historia = document.getElementById('historia').value;
       
       salvarFicha(nome, classe, nivel, historia);
-      
       formFicha.reset();
     });
 
     atualizarListaFichas();
 
-    // Resetar fichas
     function resetarFichas() {
       if (confirm('Tem certeza de que deseja apagar todas as fichas? Esta ação não pode ser desfeita.')) {
         fichas = [];
