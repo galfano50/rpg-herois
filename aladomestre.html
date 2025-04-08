@@ -14,15 +14,66 @@
     <form id="formFicha">
       <label for="nome">Nome do Herói:</label>
       <input type="text" id="nome" required />
+
+      <label for="raça">Raça:</label>
+      <input type="text" id="raça" required />
       
       <label for="classe">Classe:</label>
       <input type="text" id="classe" required />
       
       <label for="nivel">Nível:</label>
       <input type="number" id="nivel" required />
+
+      <label for="vida">Vida:</label>
+      <input type="number" id="vida" required />
+
+      <label for="energia">Energia:</label>
+      <input type="number" id="energia" required />
+
+      <label for="indice_protecao">Índice de Proteção:</label>
+      <input type="number" id="indice_protecao" required />
       
       <label for="historia">História:</label>
       <textarea id="historia" required></textarea>
+
+      <label for="forca">Força:</label>
+      <input type="number" id="forca" required />
+
+      <label for="constituicao">Constituição:</label>
+      <input type="number" id="constituicao" required />
+
+      <label for="destreza">Destreza:</label>
+      <input type="number" id="destreza" required />
+
+      <label for="agilidade">Agilidade:</label>
+      <input type="number" id="agilidade" required />
+
+      <label for="inteligencia">Inteligência:</label>
+      <input type="number" id="inteligencia" required />
+
+      <label for="percepcao">Percepção:</label>
+      <input type="number" id="percepcao" required />
+
+      <label for="vontade">Vontade:</label>
+      <input type="number" id="vontade" required />
+
+      <label for="carisma">Carisma:</label>
+      <input type="number" id="carisma" required />
+
+      <label for="aprimoramento1">Aprimoramento1:</label>
+      <textarea id="aprimoramento1" required></textarea>
+
+      <label for="primaria">Arma1:</label>
+      <textarea id="primaria" required></textarea>
+
+      <label for="power1">Podere1:</label>
+      <textarea id="power1" required></textarea>
+
+      <label for="golpes">Itens:</label>
+      <textarea id="golpes" required></textarea>
+
+      <label for="item1">Itens:</label>
+      <textarea id="item1" required></textarea>
 
       <button type="submit">Criar Ficha</button>
     </form>
@@ -38,14 +89,22 @@
     const formFicha = document.getElementById('formFicha');
     const listaFichas = document.getElementById('listaFichas');
     let fichas = JSON.parse(localStorage.getItem('fichas')) || [];
-
-    function salvarFicha(nome, classe, nivel, historia) {
-      const ficha = { nome, classe, nivel, historia };
+  
+    function salvarFicha(
+      nome, raça, classe, nivel, vida, energia, indice_protecao, historia,
+      forca, constituicao, destreza, agilidade, inteligencia, percepcao,
+      vontade, carisma, aprimoramento1, primaria, power1, golpes, item1
+    ) {
+      const ficha = {
+        nome, raça, classe, nivel, vida, energia, indice_protecao, historia,
+        forca, constituicao, destreza, agilidade, inteligencia, percepcao,
+        vontade, carisma, aprimoramento1, primaria, power1, golpes, item1
+      };
       fichas.push(ficha);
       localStorage.setItem('fichas', JSON.stringify(fichas));
       atualizarListaFichas();
     }
-
+  
     function atualizarListaFichas() {
       listaFichas.innerHTML = '';
       fichas.forEach((ficha, index) => {
@@ -58,7 +117,7 @@
         listaFichas.appendChild(li);
       });
     }
-
+  
     function abrirFicha(index) {
       if (index >= 0 && index < fichas.length) {
         const ficha = fichas[index];
@@ -68,20 +127,43 @@
         alert("Erro ao abrir a ficha. Índice inválido.");
       }
     }
-
+  
     formFicha.addEventListener('submit', (e) => {
       e.preventDefault();
+      
       const nome = document.getElementById('nome').value;
+      const raça = document.getElementById('raça').value;
       const classe = document.getElementById('classe').value;
       const nivel = document.getElementById('nivel').value;
+      const vida = document.getElementById('vida').value;
+      const energia = document.getElementById('energia').value;
+      const indice_protecao = document.getElementById('indice_protecao').value;
       const historia = document.getElementById('historia').value;
+      const forca = document.getElementById('forca').value;
+      const constituicao = document.getElementById('constituicao').value;
+      const destreza = document.getElementById('destreza').value;
+      const agilidade = document.getElementById('agilidade').value;
+      const inteligencia = document.getElementById('inteligencia').value;
+      const percepcao = document.getElementById('percepcao').value;
+      const vontade = document.getElementById('vontade').value;
+      const carisma = document.getElementById('carisma').value;
+      const aprimoramento1 = document.getElementById('aprimoramento1').value;
+      const primaria = document.getElementById('primaria').value;
+      const power1 = document.getElementById('power1').value;
+      const golpes = document.getElementById('golpes').value;
+      const item1 = document.getElementById('item1').value;
+  
+      salvarFicha(
+        nome, raça, classe, nivel, vida, energia, indice_protecao, historia,
+        forca, constituicao, destreza, agilidade, inteligencia, percepcao,
+        vontade, carisma, aprimoramento1, primaria, power1, golpes, item1
+      );
       
-      salvarFicha(nome, classe, nivel, historia);
       formFicha.reset();
     });
-
+  
     atualizarListaFichas();
-
+  
     function resetarFichas() {
       if (confirm('Tem certeza de que deseja apagar todas as fichas? Esta ação não pode ser desfeita.')) {
         fichas = [];
@@ -91,5 +173,6 @@
       }
     }
   </script>
+  
 </body>
 </html>
