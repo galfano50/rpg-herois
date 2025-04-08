@@ -184,22 +184,13 @@
     const formFicha = document.getElementById('formFicha');
     const listaFichas = document.getElementById('listaFichas');
     let fichas = JSON.parse(localStorage.getItem('fichas')) || [];
-  
-    function salvarFicha(
-      nome, raca, classe, nivel, vida, energia, indice_protecao, historia,
-      forca, constituicao, destreza, agilidade, inteligencia, percepcao,
-      vontade, carisma, extra1, extra2, extra3, extra4, extra5, extra6, extra7, extra8, extra9, extra10, poder1, poder2, poder3, poder4, poder5, poder6, poder7, poder8, poder9, aprimoramento1, aprimoramento2, aprimoramento3, aprimoramento4, primaria, secundaria, power1, poder2, poder3, poder4, poder5, golpes, item1, item2, item3, item4, item5
-    ) {
-      const ficha = {
-        nome, raca, classe, nivel, vida, energia, indice_protecao, historia,
-      forca, constituicao, destreza, agilidade, inteligencia, percepcao,
-      vontade, carisma, extra1, extra2, extra3, extra4, extra5, extra6, extra7, extra8, extra9, extra10, poder1, poder2, poder3, poder4, poder5, poder6, poder7, poder8, poder9, aprimoramento1, aprimoramento2, aprimoramento3, aprimoramento4, primaria, secundaria, power1, poder2, poder3, poder4, poder5, golpes, item1, item2, item3, item4, item5
-     };
-      fichas.push(ficha);
+
+    function salvarFicha(dadosFicha) {
+      fichas.push(dadosFicha);
       localStorage.setItem('fichas', JSON.stringify(fichas));
       atualizarListaFichas();
     }
-  
+
     function atualizarListaFichas() {
       listaFichas.innerHTML = '';
       fichas.forEach((ficha, index) => {
@@ -212,16 +203,14 @@
         listaFichas.appendChild(li);
       });
     }
-  
+
     function abrirFicha(index) {
       if (index >= 0 && index < fichas.length) {
         const ficha = fichas[index];
         const params = new URLSearchParams();
-      
         for (const chave in ficha) {
           params.append(chave, ficha[chave]);
         }
-      
         const urlFicha = `Ficha-Heróis.html?${params.toString()}`;
         window.open(urlFicha, '_blank');
       } else {
@@ -231,74 +220,18 @@
 
     formFicha.addEventListener('submit', (e) => {
       e.preventDefault();
-      
-      const nome = document.getElementById('nome').value;
-      const raca = document.getElementById('raca').value;
-      const classe = document.getElementById('classe').value;
-      const nivel = document.getElementById('nivel').value;
-      const vida = document.getElementById('vida').value;
-      const energia = document.getElementById('energia').value;
-      const indice_protecao = document.getElementById('indice_protecao').value;
-      const historia = document.getElementById('historia').value;
-      const forca = document.getElementById('forca').value;
-      const constituicao = document.getElementById('constituicao').value;
-      const destreza = document.getElementById('destreza').value;
-      const agilidade = document.getElementById('agilidade').value;
-      const inteligencia = document.getElementById('inteligencia').value;
-      const percepcao = document.getElementById('percepcao').value;
-      const vontade = document.getElementById('vontade').value;
-      const carisma = document.getElementById('carisma').value;
-      const extra1 = document.getElementById('extra1').value;
-      const extra2 = document.getElementById('extra2').value;
-      const extra3 = document.getElementById('extra3').value;
-      const extra4 = document.getElementById('extra4').value;
-      const extra5 = document.getElementById('extra5').value;
-      const extra6 = document.getElementById('extra6').value;
-      const extra7 = document.getElementById('extra7').value;
-      const extra8 = document.getElementById('extra8').value;
-      const extra9 = document.getElementById('extra9').value;
-      const poder1 = document.getElementById('poder1').value;
-      const poder2 = document.getElementById('poder2').value;
-      const poder3 = document.getElementById('poder3').value;
-      const poder4 = document.getElementById('poder4').value;
-      const poder5 = document.getElementById('poder5').value;
-      const poder6 = document.getElementById('poder6').value;
-      const poder7 = document.getElementById('poder7').value;
-      const poder8 = document.getElementById('poder8').value;
-      const poder9 = document.getElementById('poder9').value;
-      const poder10 = document.getElementById('poder10').value;
-      const aprimoramento1 = document.getElementById('aprimoramento1').value;
-      const aprimoramento2 = document.getElementById('aprimoramento2').value;
-      const aprimoramento3 = document.getElementById('aprimoramento3').value;
-      const aprimoramento4 = document.getElementById('aprimoramento4').value;
-      const primaria = document.getElementById('primaria').value;
-      const secundaria = document.getElementById('secundaria').value;
-      const power1 = document.getElementById('power1').value;
-      const power2 = document.getElementById('power2').value;
-      const power3 = document.getElementById('power3').value;
-      const power4 = document.getElementById('power4').value;
-      const power5 = document.getElementById('power5').value;
-      const golpes = document.getElementById('golpes').value;
-      const item1 = document.getElementById('item1').value;
-      const item2 = document.getElementById('item2').value;
-      const item3 = document.getElementById('item3').value;
-      const item4 = document.getElementById('item4').value;
-      const item5 = document.getElementById('item5').value;
-  
-      salvarFicha(
-      nome, raca, classe, nivel, vida, energia, indice_protecao, historia,
-      forca, constituicao, destreza, agilidade, inteligencia, percepcao,
-      vontade, carisma, extra1, extra2, extra3, extra4, extra5, extra6, extra7, extra8, extra9, extra10, 
-      poder1, poder2, poder3, poder4, poder5, poder6, poder7, poder8, poder9, 
-      aprimoramento1, aprimoramento2, aprimoramento3, aprimoramento4, primaria, secundaria, 
-      power1, poder2, poder3, poder4, poder5, golpes, item1, item2, item3, item4, item5
-    );
-      
+
+      const campos = formFicha.querySelectorAll('input, textarea');
+      const dadosFicha = {};
+
+      campos.forEach(campo => {
+        dadosFicha[campo.id] = campo.value;
+      });
+
+      salvarFicha(dadosFicha);
       formFicha.reset();
     });
-  
-    atualizarListaFichas();
-  
+
     function resetarFichas() {
       if (confirm('Tem certeza de que deseja apagar todas as fichas? Esta ação não pode ser desfeita.')) {
         fichas = [];
@@ -307,6 +240,8 @@
         alert('Todas as fichas foram apagadas com sucesso!');
       }
     }
+
+    atualizarListaFichas();
   </script>
   
 </body>
