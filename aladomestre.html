@@ -123,13 +123,19 @@
     function abrirFicha(index) {
       if (index >= 0 && index < fichas.length) {
         const ficha = fichas[index];
-        const urlFicha = `Ficha-Heróis.html?nome=${encodeURIComponent(ficha.nome)}&classe=${encodeURIComponent(ficha.classe)}&nivel=${encodeURIComponent(ficha.nivel)}&historia=${encodeURIComponent(ficha.historia)}`;
+        const params = new URLSearchParams();
+      
+        for (const chave in ficha) {
+          params.append(chave, ficha[chave]);
+        }
+      
+        const urlFicha = `Ficha-Heróis.html?${params.toString()}`;
         window.open(urlFicha, '_blank');
       } else {
         alert("Erro ao abrir a ficha. Índice inválido.");
       }
     }
-  
+      
     formFicha.addEventListener('submit', (e) => {
       e.preventDefault();
       

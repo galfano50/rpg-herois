@@ -967,21 +967,46 @@ button:active {
             alert("Ficha apagada!");
         }
 
-        window.onload = function() {
+        window.onload = function () {
           const urlParams = new URLSearchParams(window.location.search);
-          const nome = urlParams.get('nome');
-          const classe = urlParams.get('classe');
-          const nivel = urlParams.get('nivel');
-          const historia = urlParams.get('historia');
-
-          if (nome && classe && nivel && historia) {
-            document.getElementById('nome').value = nome;
-            document.getElementById('classe').value = classe;
-            document.getElementById('nivel').value = nivel;
-            document.getElementById('historia').value = decodeURIComponent(historia);
-          }
+                
+          urlParams.forEach((valor, chave) => {
+            const campo = document.getElementById(chave);
+            if (campo) {
+              campo.value = decodeURIComponent(valor);
+            }
+          });
         };
     </script>
+
+    <script>
+        function obterParametrosDaURL() {
+          const params = new URLSearchParams(window.location.search);
+          const dados = {};
+        
+          for (const [chave, valor] of params.entries()) {
+            dados[chave] = decodeURIComponent(valor);
+          }
+      
+          return dados;
+        }
+    
+        function preencherFicha(dados) {
+          const container = document.createElement('div');
+          container.classList.add('ficha-heroi');
+        
+          for (const chave in dados) {
+            const paragrafo = document.createElement('p');
+            paragrafo.innerHTML = `<strong>${chave}:</strong> ${dados[chave]}`;
+            container.appendChild(paragrafo);
+          }
+      
+          document.body.appendChild(container);
+        }
+    
+        const dadosFicha = obterParametrosDaURL();
+        preencherFicha(dadosFicha);
+    </script>  
 
     <script type="module">
         // Importa a função de rolagem de dados
