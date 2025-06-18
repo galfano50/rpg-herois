@@ -3,8 +3,7 @@ import { auth, db } from './firebase-config.js';
 import {
   doc,
   setDoc,
-  getDoc,
-  updateDoc
+  getDoc
 } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 
@@ -17,8 +16,17 @@ onAuthStateChanged(auth, (user) => {
     window.location.href = "index.html";
   } else {
     usuarioLogado = user;
+
+    // Tenta obter o personagemId da URL
     const urlParams = new URLSearchParams(window.location.search);
-    personagemId = urlParams.get("personagemId") || crypto.randomUUID();
+    personagemId = urlParams.get("personagemId");
+
+    // Se não houver ID, cria um novo e atualiza a URL sem recarregar
+    if (!personagemId) {
+      personagemId = `${usuarioLogado.uid}_${crypto.randomUUID()}`;
+      history.replaceState(null, "", `?personagemId=${personagemId}`);
+    }
+
     carregarFichaFirebase();
   }
 });
@@ -65,9 +73,10 @@ async function carregarFichaFirebase() {
   const docRef = doc(db, "fichas", personagemId);
   const snap = await getDoc(docRef);
   if (!snap.exists()) {
-    alert("Ficha ainda não cadastrada.");
+    alert("Ficha ainda não cadastrada. Preencha e clique em salvar.");
     return;
   }
+
   const ficha = snap.data();
 
   for (const [chave, valor] of Object.entries(ficha)) {
@@ -103,3 +112,4 @@ async function carregarFichaFirebase() {
 }
 
 window.salvarFichaFirebase = salvarFichaFirebase;
+window.carregarFichaFirebase = carregarFichaFirebase;
