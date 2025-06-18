@@ -1,61 +1,153 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Home - RPG</title>
-  <link rel="stylesheet" href="css/style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bar do Truta RPG</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script type="module" src="js/firebase-config.js"></script>
+
+    <style>
+        nav {
+            padding: 20px;
+            background: #f9f5f1;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        nav ul {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 0;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            justify-content: center;
+        }
+
+        nav li {
+            position: relative;
+            background: #ffe6c2;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 12px 20px;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            flex: 0 0 calc((100% / 5) - 12px);
+            margin-left: -20px;
+        }
+
+        nav li:nth-child(5n + 1) {
+            margin-left: 0;
+        }
+
+        nav li:hover {
+            background: #ffcc66;
+            transform: translateY(-6px) scale(1.05);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+
+        nav li a {
+            text-decoration: none;
+            color: #4b3b2b;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: block;
+        }
+
+        nav li a:focus,
+        nav li a:hover {
+            outline: none;
+            color: #2c1f0e;
+        }
+
+        header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        background-color: #2c1f0e; /* tom escuro */
+        color: #fff; /* texto branco */
+        box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        header h1 {
+        font-size: 28px;
+        font-weight: 700;
+        color: #f5c16c; /* tom dourado, visível e estiloso */
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+        margin: 0;
+        }
+
+        #loading {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h2>Bem-vindo ao RPG</h2>
-    <p>Escolha uma das opções abaixo:</p>
-    
-    <!-- Botões principais -->
-    <button onclick="window.open('Ficha-Heróis.html', '_blank')">Criar Ficha</button>
-    <button onclick="window.open('Mapas.html', '_blank')">Mapas</button>
 
-    <!-- Botão para acessar a "Ala do Mestre" -->
-    <button onclick="abrirAlaMestre()">Ala do Mestre</button>
-    <!-- Botão para acessar o Livro de Regras -->
-    <button onclick="abrirLivroDeRegras()">Livro de Regras</button>
-    
-    <!-- Área para exibir as rolagens em tempo real -->
-    <div id="rolagensContainer" style="margin-top:20px; font-weight:bold; color:#fcf9f9;">
-      <h3>Rolagens Recentes:</h3>
-      <ul id="listaRolagens"></ul>
-    </div>
-  </div>
+    <header>
+        <h1>RPG Herois</h1>
+        <button id="logout-btn">Sair</button>
+    </header>
 
-  <script>
-    // Funções para abrir outras páginas
-    function abrirAlaMestre() {
-      window.open('aladomestre.html', '_blank');
-    }
-    function abrirLivroDeRegras() {
-      window.open('https://docs.google.com/document/d/1sncOGRxOUxP0b2kggRyJvKMyS0gAJjdZ_1NItily99I/preview', '_blank');
-    }
-  </script>
+    <nav>
+        <ul>
+            <li><a href="Ficha-Heróis.html" target="_blank">Ficha</a></li>
+            <li><a href="Conceitos.html" target="_blank">Conceitos Básicos</a></li>
+            <li><a href="Personagem.html" target="_blank">Criando seu personagem</a></li>
+            <li><a href="Atributos.html" target="_blank">Atributos</a></li>
+            <li><a href="Jogabilidade.html" target="_blank">Estilos</a></li>
+            <li><a href="Magia.html" target="_blank">Lista de magias</a></li>
+            <li><a href="Equipamentos.html" target="_blank">Equipamentos</a></li>
+            <li><a href="Niveis.html" target="_blank">Passagem de Nível</a></li>
+            <li><a href="Pericias.html" target="_blank">Perícias</a></li>
+            <li><a href="Escala.html" target="_blank">Escala do RPG</a></li>
+            <li><a href="Mapas.html" target="_blank">Mapas</a></li>
+            <li><a href="AlaMestre.html" target="_blank">Ala Mestre</a></li>
+        </ul>
+    </nav>
 
-  <!-- Scripts Firebase carregados pelo CDN -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
-  
-  <!-- Monitoramento em tempo real -->
-  <script type="module">
-    import { monitorarRolagens } from './java/ChamarRolador.js';
+    <div id="loading">Verificando autenticação...</div>
 
-    // Callback para adicionar cada nova rolagem à lista
-    function adicionarRolagem(rolagem) {
-      const ul = document.getElementById('listaRolagens');
-      const li = document.createElement('li');
-      // Formata a data e exibe o resultado
-      li.textContent = `${new Date(rolagem.timestamp).toLocaleString()} - ${rolagem.resultado}`;
-      ul.prepend(li); // Adiciona no início da lista
-    }
+    <script type="module">
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+        import { app } from "./js/firebase-config.js";
 
-    // Inicia o monitoramento das rolagens
-    monitorarRolagens(adicionarRolagem);
-  </script>
+        const auth = getAuth(app);
+        const loadingDiv = document.getElementById("loading");
+        const nav = document.querySelector("nav");
+        const header = document.querySelector("header");
+
+        // Inicialmente esconde tudo até autenticar
+        nav.style.display = "none";
+        header.style.display = "none";
+
+        // Verifica o estado da autenticação
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // Usuário autenticado -> exibe conteúdo
+                loadingDiv.style.display = "none";
+                nav.style.display = "block";
+                header.style.display = "flex";
+            } else {
+                // Usuário não autenticado -> redireciona
+                window.location.href = "index.html";
+            }
+        });
+
+        // Função de logout
+        document.getElementById("logout-btn").addEventListener("click", () => {
+            signOut(auth).then(() => {
+                window.location.href = "index.html";
+            }).catch((error) => {
+                console.error("Erro ao deslogar:", error.message);
+            });
+        });
+    </script>
 </body>
 </html>

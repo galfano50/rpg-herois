@@ -1,248 +1,49 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ala do Mestre - RPG</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <title>Ala do Mestre</title>
+  <script type="module" src="js/firebase-config.js"></script>
+  <script type="module" src="js/ala-mestre.js"></script>
+  <style>
+    body {
+      font-family: "Georgia", serif;
+      background-color: #1e1e1e;
+      color: #e0e0e0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #ffd700;
+    }
+
+    .ficha {
+      background-color: #2c2c2c;
+      border: 1px solid #444;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+    }
+
+    button {
+      background-color: #444;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      cursor: pointer;
+      border-radius: 6px;
+      margin-top: 5px;
+      margin-right: 5px;
+    }
+
+    button:hover {
+      background-color: #666;
+    }
+  </style>
 </head>
+
 <body>
-  <div class="container">
-    <h2>Ala do Mestre</h2>
-    <p>Preencha as informações do herói e clique em 'Criar Ficha' para salvar:</p>
-
-    <form id="formFicha">
-      <label for="nome">Nome do Herói:</label>
-      <input type="text" id="nome" required />
-
-      <label for="raca">Raça:</label>
-      <input type="text" id="raca" required />
-      
-      <label for="classe">Classe:</label>
-      <input type="text" id="classe" required />
-      
-      <label for="nivel">Nível:</label>
-      <input type="number" id="nivel" required />
-
-      <label for="vida">Vida:</label>
-      <input type="number" id="vida" required />
-
-      <label for="energia">Energia:</label>
-      <input type="number" id="energia" required />
-
-      <label for="indice_protecao">Índice de Proteção:</label>
-      <input type="number" id="indice_protecao" required />
-      
-      <label for="historia">História:</label>
-      <textarea id="historia" required></textarea>
-
-      <label for="forca">Força:</label>
-      <input type="number" id="forca" required />
-
-      <label for="constituicao">Constituição:</label>
-      <input type="number" id="constituicao" required />
-
-      <label for="destreza">Destreza:</label>
-      <input type="number" id="destreza" required />
-
-      <label for="agilidade">Agilidade:</label>
-      <input type="number" id="agilidade" required />
-
-      <label for="inteligencia">Inteligência:</label>
-      <input type="number" id="inteligencia" required />
-
-      <label for="percepcao">Percepção:</label>
-      <input type="number" id="percepcao" required />
-
-      <label for="vontade">Vontade:</label>
-      <input type="number" id="vontade" required />
-
-      <label for="carisma">Carisma:</label>
-      <input type="number" id="carisma" required />
-
-      <label for="extra1">Fr Extra:</label>
-      <input type="number" id="extra1" required />
-
-      <label for="extra2">Cons Extra:</label>
-      <input type="number" id="extra2" required />
-
-      <label for="extra3">Dex Extra:</label>
-      <input type="number" id="extra3" required />
-
-      <label for="extra4">Agil Extra:</label>
-      <input type="number" id="extra4" required />
-
-      <label for="extra5">Int Extra:</label>
-      <input type="number" id="extra5" required />
-
-      <label for="extra6">Perc Extra:</label>
-      <input type="number" id="extra6" required />
-
-      <label for="extra7">Vont Extra:</label>
-      <input type="number" id="extra7" required />
-
-      <label for="extra8">Cari Extra:</label>
-      <input type="number" id="extra8" required />
-
-      <label for="extra9">Vida Extra:</label>
-      <input type="number" id="extra9" required />
-
-      <label for="extra10">Energia Extra:</label>
-      <input type="number" id="extra10" required />
-
-      <label for="poder1">Fr Poder:</label>
-      <input type="number" id="poder1" required />
-
-      <label for="poder2">Cons Poder:</label>
-      <input type="number" id="poder2" required />
-
-      <label for="poder3">Dex Poder:</label>
-      <input type="number" id="poder3" required />
-
-      <label for="poder4">Agil Poder:</label>
-      <input type="number" id="poder4" required />
-
-      <label for="poder5">Int Poder:</label>
-      <input type="number" id="poder5" required />
-
-      <label for="poder6">Perc Poder:</label>
-      <input type="number" id="poder6" required />
-
-      <label for="poder7">Vont Poder:</label>
-      <input type="number" id="poder7" required />
-
-      <label for="poder8">Cari Poder:</label>
-      <input type="number" id="poder8" required />
-
-      <label for="poder9">Vida Poder:</label>
-      <input type="number" id="poder9" required />
-
-      <label for="aprimoramento1">Aprimoramento1:</label>
-      <textarea id="aprimoramento1" required></textarea>
-
-      <label for="aprimoramento2">Aprimoramento2:</label>
-      <textarea id="aprimoramento2" required></textarea>
-
-      <label for="aprimoramento3">Aprimoramento3:</label>
-      <textarea id="aprimoramento3" required></textarea>
-
-      <label for="aprimoramento4">Aprimoramento4:</label>
-      <textarea id="aprimoramento4" required></textarea>
-
-      <label for="primaria">Primária:</label>
-      <textarea id="primaria" required></textarea>
-
-      <label for="secundaria">Secundária:</label>
-      <textarea id="secundaria" required></textarea>
-
-      <label for="power1">Podere 1:</label>
-      <textarea id="power1" required></textarea>
-
-      <label for="power2">Podere 2:</label>
-      <textarea id="power2" required></textarea>
-
-      <label for="power3">Podere 3:</label>
-      <textarea id="power3" required></textarea>
-
-      <label for="power4">Podere 4:</label>
-      <textarea id="power4" required></textarea>
-
-      <label for="power5">Podere 5:</label>
-      <textarea id="power5" required></textarea>
-
-      <label for="golpes">Golpes:</label>
-      <textarea id="golpes" required></textarea>
-
-      <label for="item1">Item 1:</label>
-      <textarea id="item1" required></textarea>
-
-      <label for="item2">Item 2:</label>
-      <textarea id="item2" required></textarea>
-
-      <label for="item3">Item 3:</label>
-      <textarea id="item3" required></textarea>
-
-      <label for="item4">Item 4:</label>
-      <textarea id="item4" required></textarea>
-
-      <label for="item5">Item 5:</label>
-      <textarea id="item5" required></textarea>
-
-      <div style="flex: 1 1 100%; text-align: center;"></div>
-
-      <button type="submit">Criar Ficha</button>
-    </form>
-
-    <div id="fichasCriadas">
-      <h3>Fichas Criadas:</h3>
-      <ul id="listaFichas"></ul>
-    </div>
-    <button onclick="resetarFichas()">Resetar Fichas</button>
-  </div>
-
-  <script>
-    const formFicha = document.getElementById('formFicha');
-    const listaFichas = document.getElementById('listaFichas');
-    let fichas = JSON.parse(localStorage.getItem('fichas')) || [];
-
-    function salvarFicha(dadosFicha) {
-      fichas.push(dadosFicha);
-      localStorage.setItem('fichas', JSON.stringify(fichas));
-      atualizarListaFichas();
-    }
-
-    function atualizarListaFichas() {
-      listaFichas.innerHTML = '';
-      fichas.forEach((ficha, index) => {
-        const li = document.createElement('li');
-        li.innerHTML = `
-          <strong>${ficha.nome}</strong> - ${ficha.classe} (Nível ${ficha.nivel})<br>
-          História: ${ficha.historia}<br>
-          <button onclick="abrirFicha(${index})">Abrir Ficha</button>
-        `;
-        listaFichas.appendChild(li);
-      });
-    }
-
-    function abrirFicha(index) {
-      if (index >= 0 && index < fichas.length) {
-        const ficha = fichas[index];
-        const params = new URLSearchParams();
-        for (const chave in ficha) {
-          params.append(chave, ficha[chave]);
-        }
-        const urlFicha = `Ficha-Heróis.html?${params.toString()}`;
-        window.open(urlFicha, '_blank');
-      } else {
-        alert("Erro ao abrir a ficha. Índice inválido.");
-      }
-    }
-
-    formFicha.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      const campos = formFicha.querySelectorAll('input, textarea');
-      const dadosFicha = {};
-
-      campos.forEach(campo => {
-        dadosFicha[campo.id] = campo.value;
-      });
-
-      salvarFicha(dadosFicha);
-      formFicha.reset();
-    });
-
-    function resetarFichas() {
-      if (confirm('Tem certeza de que deseja apagar todas as fichas? Esta ação não pode ser desfeita.')) {
-        fichas = [];
-        localStorage.removeItem('fichas');
-        atualizarListaFichas();
-        alert('Todas as fichas foram apagadas com sucesso!');
-      }
-    }
-
-    atualizarListaFichas();
-  </script>
-  
+  <h1>Ala do Mestre</h1>
+  <div id="listaFichas"></div>
 </body>
 </html>
