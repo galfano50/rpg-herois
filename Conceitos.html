@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Conceitos Básicos</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script type="module" src="js/firebase-config.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 20px;
+      line-height: 1.6;
+      background-color: #fdfaf5;
+      color: #2c1f0e;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background-color: #2c1f0e;
+      color: #fff;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    }
+
+    header h1 {
+      color: #f5c16c;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+      margin: 0;
+    }
+
+    h2 {
+      color: #4b3b2b;
+      margin-top: 30px;
+    }
+
+    p {
+      margin-bottom: 16px;
+    }
+
+    strong {
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Conceitos Básicos</h1>
+    <button id="logout-btn">Sair</button>
+  </header>
+
+  <main>
+    <p><strong>Mestre ou Narrador:</strong> É o jogador que fica responsável pelas regras do jogo. É uma espécie de diretor ou coordenador do jogo que controla os NPC’s, cria e executa as aventuras.</p>
+
+    <p><strong>Atributos:</strong> São os atributos que descrevem como é o seu personagem e definem o sucesso ou não de seus testes. São um total de 8 e divididos em físicos e mentais. Os atributos físicos são: força, constituição, destreza e agilidade; enquanto os mentais são: inteligência, percepção, força de vontade e carisma.</p>
+
+    <p><strong>Nível:</strong> Em um jogo de RPG, normalmente precisamos de alguma coisa para comparar os personagens entre si. Os níveis variam de 1 a 50, e a cada nível o personagem ganha pontos para distribuir em HP, P.E. e Atributos, seguindo a tabela:</p>
+    <ul>
+      <li>Lv 1 ao 10: 1d6</li>
+      <li>Lv 11 ao 25: 1d10</li>
+      <li>Lv 26 ao 50: 1d20</li>
+    </ul>
+
+    <p><strong>Pontos de Vida (HP):</strong> É a energia vital do personagem. Quanto mais HP, mais difícil será matá-lo. Recupera-se com turnos e descanso, podendo melhorar com cuidados adequados.</p>
+
+    <p><strong>Pontos de Energia (P.E.):</strong> Representa o vigor do personagem. Define sua resistência em lutas, corridas, etc. Também se recupera com descanso e alimentação.</p>
+
+    <p><strong>Rodada:</strong> Uma rodada de aventura equivale a 2 minutos. No combate, cada rodada tem dois turnos (ação e contra-ação). Cada ação dura cerca de 10 segundos.</p>
+
+    <p><strong>Exemplo:</strong> Tonny, o provedor da paz, usa um soco contra o vilão Professor das Marionetes. Ambos fazem um teste de DEX para determinar quem acerta primeiro.</p>
+
+    <p><strong>IP (Índice de Proteção):</strong> Representa a “armadura” do personagem, como coletes ou escudos. Protege contra tipos específicos de dano.</p>
+
+    <p><strong>Dano:</strong> Existem dois tipos:
+      <ul>
+        <li><strong>Dano 1:</strong> Impactos físicos (testa contra Constituição).</li>
+        <li><strong>Dano 2:</strong> Queimaduras, venenos etc. (testa contra proteção mágica ou tecnológica).</li>
+      </ul>
+    </p>
+
+    <p><strong>Exemplo:</strong> Bruno Bucciarati atira em Mastrov com um revólver pesado (10 + 1D10 + crítico), usando um doppelganger como distração. O ataque é bem-sucedido, ignorando a defesa.</p>
+  </main>
+
+  <script type="module">
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+    import { app } from "./js/firebase-config.js";
+
+    const auth = getAuth(app);
+
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        window.location.href = "index.html";
+      }
+    });
+
+    document.getElementById("logout-btn").addEventListener("click", () => {
+      signOut(auth).then(() => {
+        window.location.href = "index.html";
+      });
+    });
+  </script>
+</body>
+</html>

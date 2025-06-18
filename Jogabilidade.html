@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jogabilidade</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script type="module" src="js/firebase-config.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fcf8f2;
+      padding: 20px;
+      color: #2c1f0e;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #2c1f0e;
+      color: white;
+      padding: 20px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    }
+
+    h1 {
+      margin: 0;
+      color: #ffcb74;
+    }
+
+    h2, h3 {
+      color: #4a3523;
+      margin-top: 30px;
+    }
+
+    p, li {
+      margin-bottom: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    th, td {
+      border: 1px solid #999;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #eee;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Jogabilidade</h1>
+    <button id="logout-btn">Sair</button>
+  </header>
+
+  <main>
+    <h2>1º - Componentes de um poder</h2>
+    <p>Cada poder é único e possui componentes que o caracterizam. Os principais componentes incluem:</p>
+    <ul>
+      <li><strong>Np:</strong> Nível de poder.</li>
+      <li><strong>Atributos:</strong> Atributos da ficha que se somam ao poder.</li>
+      <li><strong>Dano 1:</strong> Dano de impacto.</li>
+      <li><strong>Dano 2:</strong> Dano especial.</li>
+      <li><strong>Alcance, Ataques, IP, Raio, Alvos, Carga, Duração, Membros:</strong> Características específicas do poder.</li>
+      <li><strong>Corrida, Voo, Multiplicador, Possessão, Absorção, Influência, Pvs:</strong> Outras capacidades relacionadas.</li>
+    </ul>
+
+    <h2>2º - Grau de Poder</h2>
+    <table>
+      <tr><th>Grau</th><th>Dado</th></tr>
+      <tr><td>Beta</td><td>1d6</td></tr>
+      <tr><td>Alfa</td><td>1d10</td></tr>
+      <tr><td>Transição</td><td>1d20</td></tr>
+      <tr><td>Ômega</td><td>2d20</td></tr>
+      <tr><td>Divino 1º</td><td>1d4</td></tr>
+      <tr><td>Divino 2º</td><td>1d6</td></tr>
+      <tr><td>Divino 3º</td><td>1d10</td></tr>
+      <tr><td>Divino 4º</td><td>1d12</td></tr>
+      <tr><td>Divino 5º</td><td>1d20</td></tr>
+      <tr><td>Divino 6º</td><td>2d20</td></tr>
+      <tr><td>Entidades</td><td>1d100</td></tr>
+    </table>
+    <p>Explicação detalhada sobre os pontos atribuídos a cada grau no sistema.</p>
+
+    <h2>3º - Vantagens e Desvantagens das Classes</h2>
+    <p>Místico > Cósmico > Tecnológico > Mutante > Lutador > Científico > Místico</p>
+
+    <h2>4º - Tipos de Queimaduras</h2>
+    <ul>
+      <li><strong>1º Grau:</strong> 3 HP/turno por 2 voltas.</li>
+      <li><strong>2º Grau:</strong> 8 HP/5 voltas.</li>
+      <li><strong>3º Grau:</strong> 20 HP/turno, dano crítico se em movimento.</li>
+    </ul>
+
+    <h2>5º - Dano Crítico</h2>
+    <ul>
+      <li>Leve: +10 dano</li>
+      <li>Médio: +25 dano</li>
+      <li>Alto: +40 dano</li>
+      <li>Máximo: +70 dano</li>
+    </ul>
+
+    <h2>6º - Penalidades</h2>
+    <ul>
+      <li>Leve: -10</li>
+      <li>Mediana: -40</li>
+      <li>Alta: -70</li>
+      <li>Máxima: -100</li>
+    </ul>
+
+    <h2>7º - Testes de Acerto</h2>
+    <p>Testes baseados em atributos + perícias + dados. Exemplos e escalas de dificuldade:</p>
+    <ul>
+      <li>Muito fácil: 10</li>
+      <li>Fácil: 11 a 30</li>
+      <li>Mediano: 31 a 89</li>
+      <li>Difícil: 90 a 200</li>
+      <li>Impossível: 250+</li>
+    </ul>
+
+    <h2>8º - Gastos e Recuperação</h2>
+    <p>Gasto de energia por grau de poder e tabela de recuperação:</p>
+    <table>
+      <tr><th>Caso</th><th>Recuperação</th><th>Tempo ou Meio</th></tr>
+      <tr><td>Descanso</td><td>1 HP/PE</td><td>2 horas</td></tr>
+      <tr><td>1º Socorros</td><td>2 HP + Perícia</td><td>---</td></tr>
+      <tr><td>Medicação</td><td>5 HP + Perícia</td><td>---</td></tr>
+      <tr><td>Emergência</td><td>7 HP + Perícia</td><td>Teste</td></tr>
+      <tr><td>Urgência</td><td>10 HP + Perícia</td><td>Teste</td></tr>
+      <tr><td>Comida simples</td><td>2 PE + Perícia</td><td>---</td></tr>
+      <tr><td>Comida - Almoço</td><td>8 PE + Perícia</td><td>---</td></tr>
+      <tr><td>Comida sofisticada</td><td>13 PE + Perícia</td><td>---</td></tr>
+    </table>
+
+    <h2>9º - Vedações</h2>
+    <p>É proibida a soma de mais de 2 poderes ou atributos através de aprimoramentos.</p>
+
+    <h2>10º - Magia</h2>
+    <p>Dividido entre <strong>Mago</strong> (poder inato) e <strong>Feiticeiro</strong> (usa objetos). Conceitos de Focus e Forma (Entender, Controlar, Criar).</p>
+  </main>
+
+  <script type="module">
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+    import { app } from "./js/firebase-config.js";
+
+    const auth = getAuth(app);
+
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        window.location.href = "index.html";
+      }
+    });
+
+    document.getElementById("logout-btn").addEventListener("click", () => {
+      signOut(auth).then(() => {
+        window.location.href = "index.html";
+      });
+    });
+  </script>
+</body>
+</html>

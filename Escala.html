@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Escala do RPG</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #121212;
+      color: #ddd;
+      margin: 20px;
+      line-height: 1.5;
+    }
+    h1, h2 {
+      color: #f0a500;
+    }
+    p {
+      max-width: 900px;
+    }
+    table {
+      border-collapse: collapse;
+      margin-bottom: 40px;
+      width: 100%;
+      max-width: 900px;
+    }
+    table, th, td {
+      border: 1px solid #444;
+    }
+    th, td {
+      padding: 8px 12px;
+      text-align: left;
+    }
+    th {
+      background-color: #333;
+      color: #f0a500;
+    }
+    tbody tr:nth-child(even) {
+      background-color: #222;
+    }
+    tbody tr:nth-child(odd) {
+      background-color: #1a1a1a;
+    }
+    .unidade {
+      font-style: italic;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Escala do RPG</h1>
+  <p>
+    São os dados e informações dos atributos que o seu personagem alcança. Esses dados servem para sistematizar o jogo e definir relações de peso, dano, distância, velocidade e etc… A escala se define pelo atributo da ficha ou poder na sua forma base, ou seja, sem a rolagem de dados, seguindo as tabelas abaixo.<br />
+    Para testes de queda livre (Grandes alturas), aplica-se a distância percorrida e seu atributo correspondente, e se o personagem não possuir alguma proteção extra, será aplicado um teste de constituição + Penalidade aplicada, e se falhou no teste, aplica-se o dano + Crítico.
+  </p>
+
+  <h2>Escala de Força</h2>
+  <table>
+    <thead>
+      <tr><th>Atributo</th><th>Carregar <span class="unidade">(Kg)</span></th></tr>
+    </thead>
+    <tbody>
+      <tr><td>0 a 5</td><td>30 kg</td></tr>
+      <tr><td>6 a 14</td><td>60 kg</td></tr>
+      <tr><td>15 a 24</td><td>90 kg</td></tr>
+      <tr><td>25 a 34</td><td>130 kg</td></tr>
+      <tr><td>35 a 42</td><td>270 kg</td></tr>
+      <tr><td>43 a 50</td><td>320 kg</td></tr>
+      <tr><td>51 a 58</td><td>700 kg</td></tr>
+      <tr><td>59 a 90</td><td>2 T 100 Kg</td></tr>
+      <tr><td>91 a 120</td><td>60 T</td></tr>
+      <tr><td>121 a 140</td><td>180 T</td></tr>
+      <tr><td>141 a 160</td><td>2.000 T</td></tr>
+      <tr><td>161 a 180</td><td>9.000 T</td></tr>
+      <tr><td>181 a 200</td><td>20.000 T</td></tr>
+      <tr><td>201 a 230</td><td>60.000 T</td></tr>
+      <tr><td>231 a 250</td><td>160.000 T</td></tr>
+      <tr><td>251 a 300</td><td>600.000 T (Ponte George Washington)</td></tr>
+      <tr><td>301 a 450</td><td>6.000.000 T (Pirâmide)</td></tr>
+      <tr><td>451 a 500</td><td>53.000.000 T (Maior represa do mundo)</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Escala de Alcance</h2>
+  <table>
+    <thead>
+      <tr><th>Atributo</th><th>Distância <span class="unidade">(Metros)</span></th></tr>
+    </thead>
+    <tbody>
+      <tr><td>0 a 5</td><td>6 m</td></tr>
+      <tr><td>6 a 10</td><td>15 m</td></tr>
+      <tr><td>11 a 15</td><td>30 m</td></tr>
+      <tr><td>16 a 19</td><td>80 m</td></tr>
+      <tr><td>20</td><td>100 m</td></tr>
+      <tr><td>21 a 36</td><td>180 m</td></tr>
+      <tr><td>37 a 42</td><td>350 m</td></tr>
+      <tr><td>43 a 58</td><td>800 m</td></tr>
+      <tr><td>59 a 90</td><td>2 Km</td></tr>
+      <tr><td>91 a 190</td><td>28 Km</td></tr>
+      <tr><td>191 a 120</td><td>70 Km</td></tr>
+      <tr><td>121 a 140</td><td>120 Km</td></tr>
+      <tr><td>141 a 160</td><td>600 Km</td></tr>
+      <tr><td>161 a 180</td><td>1.500 Km</td></tr>
+      <tr><td>181 a 200</td><td>3.000 Km</td></tr>
+      <tr><td>201 a 240</td><td>6.000 Km</td></tr>
+      <tr><td>251 a 300</td><td>8.000 Km (Distância média do Brasil a Europa central)</td></tr>
+      <tr><td>301 a 450</td><td>16.747 km (Distância média do Brasil a Ásia central)</td></tr>
+      <tr><td>451 a 500</td><td>40.000 km (Volta perfeita ao mundo)</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Escala de Raio</h2>
+  <table>
+    <thead>
+      <tr><th>Atributo</th><th>Raio <span class="unidade">(Metros quadrados)</span></th></tr>
+    </thead>
+    <tbody>
+      <tr><td>0 a 5</td><td>10 m²</td></tr>
+      <tr><td>6 a 10</td><td>22 m²</td></tr>
+      <tr><td>11 a 15</td><td>60 m²</td></tr>
+      <tr><td>16 a 19</td><td>100 m²</td></tr>
+      <tr><td>20</td><td>400 m²</td></tr>
+      <tr><td>21 a 36</td><td>800 m²</td></tr>
+      <tr><td>37 a 42</td><td>1 Km²</td></tr>
+      <tr><td>43 a 58</td><td>10 Km²</td></tr>
+      <tr><td>59 a 90</td><td>44 Km²</td></tr>
+      <tr><td>91 a 190</td><td>98 Km²</td></tr>
+      <tr><td>191 a 120</td><td>260 Km²</td></tr>
+      <tr><td>121 a 140</td><td>500 Km²</td></tr>
+      <tr><td>141 a 160</td><td>600 Km²</td></tr>
+      <tr><td>161 a 180</td><td>780 Km²</td></tr>
+      <tr><td>181 a 200</td><td>900 Km²</td></tr>
+      <tr><td>201 a 240</td><td>1.200 Km²</td></tr>
+      <tr><td>251 a 300</td><td>1.800 Km² (Raio da lua)</td></tr>
+      <tr><td>301 a 450</td><td>3.185 Km² (Metade da terra)</td></tr>
+      <tr><td>451 a 500</td><td>6.371 km² (Raio da terra)</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Escala de Carga</h2>
+  <table>
+    <thead>
+      <tr><th>Atributo</th><th>Carga <span class="unidade">(Kg)</span></th></tr>
+    </thead>
+    <tbody>
+      <tr><td>0 a 5</td><td>40 kg</td></tr>
+      <tr><td>6 a 10</td><td>90 kg</td></tr>
+      <tr><td>11 a 15</td><td>140 kg</td></tr>
+      <tr><td>16 a 19</td><td>270 kg</td></tr>
+      <tr><td>20 a 25</td><td>320 kg</td></tr>
+      <tr><td>26 a 36</td><td>500 kg</td></tr>
+      <tr><td>37 a 42</td><td>1 T 200 kg</td></tr>
+      <tr><td>43 a 58</td><td>12 T</td></tr>
+      <tr><td>59 a 90</td><td>25 T</td></tr>
+      <tr><td>91 a 120</td><td>60 T</td></tr>
+      <tr><td>121 a 140</td><td>180 T</td></tr>
+      <tr><td>141 a 160</td><td>2.000 T</td></tr>
+      <tr><td>161 a 180</td><td>9.000 T</td></tr>
+      <tr><td>181 a 200</td><td>20.000 T</td></tr>
+      <tr><td>201 a 230</td><td>60.000 T</td></tr>
+      <tr><td>231 a 250</td><td>160.000 T</td></tr>
+      <tr><td>251 a 300</td><td>600.000 T (Ponte George Washington)</td></tr>
+      <tr><td>301 a 450</td><td>6.000.000 T (Pirâmide)</td></tr>
+      <tr><td>451 a 500</td><td>53.000.000 T (Maior represa do mundo)</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Escala de Velocidade</h2>
+  <table>
+    <thead>
+      <tr><th>Atributo</th><th>Velocidade <span class="unidade">(Km/h)</span></th></tr>
+    </thead>
+    <tbody>
+      <tr><td>5</td><td>3 km/h (8 Metros/Ação)</td></tr>
+      <tr><td>6 a 11</td><td>12 km/h (33 Metros/Ação)</td></tr>
+      <tr><td>12 a 19</td><td>42 km/h (116 Metros/Ação)</td></tr>
+      <tr><td>20 a 49</td><td>98 km/h (272 Metros/Ação)</td></tr>
+      <tr><td>50</td><td>110 km/h (305 Metros/Ação)</td></tr>
+      <tr><td>60</td><td>150 km/h (416 Metros/Ação) (armas normais)</td></tr>
+      <tr><td>65</td><td>210 km/h (583 Metros/Ação)</td></tr>
+      <tr><td>70</td><td>550 km/h (1.528 Metros/Ação) (Veículo+Rápido)</td></tr>
+      <tr><td>80</td><td>940 km/h (2.612 Metros/Ação) (Tiro Sniper)</td></tr>
+      <tr><td>100</td><td>1.000 km/h (2.778 Metros/Ação)</td></tr>
+      <tr><td>120</td><td>1.124 km/h (3.122 Metros/Ação) (Velo. do Som)</td></tr>
+      <tr><td>150</td><td>1.800 km/h (5.000 Metros/Ação)</td></tr>
+      <tr><td>180</td><td>8.000 km/h (22.222 Metros/Ação)</td></tr>
+      <tr><td>200</td><td>12.000 km/h (33.333 Metros/Ação)</td></tr>
+      <tr><td>230</td><td>28.440 km/h (79.000 Metros/Ação) (Aeronave +veloz)</td></tr>
+      <tr><td>250</td><td>98.000 km/h (272.222 Metros/Ação)</td></tr>
+      <tr><td>300</td><td>125.000 km/h (347.222 Metros/Ação)</td></tr>
+      <tr><td>350</td><td>600.000 km/h (1.666.666 Metros/Ação)</td></tr>
+      <tr><td>390</td><td>1.000.000 km/h (2.777.777 Metros/Ação)</td></tr>
+      <tr><td>420</td><td>79.900.000 Km/h (221.944.444 Metros/Ação)</td></tr>
+      <tr><td>500</td><td>Velocidade da luz: 1.079.000.000 km/h (2.997.222.220 Metros/Ação)</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Escala de Alvos</h2>
+  <table>
+    <thead>
+      <tr><th>Atributo</th><th>Número de Alvos</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>0 a 15</td><td>20 Alvos</td></tr>
+      <tr><td>16 a 19</td><td>32 Alvos</td></tr>
+      <tr><td>20</td><td>50 Alvos</td></tr>
+      <tr><td>21 a 36</td><td>90 Alvos</td></tr>
+      <tr><td>37 a 42</td><td>150 Alvos</td></tr>
+      <tr><td>43 a 58</td><td>220 Alvos</td></tr>
+      <tr><td>59 a 90</td><td>450 Alvos</td></tr>
+      <tr><td>91 a 120</td><td>900 Alvos</td></tr>
+      <tr><td>121 a 140</td><td>1.200 Alvos</td></tr>
+      <tr><td>141 a 160</td><td>5.000 Alvos</td></tr>
+      <tr><td>161 a 180</td><td>10.000 Alvos</td></tr>
+      <tr><td>181 a 200</td><td>18.000 Alvos</td></tr>
+      <tr><td>201 a 230</td><td>24.000 Alvos</td></tr>
+      <tr><td>231 a 240</td><td>45.000 Alvos</td></tr>
+      <tr><td>250 a 251</td><td>60.000 Alvos</td></tr>
+      <tr><td>301 a 450</td><td>100.000 Alvos</td></tr>
+      <tr><td>451 a 500</td><td>600.000 Alvos</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Escala de Ações e Número de Ataques</h2>
+  <table>
+    <thead>
+      <tr><th>Atributo</th><th>Ações / Número de Ataques</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1 a 50</td><td>+1 ação extra por turno</td></tr>
+      <tr><td>100</td><td>+2 ações extras por turno</td></tr>
+      <tr><td>200</td><td>+3 ações extras por turno</td></tr>
+      <tr><td>250</td><td>+4 ações extras por turno</td></tr>
+      <tr><td>400</td><td>+5 ações extras por turno</td></tr>
+    </tbody>
+  </table>
+
+</body>
+</html>
