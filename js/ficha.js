@@ -17,24 +17,39 @@ onAuthStateChanged(auth, (user) => {
   } else {
     usuarioLogado = user;
 
-    // Tenta obter o personagemId da URL
+    // Obtém o ID da URL
     const urlParams = new URLSearchParams(window.location.search);
     personagemId = urlParams.get("personagemId");
 
-    // Se não houver ID, cria um novo e atualiza a URL sem recarregar
+    // Se o campo input tiver valor, usa ele como ID
+    const campoId = document.getElementById("personagemId");
+    if (campoId && campoId.value.trim() !== "") {
+      personagemId = `${usuarioLogado.uid}_${campoId.value.trim()}`;
+    }
+
+    // Se ainda não houver ID, gera um novo
     if (!personagemId) {
       personagemId = `${usuarioLogado.uid}_${crypto.randomUUID()}`;
-      history.replaceState(null, "", `?personagemId=${personagemId}`);
     }
+
+    // Atualiza o campo input com o ID usado
+    if (campoId) campoId.value = personagemId;
+
+    // Atualiza a URL
+    history.replaceState(null, "", `?personagemId=${personagemId}`);
 
     carregarFichaFirebase();
   }
 });
 
 async function salvarFichaFirebase() {
+  if (!personagemId) {
+    alert("ID do personagem não definido.");
+    return;
+  }
+
   const ficha = { uid: usuarioLogado.uid };
 
-  // Campos principais
   const campos = [
     'nome','raca','classe','nivel','vida','energia','indice_protecao','xp','p_heroi','p_vilao',
     'extra11','extra12','pontos','forca','constituicao','destreza','agilidade','inteligencia',
@@ -52,7 +67,6 @@ async function salvarFichaFirebase() {
     ficha[campo] = el ? el.value || el.textContent : '';
   });
 
-  // Perícias
   ficha.pericias = Array.from(document.querySelectorAll('.pericia-section')).map(section => {
     const inputs = section.querySelectorAll('input');
     return {
@@ -62,7 +76,6 @@ async function salvarFichaFirebase() {
     };
   });
 
-  // Mochila
   ficha.mochila = Array.from(document.querySelectorAll('.mochila-section textarea')).map(t => ({ nome: t.value || '' }));
 
   await setDoc(doc(db, "fichas", personagemId), ficha);
@@ -111,5 +124,25 @@ async function carregarFichaFirebase() {
   alert("Ficha carregada do Firestore!");
 }
 
+function resetarFicha() {
+  const campos = document.querySelectorAll("input, textarea");
+  campos.forEach(el => {
+    if (el.type === "number" || el.type === "text" || el.tagName === "TEXTAREA") {
+      el.value = "";
+    }
+  });
+
+  // Limpa spans de soma (totais)
+  for (let i = 1; i <= 8; i++) {
+    const span = document.getElementById(`soma${i}`);
+    if (span) span.textContent = "0";
+  }
+
+  // Zera pontuação
+  const pontos = document.getElementById("pontos");
+  if (pontos) pontos.textContent = "Pontos: 81";
+}
+
 window.salvarFichaFirebase = salvarFichaFirebase;
 window.carregarFichaFirebase = carregarFichaFirebase;
+window.resetarFicha = resetarFicha;

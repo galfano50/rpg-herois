@@ -36,8 +36,12 @@ async function listarFichas(user) {
 
     container.innerHTML = "";
     querySnapshot.forEach((docSnap) => {
-      const dados = docSnap.data();
       const idCompleto = docSnap.id;
+
+      // 👉 FILTRO: mostra apenas fichas criadas no modelo Ficha-Heróis (com ID contendo "_")
+      if (!idCompleto.includes("_")) return;
+
+      const dados = docSnap.data();
 
       const div = document.createElement("div");
       div.className = "ficha";
@@ -57,7 +61,8 @@ async function listarFichas(user) {
 }
 
 window.abrirFicha = function (id) {
-  window.open(`Ficha.html?personagemId=${encodeURIComponent(id)}`, "_blank");
+  // Abre corretamente no seu sistema ficha-herois
+  window.open(`Ficha-Heróis.html?personagemId=${encodeURIComponent(id)}`, "_blank");
 };
 
 window.deletarFicha = async function (idCompleto) {
