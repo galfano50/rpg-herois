@@ -3,8 +3,7 @@ import { auth, db } from './firebase-config.js';
 import {
   doc,
   setDoc,
-  getDoc,
-  updateDoc
+  getDoc
 } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 
@@ -18,12 +17,26 @@ onAuthStateChanged(auth, (user) => {
   } else {
     usuarioLogado = user;
     const urlParams = new URLSearchParams(window.location.search);
-    personagemId = urlParams.get("personagemId") || crypto.randomUUID();
-    carregarFichaFirebase();
+    const idUrl = urlParams.get("personagemId");
+
+    if (idUrl) {
+      personagemId = idUrl;
+      carregarFichaFirebase(); // só carrega se veio pela URL
+    }
   }
 });
 
 async function salvarFichaFirebase() {
+  const personagemIdInput = document.getElementById("personagemId");
+  const id = personagemIdInput?.value?.trim();
+
+  if (!id) {
+    alert("Por favor, preencha o ID do personagem.");
+    return;
+  }
+
+  personagemId = id;
+
   const ficha = { uid: usuarioLogado.uid };
 
   // Campos principais
@@ -55,51 +68,76 @@ async function salvarFichaFirebase() {
   });
 
   // Mochila
-  ficha.mochila = Array.from(document.querySelectorAll('.mochila-section textarea')).map(t => ({ nome: t.value || '' }));
+  ficha.mochila = Array.from(document.querySelectorAll('.mochila-section textarea')).map(t => ({
+    nome: t.value || ''
+  }));
 
-  await setDoc(doc(db, "fichas", personagemId), ficha);
-  alert("Ficha salva com sucesso no Firestore!");
+  try {
+    await setDoc(doc(db, "fichas", personagemId), ficha);
+    alert("Ficha salva com sucesso no Firestore!");
+  } catch (error) {
+    console.error("Erro ao salvar ficha:", error);
+    alert("Erro ao salvar ficha.");
+  }
 }
 
 async function carregarFichaFirebase() {
-  const docRef = doc(db, "fichas", personagemId);
-  const snap = await getDoc(docRef);
-  if (!snap.exists()) {
-    alert("Ficha ainda não cadastrada.");
+  const personagemIdInput = document.getElementById("personagemId");
+  const id = personagemId || personagemIdInput?.value?.trim();
+
+  if (!id) {
+    alert("Por favor, informe o ID do personagem para carregar.");
     return;
   }
-  const ficha = snap.data();
 
-  for (const [chave, valor] of Object.entries(ficha)) {
-    const el = document.getElementById(chave);
-    if (el) {
-      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT') {
-        el.value = valor;
-      } else {
-        el.textContent = valor;
+  personagemId = id;
+
+  try {
+    const docRef = doc(db, "fichas", personagemId);
+    const snap = await getDoc(docRef);
+
+    if (!snap.exists()) {
+      alert("Ficha ainda não cadastrada.");
+      return;
+    }
+
+    const ficha = snap.data();
+
+    for (const [chave, valor] of Object.entries(ficha)) {
+      const el = document.getElementById(chave);
+      if (el) {
+        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT') {
+          el.value = valor;
+        } else {
+          el.textContent = valor;
+        }
       }
     }
-  }
 
-  if (ficha.pericias) {
-    document.querySelectorAll('.pericia-section').forEach((section, i) => {
-      const inputs = section.querySelectorAll('input');
-      const p = ficha.pericias[i] || {};
-      if (inputs.length >= 3) {
-        inputs[0].value = p.nome || '';
-        inputs[1].value = p.att_atrelado || '';
-        inputs[2].value = p.pontos || '';
-      }
-    });
-  }
+    if (ficha.pericias) {
+      document.querySelectorAll('.pericia-section').forEach((section, i) => {
+        const inputs = section.querySelectorAll('input');
+        const p = ficha.pericias[i] || {};
+        if (inputs.length >= 3) {
+          inputs[0].value = p.nome || '';
+          inputs[1].value = p.att_atrelado || '';
+          inputs[2].value = p.pontos || '';
+        }
+      });
+    }
 
-  if (ficha.mochila) {
-    document.querySelectorAll('.mochila-section textarea').forEach((t, i) => {
-      t.value = ficha.mochila[i]?.nome || '';
-    });
-  }
+    if (ficha.mochila) {
+      document.querySelectorAll('.mochila-section textarea').forEach((t, i) => {
+        t.value = ficha.mochila[i]?.nome || '';
+      });
+    }
 
-  alert("Ficha carregada do Firestore!");
+    alert("Ficha carregada do Firestore!");
+  } catch (error) {
+    console.error("Erro ao carregar ficha:", error);
+    alert("Erro ao carregar ficha.");
+  }
 }
 
 window.salvarFichaFirebase = salvarFichaFirebase;
+window.carregarFichaFirebase = carregarFichaFirebase;
