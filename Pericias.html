@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Perícias - RPG Bar do Truta</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script type="module" src="js/firebase-config.js"></script>
+</head>
+<body>
+
+  <header>
+    <h1>Perícias</h1>
+    <button id="logout-btn">Sair</button>
+  </header>
+
+  <main style="max-width: 960px; margin: 40px auto; padding: 20px;">
+    <h1>Perícias e Passagem de Nível</h1>
+
+    <h2>1º - Lista de Perícias</h2>
+    <p>
+      Adestrador (INT), Montaria (AGL), Armas Brancas (DEX), Armas de Fogo (DEX),<br>
+      Atuação (CAR), Canto (PER), Arte (DEX), Culinária (PER), Dança (AGL), Pintura (DEX),<br>
+      Escapismo (AGL), Ilusionismo (DEX), Música (PER), Prestidigitação (AGL),<br>
+      Artífice (DEX), Avaliação de Obj (PER), Pilotagem (AGL), Misticismo (VON),<br>
+      Alquimia (INT), Agricultura (INT), Arqueologia (INT), Astronomia (INT),<br>
+      Botânica (PER), Direito (INT), Física (INT), Genética (INT), Robótica (INT), História (INT),<br>
+      Geografia (PER), Química (INT), Teologia (INT), Disfarce (AGL), Escalada (AGL),<br>
+      Paraquedismo (AGL), Engenharia (INT), Escutar (PER), Esquiva (AGL), Acrobacia (AGL),<br>
+      Atletismo (AGL), Computação (INT), Artes Marciais (DEX), Boxer (AGL), Canoagem (AGL),<br>
+      Caça (DEX), Corrida (AGL), Mergulho (AGL), Etiqueta (CAR), Falsificação (INT),<br>
+      Idiomas (INT), Furtar (DEX), Furtividade (AGL), Emboscada (INT), Criptografia (INT),<br>
+      Informática (INT), Jogos (DEX), Lábia (CAR), Interrogatório (INT), Hipnose (INT),<br>
+      Investigação (INT), Sedução (CAR), Tortura (DEX), Sobrevivência (CON), Negociação (CAR)
+    </p>
+  </main>
+
+  <script type="module">
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+    import { app } from "./js/firebase-config.js";
+
+    const auth = getAuth(app);
+    const header = document.querySelector("header");
+
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        window.location.href = "index.html";
+      }
+    });
+
+    document.getElementById("logout-btn").addEventListener("click", () => {
+      signOut(auth).then(() => {
+        window.location.href = "index.html";
+      }).catch((error) => {
+        console.error("Erro ao deslogar:", error.message);
+      });
+    });
+  </script>
+</body>
+</html>
