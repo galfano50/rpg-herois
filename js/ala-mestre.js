@@ -64,7 +64,8 @@ async function carregarFichasDoSistemaHeroi(uid) {
 }
 
 window.abrirFicha = function (id) {
-  window.open(`Ficha-Heróis.html?personagemId=${encodeURIComponent(id)}`, "_blank");
+  // ✅ Redireciona corretamente para Ficha.html agora
+  window.open(`Ficha.html?personagemId=${encodeURIComponent(id)}`, "_blank");
 };
 
 window.deletarFicha = async function (id) {
