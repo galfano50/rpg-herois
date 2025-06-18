@@ -37,15 +37,15 @@ async function listarFichas(user) {
     container.innerHTML = "";
     querySnapshot.forEach((docSnap) => {
       const dados = docSnap.data();
-      const personagemId = docSnap.id.replace(user.uid + '_', '');
+      const idCompleto = docSnap.id;
 
       const div = document.createElement("div");
       div.className = "ficha";
       div.innerHTML = `
-        <strong>ID:</strong> ${personagemId}<br>
+        <strong>ID:</strong> ${idCompleto}<br>
         <strong>Nome:</strong> ${dados.nome || "Sem nome"}<br>
-        <button onclick="abrirFicha('${personagemId}')">📄 Abrir Ficha</button>
-        <button onclick="deletarFicha('${docSnap.id}')">🗑️ Excluir</button>
+        <button onclick="abrirFicha('${idCompleto}')">📄 Abrir Ficha</button>
+        <button onclick="deletarFicha('${idCompleto}')">🗑️ Excluir</button>
         <hr>
       `;
       container.appendChild(div);
