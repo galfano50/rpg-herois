@@ -102,4 +102,37 @@ async function carregarFichaFirebase() {
   alert("Ficha carregada do Firestore!");
 }
 
+function resetarFicha() {
+  const campos = [
+    'nome','raca','classe','nivel','vida','energia','indice_protecao','xp','p_heroi','p_vilao',
+    'extra11','extra12','pontos','forca','constituicao','destreza','agilidade','inteligencia',
+    'percepcao','vontade','carisma','extra1','extra2','extra3','extra4','extra5','extra6',
+    'extra7','extra8','extra9','extra10','poder1','poder2','poder3','poder4','poder5','poder6',
+    'poder7','poder8','poder9','poder10','poder11','poder12','poder13','poder14','poder15',
+    'soma1','soma2','soma3','soma4','soma5','soma6','soma7','soma8',
+    'aprimoramento1','aprimoramento2','aprimoramento3','aprimoramento4','positivo','negativo',
+    'historia','primaria','secundaria','power1','power2','power3','power4','power5',
+    'item1','item2','item3','item4','item5','golpes'
+  ];
+
+  campos.forEach(campo => {
+    const el = document.getElementById(campo);
+    if (el) {
+      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+        el.value = '';
+      } else {
+        el.textContent = '';
+      }
+    }
+  });
+
+  document.querySelectorAll('.pericia-section input').forEach(el => el.value = '');
+  document.querySelectorAll('.mochila-section textarea').forEach(t => t.value = '');
+
+  alert("Todos os campos da ficha foram limpos.");
+}
+
+// Exporta funções globais
 window.salvarFichaFirebase = salvarFichaFirebase;
+window.carregarFichaFirebase = carregarFichaFirebase;
+window.resetarFicha = resetarFicha;
