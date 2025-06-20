@@ -45,13 +45,19 @@ async function salvarFichaFirebase() {
   });
 
   // Perícias
-  ficha.pericias = Array.from(document.querySelectorAll('.pericia-section')).map(section => {
-    const inputs = section.querySelectorAll('input');
-    return {
+  const rows = document.querySelectorAll('.pericia-section table tr');
+  ficha.pericias = [];
+
+  rows.forEach((row, index) => {
+    // Pula a primeira linha, que é o cabeçalho
+    if (index === 0) return;
+
+    const inputs = row.querySelectorAll('input');
+    ficha.pericias.push({
       nome: inputs[0]?.value || '',
       att_atrelado: inputs[1]?.value || '',
       pontos: inputs[2]?.value || ''
-    };
+    });
   });
 
   // Mochila
