@@ -197,53 +197,52 @@ async function listarFichas(user) {
     const fichasRef = collection(db, "fichas");
     console.log('Referência da coleção criada');
     
-    // Query simplificada sem ordenação para evitar erro de índice
-    console.log('Criando query simplificada...');
-    const q = query(
-      fichasRef, 
-      where("uid", "==", user.uid)
-      // Removido orderBy temporariamente para evitar erro de índice
-    );
-    
-    console.log('Executando query...');
-    const querySnapshot = await getDocs(q);
+    // Query mais simples possível - apenas buscar todas as fichas
+    console.log('Criando query simples...');
+    const querySnapshot = await getDocs(fichasRef);
     console.log('Query executada, resultado:', querySnapshot.size, 'documentos');
 
     if (querySnapshot.empty) {
-      console.log('Nenhuma ficha encontrada para o usuário, tentando debug...');
+      console.log('Nenhuma ficha encontrada no banco');
+      showEmptyState();
+      updateFichasCount(0);
+      return;
+    }
+
+    // Filtrar no cliente as fichas do usuário atual
+    const fichasDoUsuario = querySnapshot.docs.filter(doc => {
+      const data = doc.data();
+      return data.uid === user.uid;
+    });
+
+    console.log('Fichas filtradas para o usuário:', fichasDoUsuario.length);
+
+    if (fichasDoUsuario.length === 0) {
+      console.log('Nenhuma ficha encontrada para o usuário');
       
-      // Tentar buscar todas as fichas para debug
-      try {
-        const todasFichas = await debugBuscarTodasFichas();
-        if (todasFichas.size > 0) {
-          console.log('DEBUG: Existem fichas no banco, mas não para este usuário');
-          // Mostrar alerta informativo
-          const alertDiv = document.createElement('div');
-          alertDiv.className = 'alert alert-info alert-dismissible fade show';
-          alertDiv.innerHTML = `
-            <i class="fas fa-info-circle me-2"></i>
-            Existem fichas no banco de dados, mas nenhuma pertence ao seu usuário atual.
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-          `;
-          
-          const container = document.querySelector('.container');
-          container.insertBefore(alertDiv, container.firstChild);
-        }
-      } catch (debugError) {
-        console.error('DEBUG: Erro ao buscar todas as fichas:', debugError);
-      }
+      // Mostrar alerta informativo
+      const alertDiv = document.createElement('div');
+      alertDiv.className = 'alert alert-info alert-dismissible fade show';
+      alertDiv.innerHTML = `
+        <i class="fas fa-info-circle me-2"></i>
+        Existem ${querySnapshot.size} fichas no banco de dados, mas nenhuma pertence ao seu usuário atual (${user.uid}).
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      `;
+      
+      const container = document.querySelector('.container');
+      container.insertBefore(alertDiv, container.firstChild);
       
       showEmptyState();
       updateFichasCount(0);
       return;
     }
 
-    console.log('Criando cards para', querySnapshot.size, 'fichas');
+    console.log('Criando cards para', fichasDoUsuario.length, 'fichas');
     const container = document.getElementById("listaFichas");
     container.innerHTML = "";
     
     // Ordenar os resultados no cliente para mostrar as mais recentes primeiro
-    const fichasArray = querySnapshot.docs.map(doc => ({
+    const fichasArray = fichasDoUsuario.map(doc => ({
       id: doc.id,
       data: doc.data()
     })).sort((a, b) => {
