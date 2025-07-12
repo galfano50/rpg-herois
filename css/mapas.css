@@ -33,3 +33,11 @@ select {
   justify-content: center;
   align-items: center;
 }
+
+/* Garantir contraste em tabelas e cards para mapas e fichas */
+td, th {
+  color: #fffbe6 !important;
+}
+.ficha-card, .ficha-info {
+  color: #fffbe6 !important;
+}

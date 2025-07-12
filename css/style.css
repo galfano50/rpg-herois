@@ -72,6 +72,33 @@ button:hover {
     transform: scale(1.05);
 }
 
+/* Melhor contraste para totais em Ficha.html */
+.total-title, .total-label {
+  color: #ffd700 !important;
+  font-weight: bold;
+}
+.total-value {
+  color: #fffbe6 !important;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+/* Melhor contraste para cards da Ala do Mestre */
+.ficha-card, .ficha-info, .stats-badge {
+  color: #fffbe6 !important;
+}
+.ficha-card h5, .ficha-card strong {
+  color: #ffd700 !important;
+}
+.ficha-card small, .ficha-card .text-muted {
+  color: #e0e0e0 !important;
+}
+
+/* Garantir contraste em tabelas de totais */
+td, th {
+  color: #fffbe6 !important;
+}
+
 @media (max-width: 600px) {
     .container {
         margin: 40px 20px;
