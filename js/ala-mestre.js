@@ -197,12 +197,12 @@ async function listarFichas(user) {
     const fichasRef = collection(db, "fichas");
     console.log('Referência da coleção criada');
     
-    // Primeiro, vamos tentar buscar todas as fichas sem filtro para debug
-    console.log('Criando query...');
+    // Query simplificada sem ordenação para evitar erro de índice
+    console.log('Criando query simplificada...');
     const q = query(
       fichasRef, 
-      where("uid", "==", user.uid),
-      orderBy("dataSalvamento", "desc")
+      where("uid", "==", user.uid)
+      // Removido orderBy temporariamente para evitar erro de índice
     );
     
     console.log('Executando query...');
@@ -242,14 +242,28 @@ async function listarFichas(user) {
     const container = document.getElementById("listaFichas");
     container.innerHTML = "";
     
-    querySnapshot.forEach((docSnap) => {
-      console.log('Processando ficha:', docSnap.id, docSnap.data());
+    // Ordenar os resultados no cliente para mostrar as mais recentes primeiro
+    const fichasArray = querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      data: doc.data()
+    })).sort((a, b) => {
+      const dateA = new Date(a.data.dataSalvamento || 0);
+      const dateB = new Date(b.data.dataSalvamento || 0);
+      return dateB - dateA; // Ordem decrescente (mais recente primeiro)
+    });
+    
+    fichasArray.forEach((ficha) => {
+      console.log('Processando ficha:', ficha.id, ficha.data);
+      const docSnap = {
+        id: ficha.id,
+        data: () => ficha.data
+      };
       const card = createFichaCard(docSnap, user);
       container.appendChild(card);
     });
     
     showFichasList();
-    updateFichasCount(querySnapshot.size);
+    updateFichasCount(fichasArray.length);
     console.log('Listagem concluída com sucesso');
     
   } catch (error) {
