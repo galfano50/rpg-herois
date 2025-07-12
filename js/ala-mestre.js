@@ -156,49 +156,121 @@ function createFichaCard(docSnap, user) {
   return col;
 }
 
+// Função de debug para buscar todas as fichas
+async function debugBuscarTodasFichas() {
+  try {
+    console.log('DEBUG: Buscando todas as fichas sem filtro...');
+    const fichasRef = collection(db, "fichas");
+    const querySnapshot = await getDocs(fichasRef);
+    
+    console.log('DEBUG: Total de fichas encontradas:', querySnapshot.size);
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      console.log('DEBUG: Ficha ID:', doc.id, 'UID:', data.uid, 'Nome:', data.nome);
+    });
+    
+    return querySnapshot;
+  } catch (error) {
+    console.error('DEBUG: Erro ao buscar todas as fichas:', error);
+    throw error;
+  }
+}
+
 // Função principal para listar fichas
 async function listarFichas(user) {
+  console.log('Iniciando listagem de fichas para usuário:', user.uid);
   showLoading(true);
   
   try {
     // Verificar se o Firebase está inicializado
     if (!isFirebaseInitialized()) {
+      console.log('Firebase não inicializado, tentando inicializar...');
       const { auth: authInstance, db: dbInstance } = getFirebaseInstances();
       if (!authInstance || !dbInstance) {
+        console.error('Falha ao inicializar Firebase');
         showEmptyState();
-        console.error('Firebase não foi inicializado corretamente.');
         return;
       }
     }
 
+    console.log('Firebase inicializado, buscando fichas...');
     const fichasRef = collection(db, "fichas");
+    console.log('Referência da coleção criada');
+    
+    // Primeiro, vamos tentar buscar todas as fichas sem filtro para debug
+    console.log('Criando query...');
     const q = query(
       fichasRef, 
       where("uid", "==", user.uid),
       orderBy("dataSalvamento", "desc")
     );
     
+    console.log('Executando query...');
     const querySnapshot = await getDocs(q);
+    console.log('Query executada, resultado:', querySnapshot.size, 'documentos');
 
     if (querySnapshot.empty) {
+      console.log('Nenhuma ficha encontrada para o usuário, tentando debug...');
+      
+      // Tentar buscar todas as fichas para debug
+      try {
+        const todasFichas = await debugBuscarTodasFichas();
+        if (todasFichas.size > 0) {
+          console.log('DEBUG: Existem fichas no banco, mas não para este usuário');
+          // Mostrar alerta informativo
+          const alertDiv = document.createElement('div');
+          alertDiv.className = 'alert alert-info alert-dismissible fade show';
+          alertDiv.innerHTML = `
+            <i class="fas fa-info-circle me-2"></i>
+            Existem fichas no banco de dados, mas nenhuma pertence ao seu usuário atual.
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          `;
+          
+          const container = document.querySelector('.container');
+          container.insertBefore(alertDiv, container.firstChild);
+        }
+      } catch (debugError) {
+        console.error('DEBUG: Erro ao buscar todas as fichas:', debugError);
+      }
+      
       showEmptyState();
       updateFichasCount(0);
       return;
     }
 
+    console.log('Criando cards para', querySnapshot.size, 'fichas');
     const container = document.getElementById("listaFichas");
     container.innerHTML = "";
     
     querySnapshot.forEach((docSnap) => {
+      console.log('Processando ficha:', docSnap.id, docSnap.data());
       const card = createFichaCard(docSnap, user);
       container.appendChild(card);
     });
     
     showFichasList();
     updateFichasCount(querySnapshot.size);
+    console.log('Listagem concluída com sucesso');
     
   } catch (error) {
-    console.error("Erro ao listar fichas:", error);
+    console.error("Erro detalhado ao listar fichas:", error);
+    console.error("Stack trace:", error.stack);
+    
+    // Verificar se é erro de permissão
+    if (error.code === 'permission-denied') {
+      console.error('Erro de permissão detectado');
+      const alertDiv = document.createElement('div');
+      alertDiv.className = 'alert alert-warning alert-dismissible fade show';
+      alertDiv.innerHTML = `
+        <i class="fas fa-exclamation-triangle me-2"></i>
+        Erro de permissão: Você não tem acesso às fichas. Verifique as regras de segurança do Firestore.
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      `;
+      
+      const container = document.querySelector('.container');
+      container.insertBefore(alertDiv, container.firstChild);
+    }
+    
     showEmptyState();
     
     // Mostrar alerta de erro
@@ -217,6 +289,7 @@ async function listarFichas(user) {
 
 // Função para abrir ficha (global)
 window.abrirFicha = function (id) {
+  console.log('Abrindo ficha:', id);
   window.open(`Ficha.html?personagemId=${encodeURIComponent(id)}`, "_blank");
 };
 
@@ -227,6 +300,8 @@ window.deletarFicha = async function (id, nome) {
   if (!confirmacao) return;
 
   try {
+    console.log('Excluindo ficha:', id);
+    
     // Verificar se o Firebase está inicializado
     if (!isFirebaseInitialized()) {
       const { auth: authInstance, db: dbInstance } = getFirebaseInstances();
@@ -237,6 +312,7 @@ window.deletarFicha = async function (id, nome) {
     }
 
     await deleteDoc(doc(db, "fichas", id));
+    console.log('Ficha excluída com sucesso');
     
     // Mostrar mensagem de sucesso
     const alertDiv = document.createElement('div');
@@ -272,6 +348,16 @@ window.deletarFicha = async function (id, nome) {
   }
 };
 
+// Função para refresh das fichas (global)
+window.refreshFichas = function() {
+  console.log('Refresh solicitado');
+  if (currentUser) {
+    listarFichas(currentUser);
+  } else {
+    console.error('Usuário não autenticado');
+  }
+};
+
 // Função para logout (global)
 window.logout = async function() {
   try {
@@ -285,10 +371,14 @@ window.logout = async function() {
 
 // Listener para mudanças no estado de autenticação
 onAuthStateChanged(auth, (user) => {
+  console.log('Estado de autenticação mudou:', user ? 'Usuário logado' : 'Usuário deslogado');
+  
   if (!user) {
+    console.log('Usuário não autenticado, redirecionando...');
     alert("Você precisa estar logado para acessar esta página.");
     window.location.href = "index.html";
   } else {
+    console.log('Usuário autenticado:', user.uid);
     currentUser = user;
     listarFichas(user);
   }

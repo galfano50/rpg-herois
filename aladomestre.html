@@ -3,113 +3,153 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ala do Mestre - Site RPG</title>
+  <title>Ala do Mestre - RPG</title>
   
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  <!-- Custom CSS -->
-  <link href="css/style.css" rel="stylesheet">
   
   <style>
-    .master-header {
-      background: linear-gradient(135deg, #2c1810 0%, #4a2c1a 100%);
-      color: #ffd700;
-      padding: 2rem 0;
-      margin-bottom: 2rem;
+    body {
+      font-family: "Georgia", serif;
+      background: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
+      color: #e0e0e0;
+      min-height: 100vh;
     }
-    
-    .ficha-card {
-      background: linear-gradient(145deg, #2a2a2a 0%, #3a3a3a 100%);
-      border: 2px solid #444;
-      border-radius: 15px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
+
+    .navbar-brand {
+      color: #ffd700 !important;
+      font-weight: bold;
+    }
+
+    .btn-master {
+      background: linear-gradient(45deg, #ffd700, #ffed4e);
+      color: #1e1e1e;
+      border: none;
+      font-weight: bold;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
-    
+
+    .btn-master:hover {
+      background: linear-gradient(45deg, #ffed4e, #ffd700);
+      color: #1e1e1e;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(255, 215, 0, 0.3);
+    }
+
+    .btn-danger-master {
+      background: linear-gradient(45deg, #dc3545, #c82333);
+      color: white;
+    }
+
+    .btn-danger-master:hover {
+      background: linear-gradient(45deg, #c82333, #dc3545);
+      color: white;
+    }
+
+    .ficha-card {
+      background: linear-gradient(145deg, #2c2c2c, #3a3a3a);
+      border: 1px solid #444;
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+    }
+
     .ficha-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-      border-color: #ffd700;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
     }
-    
-    .ficha-info {
-      color: #e0e0e0;
-      margin-bottom: 1rem;
-    }
-    
-    .ficha-info strong {
+
+    .ficha-info h5 {
       color: #ffd700;
+      border-bottom: 2px solid #444;
+      padding-bottom: 10px;
     }
-    
-    .btn-master {
-      background: linear-gradient(145deg, #444 0%, #555 100%);
-      border: 2px solid #666;
-      color: #fff;
-      font-weight: 600;
-      padding: 0.75rem 1.5rem;
-      border-radius: 10px;
-      transition: all 0.3s ease;
-      margin: 0.25rem;
+
+    .stats-badge {
+      background: linear-gradient(45deg, #ffd700, #ffed4e);
+      color: #1e1e1e;
+      font-weight: bold;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.9em;
     }
-    
-    .btn-master:hover {
-      background: linear-gradient(145deg, #555 0%, #666 100%);
-      border-color: #ffd700;
-      color: #ffd700;
-      transform: translateY(-2px);
-    }
-    
-    .btn-danger-master {
-      background: linear-gradient(145deg, #dc3545 0%, #c82333 100%);
-      border-color: #dc3545;
-    }
-    
-    .btn-danger-master:hover {
-      background: linear-gradient(145deg, #c82333 0%, #bd2130 100%);
-      border-color: #ffd700;
-    }
-    
+
     .loading-spinner {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 3rem;
+      color: #ffd700;
     }
-    
+
     .empty-state {
       text-align: center;
-      padding: 3rem;
-      color: #888;
+      padding: 60px 20px;
     }
-    
+
     .empty-state i {
       font-size: 4rem;
-      margin-bottom: 1rem;
-      color: #555;
+      color: #666;
+      margin-bottom: 20px;
     }
-    
-    .stats-badge {
-      background: linear-gradient(145deg, #ffd700 0%, #ffed4e 100%);
-      color: #2c1810;
-      padding: 0.25rem 0.75rem;
-      border-radius: 20px;
-      font-size: 0.875rem;
-      font-weight: 600;
-      margin: 0.25rem;
+
+    .card {
+      background: linear-gradient(145deg, #2c2c2c, #3a3a3a);
+      border: 1px solid #444;
+      border-radius: 15px;
+    }
+
+    .card-header {
+      background: linear-gradient(45deg, #ffd700, #ffed4e);
+      color: #1e1e1e;
+      font-weight: bold;
+      border-bottom: 1px solid #444;
+    }
+
+    .alert {
+      border-radius: 10px;
+      border: none;
+    }
+
+    .navbar {
+      background: linear-gradient(45deg, #1e1e1e, #2d2d2d) !important;
+      border-bottom: 2px solid #ffd700;
+    }
+
+    .nav-link {
+      color: #e0e0e0 !important;
+      transition: color 0.3s ease;
+    }
+
+    .nav-link:hover {
+      color: #ffd700 !important;
+    }
+
+    .nav-link.active {
+      color: #ffd700 !important;
+      font-weight: bold;
+    }
+
+    @media (max-width: 768px) {
+      .ficha-card {
+        margin-bottom: 15px;
+        padding: 15px;
+      }
+      
+      .btn-master {
+        font-size: 0.9em;
+        padding: 8px 12px;
+      }
     }
   </style>
 </head>
 
-<body class="bg-dark text-light">
+<body>
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark" style="background: linear-gradient(135deg, #1a1a1a 0%, #2c1810 100%);">
+  <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
-      <a class="navbar-brand fw-bold" href="home.html">
-        <i class="fas fa-dragon me-2"></i>Site RPG
+      <a class="navbar-brand" href="#">
+        <i class="fas fa-crown me-2"></i>Ala do Mestre
       </a>
       
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -125,77 +165,97 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="Ficha.html">
-              <i class="fas fa-scroll me-1"></i>Ficha
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="aladomestre.html">
-              <i class="fas fa-crown me-1"></i>Ala do Mestre
+              <i class="fas fa-user me-1"></i>Nova Ficha
             </a>
           </li>
         </ul>
         
         <div class="navbar-nav">
-          <button class="btn btn-outline-warning" onclick="logout()">
-            <i class="fas fa-sign-out-alt me-1"></i>Sair
+          <button class="btn btn-master" onclick="logout()">
+            <i class="fas fa-sign-out-alt me-2"></i>Sair
           </button>
         </div>
       </div>
     </div>
   </nav>
 
-  <!-- Header -->
-  <div class="master-header">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-md-8">
-          <h1 class="display-4 fw-bold mb-0">
-            <i class="fas fa-crown me-3"></i>Ala do Mestre
-          </h1>
-          <p class="lead mb-0 mt-2">Gerencie todas as fichas de personagens</p>
-        </div>
-        <div class="col-md-4 text-end">
-          <div class="stats-badge">
-            <i class="fas fa-users me-1"></i>
-            <span id="totalFichas">0</span> fichas
+  <!-- Conteúdo Principal -->
+  <div class="container mt-4">
+    <!-- Header -->
+    <div class="row mb-4">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="mb-0">
+              <i class="fas fa-users me-2"></i>Gerenciamento de Fichas
+            </h3>
+          </div>
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <h5 class="mb-0">
+                  <i class="fas fa-chart-bar me-2"></i>Total de Fichas: 
+                  <span id="totalFichas" class="stats-badge">0</span>
+                </h5>
+              </div>
+              <div class="col-md-6 text-md-end">
+                <button class="btn btn-master" onclick="refreshFichas()">
+                  <i class="fas fa-sync-alt me-2"></i>Atualizar
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Main Content -->
-  <div class="container">
-    <!-- Loading State -->
-    <div id="loadingState" class="loading-spinner">
-      <div class="text-center">
-        <div class="spinner-border text-warning" role="status" style="width: 3rem; height: 3rem;">
+    <!-- Estados de Loading e Vazio -->
+    <div id="loadingState" class="d-none">
+      <div class="text-center py-5">
+        <div class="spinner-border loading-spinner" role="status" style="width: 3rem; height: 3rem;">
           <span class="visually-hidden">Carregando...</span>
         </div>
-        <p class="mt-3 text-muted">Carregando fichas...</p>
+        <h4 class="mt-3">Carregando fichas...</h4>
+        <p class="text-muted">Aguarde enquanto buscamos suas fichas no banco de dados.</p>
       </div>
     </div>
 
-    <!-- Empty State -->
-    <div id="emptyState" class="empty-state d-none">
-      <i class="fas fa-scroll"></i>
-      <h3>Nenhuma ficha encontrada</h3>
-      <p class="text-muted">Crie fichas de personagens para vê-las aqui.</p>
-      <a href="Ficha.html" class="btn btn-warning">
-        <i class="fas fa-plus me-2"></i>Criar Nova Ficha
-      </a>
+    <div id="emptyState" class="d-none">
+      <div class="empty-state">
+        <i class="fas fa-folder-open"></i>
+        <h3>Nenhuma ficha encontrada</h3>
+        <p class="text-muted">Você ainda não possui fichas de personagem salvas.</p>
+        <a href="Ficha.html" class="btn btn-master">
+          <i class="fas fa-plus me-2"></i>Criar Primeira Ficha
+        </a>
+      </div>
     </div>
 
-    <!-- Fichas Container -->
-    <div id="listaFichas" class="row"></div>
+    <!-- Lista de Fichas -->
+    <div id="listaFichas" class="row">
+      <!-- As fichas serão carregadas aqui dinamicamente -->
+    </div>
   </div>
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   
-  <!-- Firebase Scripts -->
+  <!-- Firebase e Scripts -->
   <script type="module" src="js/firebase-config.js"></script>
-  <script type="module" src="js/auth.js"></script>
   <script type="module" src="js/ala-mestre.js"></script>
+  <script type="module" src="js/teste-firebase.js"></script>
+  <script type="module" src="js/teste-regras.js"></script>
+  
+  <!-- Botões de Debug (apenas em desenvolvimento) -->
+  <div style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+    <div class="d-flex flex-column gap-2">
+      <button class="btn btn-warning btn-sm" onclick="window.testarFirebase()" title="Testar Firebase">
+        <i class="fas fa-bug"></i>
+      </button>
+      <button class="btn btn-info btn-sm" onclick="window.testarRegras()" title="Testar Regras">
+        <i class="fas fa-shield-alt"></i>
+      </button>
+    </div>
+  </div>
 </body>
 </html>
