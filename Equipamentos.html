@@ -3,140 +3,478 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Equipamentos</title>
-  <link rel="stylesheet" href="css/style.css">
+  <title>Equipamentos - Site RPG</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link href="css/style.css" rel="stylesheet">
+  
+  <style>
+    .page-header {
+      background: linear-gradient(135deg, #2c1f0e 0%, #4b3b2b 100%);
+      color: #f5c16c;
+      padding: 2rem 0;
+      margin-bottom: 2rem;
+    }
+    
+    .equipment-card {
+      background: linear-gradient(145deg, #fdfaf5 0%, #f8f5f0 100%);
+      border: 2px solid #e8e0d0;
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 15px rgba(44, 31, 14, 0.1);
+      transition: all 0.3s ease;
+    }
+    
+    .equipment-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(44, 31, 14, 0.15);
+      border-color: #f5c16c;
+    }
+    
+    .equipment-card h3 {
+      color: #4b3b2b;
+      border-bottom: 2px solid #f5c16c;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .equipment-icon {
+      font-size: 2rem;
+      color: #f5c16c;
+      margin-bottom: 1rem;
+    }
+    
+    .table-custom {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .table-custom th {
+      background: linear-gradient(145deg, #4b3b2b 0%, #2c1f0e 100%);
+      color: #f5c16c;
+      font-weight: 600;
+      border: none;
+    }
+    
+    .table-custom td {
+      border-color: #e9ecef;
+      vertical-align: middle;
+    }
+    
+    .table-custom tbody tr:hover {
+      background-color: #f8f9fa;
+    }
+    
+    .special-weapon {
+      background: linear-gradient(145deg, #fff3cd 0%, #ffeaa7 100%);
+      border-left: 4px solid #ffc107;
+    }
+    
+    .rare-item {
+      background: linear-gradient(145deg, #e8f5e8 0%, #d4edda 100%);
+      border-left: 4px solid #28a745;
+    }
+  </style>
 </head>
-<body>
-  <h1>Equipamentos</h1>
 
-  <section>
-    <h2>Armas de Fogo</h2>
-    <p>Para cada arma você joga +1D10 de dano. Pentes afetam a quantidade de tiros por ação.</p>
-    <table>
-      <tr><th>Arma</th><th>Dano</th><th>Pente</th><th>Alcance</th></tr>
-      <tr><td>Revólver leve</td><td>18+1d6S</td><td>5-6</td><td>500 m</td></tr>
-      <tr><td>Revólver pesado</td><td>20+1d8S</td><td>5-6</td><td>600 m</td></tr>
-      <tr><td>Pistola</td><td>22+1d6S</td><td>8</td><td>600 m</td></tr>
-      <tr><td>Pistola semi</td><td>23+1d6S</td><td>10</td><td>450 m</td></tr>
-      <tr><td>Pistola pesada</td><td>25+1d8S</td><td>10</td><td>600 m</td></tr>
-      <tr><td>Escopeta</td><td>28+1d6S</td><td>3-4</td><td>102 km</td></tr>
-      <tr><td>Escopeta pump</td><td>30+1d12S</td><td>14</td><td>100 m</td></tr>
-      <tr><td>Submetralhadora</td><td>28+1d10S</td><td>20</td><td>700 m</td></tr>
-      <tr><td>Rifle de caça</td><td>25+1d10S</td><td>15</td><td>1 km</td></tr>
-      <tr><td>Rifle militar</td><td>26+1d12S</td><td>5-6</td><td>1,5 km</td></tr>
-      <tr><td>Metralhadora</td><td>32+1d10S</td><td>200</td><td>600 m</td></tr>
-      <tr><td>Sniper</td><td>35+1d10S</td><td>8</td><td>5 km</td></tr>
-      <tr><td>Bazuca</td><td>40+1d12S</td><td>1</td><td>100 m</td></tr>
-      <tr><td>12</td><td>39+1d20S</td><td>4-5</td><td>20 m</td></tr>
-      <tr><td>Granada de fragmentação</td><td>18+1d6S</td><td>-</td><td>-</td></tr>
-      <tr><td>Antiaérea</td><td>45+1d10S</td><td>300</td><td>800 m</td></tr>
-      <tr><td>Míssil pequeno porte</td><td>+80 Dano</td><td>-</td><td>Raio 44 m²</td></tr>
-      <tr><td>Míssil grande porte</td><td>+100 Dano</td><td>-</td><td>Raio 98 km²</td></tr>
-    </table>
-  </section>
+<body class="bg-light">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background: linear-gradient(135deg, #1a1a1a 0%, #2c1810 100%);">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="home.html">
+        <i class="fas fa-dragon me-2"></i>Site RPG
+      </a>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="home.html">
+              <i class="fas fa-home me-1"></i>Início
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="Ficha.html">
+              <i class="fas fa-scroll me-1"></i>Ficha
+            </a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown">
+              <i class="fas fa-book me-1"></i>Regras
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="Conceitos.html"><i class="fas fa-info-circle me-2"></i>Conceitos Básicos</a></li>
+              <li><a class="dropdown-item" href="Atributos.html"><i class="fas fa-dumbbell me-2"></i>Atributos</a></li>
+              <li><a class="dropdown-item" href="Pericias.html"><i class="fas fa-tools me-2"></i>Perícias</a></li>
+              <li><a class="dropdown-item" href="Poderes.html"><i class="fas fa-bolt me-2"></i>Poderes</a></li>
+              <li><a class="dropdown-item" href="Magia.html"><i class="fas fa-magic me-2"></i>Magia</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="Equipamentos.html"><i class="fas fa-shield-alt me-2"></i>Equipamentos</a></li>
+              <li><a class="dropdown-item" href="Jogabilidade.html"><i class="fas fa-gamepad me-2"></i>Jogabilidade</a></li>
+              <li><a class="dropdown-item" href="Nivel.html"><i class="fas fa-level-up me-2"></i>Nível</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="aladomestre.html">
+              <i class="fas fa-crown me-1"></i>Ala do Mestre
+            </a>
+          </li>
+        </ul>
+        
+        <div class="navbar-nav">
+          <button class="btn btn-outline-warning" onclick="logout()">
+            <i class="fas fa-sign-out-alt me-1"></i>Sair
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
 
-  <section>
-    <h2>Armas Brancas</h2>
-    <p>Para cada arma você joga +1D6 de dano.</p>
-    <table>
-      <tr><th>Arma</th><th>Dano</th><th>Alcance</th></tr>
-      <tr><td>Faca</td><td>12+1d4S</td><td>-</td></tr>
-      <tr><td>Espada curta</td><td>14+1d4S</td><td>-</td></tr>
-      <tr><td>Espada longa</td><td>15+1d4S</td><td>-</td></tr>
-      <tr><td>Machado</td><td>13+1d4S</td><td>-</td></tr>
-      <tr><td>Porrete</td><td>10+1d4S</td><td>-</td></tr>
-      <tr><td>Lança</td><td>14+1d4S</td><td>-</td></tr>
-      <tr><td>Lança de caça</td><td>15+1d4S</td><td>-</td></tr>
-      <tr><td>Arco</td><td>13+1d4S</td><td>70 m</td></tr>
-      <tr><td>Besta</td><td>15+1d4S</td><td>40 m</td></tr>
-      <tr><td>Granada de luz</td><td>-18 Perc</td><td>Raio 5m²</td></tr>
-      <tr><td>Granada de fumaça</td><td>-15 Perc</td><td>Raio 5m²</td></tr>
-      <tr><td>Escudos</td><td>Material +20 pts.</td><td>-</td></tr>
-      <tr><td>Tranquilizantes</td><td>22 Teste Def</td><td>1d12 apagado</td></tr>
-    </table>
-  </section>
+  <!-- Header -->
+  <div class="page-header">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <h1 class="display-4 fw-bold mb-0">
+            <i class="fas fa-shield-alt me-3"></i>Equipamentos
+          </h1>
+          <p class="lead mb-0 mt-2">Armas, proteções e veículos disponíveis</p>
+        </div>
+        <div class="col-md-4 text-end">
+          <div class="badge bg-warning text-dark fs-6">
+            <i class="fas fa-tools me-1"></i>Catálogo Completo
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <section>
-    <h2>Armas Especiais</h2>
-    <p>Armas raras, bloqueadas até o mestre permitir. Tiro por ação apenas.</p>
-    <table>
-      <tr><th>Arma</th><th>Dano</th><th>Pente</th><th>Alcance</th></tr>
-      <tr><td>Blaster</td><td>70+Crítico</td><td>100</td><td>3,5 km</td></tr>
-      <tr><td>Blaster de explosão</td><td>80+Crítico</td><td>100</td><td>1 km (Raio 100 km²)</td></tr>
-      <tr><td>Rifle Anti-matéria</td><td>110+Crítico</td><td>-</td><td>80 m</td></tr>
-    </table>
-  </section>
+  <!-- Main Content -->
+  <div class="container">
+    <!-- Armas de Fogo -->
+    <div class="row">
+      <div class="col-12">
+        <div class="equipment-card">
+          <div class="text-center mb-3">
+            <i class="fas fa-gun equipment-icon"></i>
+          </div>
+          <h3>Armas de Fogo</h3>
+          <p class="mb-3">Para cada arma você joga +1D10 de dano. Pentes afetam a quantidade de tiros por ação.</p>
+          
+          <div class="table-responsive">
+            <table class="table table-custom table-hover">
+              <thead>
+                <tr>
+                  <th>Arma</th>
+                  <th>Dano</th>
+                  <th>Pente</th>
+                  <th>Alcance</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Revólver leve</td><td>18+1d6S</td><td>5-6</td><td>500 m</td></tr>
+                <tr><td>Revólver pesado</td><td>20+1d8S</td><td>5-6</td><td>600 m</td></tr>
+                <tr><td>Pistola</td><td>22+1d6S</td><td>8</td><td>600 m</td></tr>
+                <tr><td>Pistola semi</td><td>23+1d6S</td><td>10</td><td>450 m</td></tr>
+                <tr><td>Pistola pesada</td><td>25+1d8S</td><td>10</td><td>600 m</td></tr>
+                <tr><td>Escopeta</td><td>28+1d6S</td><td>3-4</td><td>102 km</td></tr>
+                <tr><td>Escopeta pump</td><td>30+1d12S</td><td>14</td><td>100 m</td></tr>
+                <tr><td>Submetralhadora</td><td>28+1d10S</td><td>20</td><td>700 m</td></tr>
+                <tr><td>Rifle de caça</td><td>25+1d10S</td><td>15</td><td>1 km</td></tr>
+                <tr><td>Rifle militar</td><td>26+1d12S</td><td>5-6</td><td>1,5 km</td></tr>
+                <tr><td>Metralhadora</td><td>32+1d10S</td><td>200</td><td>600 m</td></tr>
+                <tr><td>Sniper</td><td>35+1d10S</td><td>8</td><td>5 km</td></tr>
+                <tr><td>Bazuca</td><td>40+1d12S</td><td>1</td><td>100 m</td></tr>
+                <tr><td>12</td><td>39+1d20S</td><td>4-5</td><td>20 m</td></tr>
+                <tr><td>Granada de fragmentação</td><td>18+1d6S</td><td>-</td><td>-</td></tr>
+                <tr><td>Antiaérea</td><td>45+1d10S</td><td>300</td><td>800 m</td></tr>
+                <tr><td>Míssil pequeno porte</td><td>+80 Dano</td><td>-</td><td>Raio 44 m²</td></tr>
+                <tr><td>Míssil grande porte</td><td>+100 Dano</td><td>-</td><td>Raio 98 km²</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <section>
-    <h2>Coletes e Proteções</h2>
-    <table>
-      <tr><th>Tipo</th><th>IP Cinético</th><th>IP Balístico</th><th>Penalidade</th></tr>
-      <tr><td>Roupa normal</td><td>0</td><td>0</td><td>0</td></tr>
-      <tr><td>Jaqueta de couro</td><td>7</td><td>0</td><td>0</td></tr>
-      <tr><td>Kevlar 2 camadas</td><td>17</td><td>17</td><td>-2</td></tr>
-      <tr><td>Kevlar 10 camadas</td><td>27</td><td>22</td><td>-5</td></tr>
-      <tr><td>Kevlar 20 camadas</td><td>32</td><td>27</td><td>-4</td></tr>
-      <tr><td>Uniforme especial</td><td>37</td><td>37</td><td>-6</td></tr>
-    </table>
-  </section>
+    <!-- Armas Brancas -->
+    <div class="row">
+      <div class="col-12">
+        <div class="equipment-card">
+          <div class="text-center mb-3">
+            <i class="fas fa-sword equipment-icon"></i>
+          </div>
+          <h3>Armas Brancas</h3>
+          <p class="mb-3">Para cada arma você joga +1D6 de dano.</p>
+          
+          <div class="table-responsive">
+            <table class="table table-custom table-hover">
+              <thead>
+                <tr>
+                  <th>Arma</th>
+                  <th>Dano</th>
+                  <th>Alcance</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Faca</td><td>12+1d4S</td><td>-</td></tr>
+                <tr><td>Espada curta</td><td>14+1d4S</td><td>-</td></tr>
+                <tr><td>Espada longa</td><td>15+1d4S</td><td>-</td></tr>
+                <tr><td>Machado</td><td>13+1d4S</td><td>-</td></tr>
+                <tr><td>Porrete</td><td>10+1d4S</td><td>-</td></tr>
+                <tr><td>Lança</td><td>14+1d4S</td><td>-</td></tr>
+                <tr><td>Lança de caça</td><td>15+1d4S</td><td>-</td></tr>
+                <tr><td>Arco</td><td>13+1d4S</td><td>70 m</td></tr>
+                <tr><td>Besta</td><td>15+1d4S</td><td>40 m</td></tr>
+                <tr><td>Granada de luz</td><td>-18 Perc</td><td>Raio 5m²</td></tr>
+                <tr><td>Granada de fumaça</td><td>-15 Perc</td><td>Raio 5m²</td></tr>
+                <tr><td>Escudos</td><td>Material +20 pts.</td><td>-</td></tr>
+                <tr><td>Tranquilizantes</td><td>22 Teste Def</td><td>1d12 apagado</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <section>
-    <h2>IP Específico</h2>
-    <table>
-      <tr><th>Item</th><th>IP</th></tr>
-      <tr><td>Roupa de bombeiro</td><td>+15 Contra fogo</td></tr>
-      <tr><td>Roupa de amianto</td><td>+20 Contra fogo</td></tr>
-      <tr><td>Máscara de gás</td><td>15</td></tr>
-      <tr><td>Roupa de borracha</td><td>+38 Contra eletricidade</td></tr>
-      <tr><td>Roupa térmica</td><td>+30 Contra frio</td></tr>
-      <tr><td>Roupa contra ácidos</td><td>+30 Contra ácido</td></tr>
-      <tr><td>Roupa de mergulho</td><td>+50 Contra pressão (20h)</td></tr>
-      <tr><td>Roupa de astronauta</td><td>+50 Contra pressão (152h)</td></tr>
-      <tr><td>Porta de madeira</td><td>+20</td></tr>
-      <tr><td>Porta de ferro</td><td>+60 (Penalidade 12 dano)</td></tr>
-      <tr><td>Porta de aço</td><td>+90 (Penalidade 26 dano)</td></tr>
-      <tr><td>Parede de tijolos</td><td>+25</td></tr>
-      <tr><td>Vidro à prova de balas</td><td>+80 (Penalidade 15 dano)</td></tr>
-    </table>
-  </section>
+    <!-- Armas Especiais -->
+    <div class="row">
+      <div class="col-12">
+        <div class="equipment-card special-weapon">
+          <div class="text-center mb-3">
+            <i class="fas fa-bolt equipment-icon"></i>
+          </div>
+          <h3>Armas Especiais</h3>
+          <p class="mb-3">Armas raras, bloqueadas até o mestre permitir. Tiro por ação apenas.</p>
+          
+          <div class="table-responsive">
+            <table class="table table-custom table-hover">
+              <thead>
+                <tr>
+                  <th>Arma</th>
+                  <th>Dano</th>
+                  <th>Pente</th>
+                  <th>Alcance</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Blaster</td><td>70+Crítico</td><td>100</td><td>3,5 km</td></tr>
+                <tr><td>Blaster de explosão</td><td>80+Crítico</td><td>100</td><td>1 km (Raio 100 km²)</td></tr>
+                <tr><td>Rifle Anti-matéria</td><td>110+Crítico</td><td>-</td><td>80 m</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <section>
-    <h2>Objetos Raros</h2>
-    <table>
-      <tr><th>Nome</th><th>IP</th><th>Impactos</th></tr>
-      <tr><td>Titânio</td><td>90</td><td>30 dano</td></tr>
-      <tr><td>Escama do Oceano</td><td>60</td><td>0 (Suporta Magia)</td></tr>
-      <tr><td>Vibranium</td><td>90</td><td>20 (Absorve Impactos)</td></tr>
-      <tr><td>Katchim</td><td>120</td><td>30</td></tr>
-      <tr><td>Katchim-Katchim</td><td>150</td><td>40</td></tr>
-    </table>
-  </section>
+    <!-- Coletes e Proteções -->
+    <div class="row">
+      <div class="col-12">
+        <div class="equipment-card">
+          <div class="text-center mb-3">
+            <i class="fas fa-shield-alt equipment-icon"></i>
+          </div>
+          <h3>Coletes e Proteções</h3>
+          
+          <div class="table-responsive">
+            <table class="table table-custom table-hover">
+              <thead>
+                <tr>
+                  <th>Tipo</th>
+                  <th>IP Cinético</th>
+                  <th>IP Balístico</th>
+                  <th>Penalidade</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Roupa normal</td><td>0</td><td>0</td><td>0</td></tr>
+                <tr><td>Jaqueta de couro</td><td>7</td><td>0</td><td>0</td></tr>
+                <tr><td>Kevlar 2 camadas</td><td>17</td><td>17</td><td>-2</td></tr>
+                <tr><td>Kevlar 10 camadas</td><td>27</td><td>22</td><td>-5</td></tr>
+                <tr><td>Kevlar 20 camadas</td><td>32</td><td>27</td><td>-4</td></tr>
+                <tr><td>Uniforme especial</td><td>37</td><td>37</td><td>-6</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <section>
-    <h2>Veículos</h2>
-    <table>
-      <tr><th>Nome</th><th>Velocidade</th><th>Tanque</th><th>Fuselagem</th><th>Dados</th></tr>
-      <tr><td>Bicicleta</td><td>25 km/h</td><td>-</td><td>26</td><td>+1d4</td></tr>
-      <tr><td>Moto</td><td>300 km/h</td><td>9</td><td>45</td><td>+1d6</td></tr>
-      <tr><td>Carro</td><td>220 km/h</td><td>60</td><td>60</td><td>+1d8</td></tr>
-      <tr><td>Aeronave</td><td>900 km/h</td><td>6000</td><td>90</td><td>+1d10</td></tr>
-      <tr><td>Helicóptero</td><td>400 km/h</td><td>5000</td><td>80</td><td>+1d12</td></tr>
-      <tr><td>Caças</td><td>1960 km/h</td><td>3000</td><td>90</td><td>+1d12</td></tr>
-      <tr><td>Jet Ski</td><td>130 km/h</td><td>30</td><td>48</td><td>+1d6</td></tr>
-      <tr><td>Barco</td><td>74 km/h</td><td>120</td><td>68</td><td>+1d8</td></tr>
-      <tr><td>Submarino</td><td>65 km/h</td><td>Urânio</td><td>130</td><td>+1d10</td></tr>
-    </table>
-  </section>
+    <!-- IP Específico -->
+    <div class="row">
+      <div class="col-12">
+        <div class="equipment-card">
+          <div class="text-center mb-3">
+            <i class="fas fa-helmet-battle equipment-icon"></i>
+          </div>
+          <h3>IP Específico</h3>
+          
+          <div class="table-responsive">
+            <table class="table table-custom table-hover">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>IP</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Roupa de bombeiro</td><td>+15 Contra fogo</td></tr>
+                <tr><td>Roupa de amianto</td><td>+20 Contra fogo</td></tr>
+                <tr><td>Máscara de gás</td><td>15</td></tr>
+                <tr><td>Roupa de borracha</td><td>+38 Contra eletricidade</td></tr>
+                <tr><td>Roupa térmica</td><td>+30 Contra frio</td></tr>
+                <tr><td>Roupa contra ácidos</td><td>+30 Contra ácido</td></tr>
+                <tr><td>Roupa de mergulho</td><td>+50 Contra pressão (20h)</td></tr>
+                <tr><td>Roupa de astronauta</td><td>+50 Contra pressão (152h)</td></tr>
+                <tr><td>Porta de madeira</td><td>+20</td></tr>
+                <tr><td>Porta de ferro</td><td>+60 (Penalidade 12 dano)</td></tr>
+                <tr><td>Porta de aço</td><td>+90 (Penalidade 26 dano)</td></tr>
+                <tr><td>Parede de tijolos</td><td>+25</td></tr>
+                <tr><td>Vidro à prova de balas</td><td>+80 (Penalidade 15 dano)</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <section>
-    <h2>Veículo Personalizado</h2>
-    <table>
-      <tr><th>Nome</th><th>Velocidade</th><th>Tanque</th><th>Fuselagem</th><th>Dados</th></tr>
-      <tr><td>Fiat Uno</td><td>280 km/h</td><td>60</td><td>130</td><td>+1d10</td></tr>
-      <tr><td>(Aéreo)</td><td>550 km/h</td><td>3000</td><td>130</td><td>+1d12</td></tr>
-      <tr><td>Turbo</td><td>128.440 km/h</td><td>Urânio</td><td>130</td><td>+1d12</td></tr>
-    </table>
-  </section>
+    <!-- Objetos Raros -->
+    <div class="row">
+      <div class="col-12">
+        <div class="equipment-card rare-item">
+          <div class="text-center mb-3">
+            <i class="fas fa-gem equipment-icon"></i>
+          </div>
+          <h3>Objetos Raros</h3>
+          
+          <div class="table-responsive">
+            <table class="table table-custom table-hover">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>IP</th>
+                  <th>Impactos</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Titânio</td><td>90</td><td>30 dano</td></tr>
+                <tr><td>Escama do Oceano</td><td>60</td><td>0 (Suporta Magia)</td></tr>
+                <tr><td>Vibranium</td><td>90</td><td>20 (Absorve Impactos)</td></tr>
+                <tr><td>Katchim</td><td>120</td><td>30</td></tr>
+                <tr><td>Katchim-Katchim</td><td>150</td><td>40</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
 
+    <!-- Veículos -->
+    <div class="row">
+      <div class="col-12">
+        <div class="equipment-card">
+          <div class="text-center mb-3">
+            <i class="fas fa-car equipment-icon"></i>
+          </div>
+          <h3>Veículos</h3>
+          
+          <div class="table-responsive">
+            <table class="table table-custom table-hover">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Velocidade</th>
+                  <th>Tanque</th>
+                  <th>Fuselagem</th>
+                  <th>Dados</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Bicicleta</td><td>25 km/h</td><td>-</td><td>26</td><td>+1d4</td></tr>
+                <tr><td>Moto</td><td>300 km/h</td><td>9</td><td>45</td><td>+1d6</td></tr>
+                <tr><td>Carro</td><td>220 km/h</td><td>60</td><td>60</td><td>+1d8</td></tr>
+                <tr><td>Aeronave</td><td>900 km/h</td><td>6000</td><td>90</td><td>+1d10</td></tr>
+                <tr><td>Helicóptero</td><td>400 km/h</td><td>5000</td><td>80</td><td>+1d12</td></tr>
+                <tr><td>Caças</td><td>1960 km/h</td><td>3000</td><td>90</td><td>+1d12</td></tr>
+                <tr><td>Jet Ski</td><td>130 km/h</td><td>30</td><td>48</td><td>+1d6</td></tr>
+                <tr><td>Barco</td><td>74 km/h</td><td>120</td><td>68</td><td>+1d8</td></tr>
+                <tr><td>Submarino</td><td>65 km/h</td><td>Urânio</td><td>130</td><td>+1d10</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Veículo Personalizado -->
+    <div class="row">
+      <div class="col-12">
+        <div class="equipment-card special-weapon">
+          <div class="text-center mb-3">
+            <i class="fas fa-rocket equipment-icon"></i>
+          </div>
+          <h3>Veículo Personalizado</h3>
+          
+          <div class="table-responsive">
+            <table class="table table-custom table-hover">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Velocidade</th>
+                  <th>Tanque</th>
+                  <th>Fuselagem</th>
+                  <th>Dados</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Fiat Uno</td><td>280 km/h</td><td>60</td><td>130</td><td>+1d10</td></tr>
+                <tr><td>(Aéreo)</td><td>550 km/h</td><td>3000</td><td>130</td><td>+1d12</td></tr>
+                <tr><td>Turbo</td><td>128.440 km/h</td><td>Urânio</td><td>130</td><td>+1d12</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Firebase Scripts -->
+  <script type="module" src="js/firebase-config.js"></script>
+  <script type="module" src="js/auth.js"></script>
+  
+  <script type="module">
+    import { auth } from "./js/firebase-config.js";
+    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        window.location.href = "index.html";
+      }
+    });
+
+    window.logout = async function() {
+      try {
+        await signOut(auth);
+        window.location.href = "index.html";
+      } catch (error) {
+        console.error('Erro ao fazer logout:', error);
+        window.location.href = "index.html";
+      }
+    };
+  </script>
 </body>
 </html>

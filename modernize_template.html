@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{TITLE}} - Site RPG</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link href="css/style.css" rel="stylesheet">
+  
+  <style>
+    .page-header {
+      background: linear-gradient(135deg, #2c1f0e 0%, #4b3b2b 100%);
+      color: #f5c16c;
+      padding: 2rem 0;
+      margin-bottom: 2rem;
+    }
+    
+    .content-card {
+      background: linear-gradient(145deg, #fdfaf5 0%, #f8f5f0 100%);
+      border: 2px solid #e8e0d0;
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 15px rgba(44, 31, 14, 0.1);
+      transition: all 0.3s ease;
+    }
+    
+    .content-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(44, 31, 14, 0.15);
+      border-color: #f5c16c;
+    }
+    
+    .content-card h3 {
+      color: #4b3b2b;
+      border-bottom: 2px solid #f5c16c;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .content-icon {
+      font-size: 2rem;
+      color: #f5c16c;
+      margin-bottom: 1rem;
+    }
+    
+    .table-custom {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .table-custom th {
+      background: linear-gradient(145deg, #4b3b2b 0%, #2c1f0e 100%);
+      color: #f5c16c;
+      font-weight: 600;
+      border: none;
+    }
+    
+    .table-custom td {
+      border-color: #e9ecef;
+      vertical-align: middle;
+    }
+    
+    .table-custom tbody tr:hover {
+      background-color: #f8f9fa;
+    }
+  </style>
+</head>
+
+<body class="bg-light">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background: linear-gradient(135deg, #1a1a1a 0%, #2c1810 100%);">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="home.html">
+        <i class="fas fa-dragon me-2"></i>Site RPG
+      </a>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="home.html">
+              <i class="fas fa-home me-1"></i>Início
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="Ficha.html">
+              <i class="fas fa-scroll me-1"></i>Ficha
+            </a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown">
+              <i class="fas fa-book me-1"></i>Regras
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="Conceitos.html"><i class="fas fa-info-circle me-2"></i>Conceitos Básicos</a></li>
+              <li><a class="dropdown-item" href="Atributos.html"><i class="fas fa-dumbbell me-2"></i>Atributos</a></li>
+              <li><a class="dropdown-item" href="Pericias.html"><i class="fas fa-tools me-2"></i>Perícias</a></li>
+              <li><a class="dropdown-item" href="Poderes.html"><i class="fas fa-bolt me-2"></i>Poderes</a></li>
+              <li><a class="dropdown-item" href="Magia.html"><i class="fas fa-magic me-2"></i>Magia</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="Jogabilidade.html"><i class="fas fa-gamepad me-2"></i>Jogabilidade</a></li>
+              <li><a class="dropdown-item" href="Nivel.html"><i class="fas fa-level-up me-2"></i>Nível</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="aladomestre.html">
+              <i class="fas fa-crown me-1"></i>Ala do Mestre
+            </a>
+          </li>
+        </ul>
+        
+        <div class="navbar-nav">
+          <button class="btn btn-outline-warning" onclick="logout()">
+            <i class="fas fa-sign-out-alt me-1"></i>Sair
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <div class="page-header">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <h1 class="display-4 fw-bold mb-0">
+            <i class="fas fa-{{ICON}} me-3"></i>{{TITLE}}
+          </h1>
+          <p class="lead mb-0 mt-2">{{SUBTITLE}}</p>
+        </div>
+        <div class="col-md-4 text-end">
+          <div class="badge bg-warning text-dark fs-6">
+            <i class="fas fa-{{BADGE_ICON}} me-1"></i>{{BADGE_TEXT}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container">
+    {{CONTENT}}
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Firebase Scripts -->
+  <script type="module" src="js/firebase-config.js"></script>
+  <script type="module" src="js/auth.js"></script>
+  
+  <script type="module">
+    import { auth } from "./js/firebase-config.js";
+    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        window.location.href = "index.html";
+      }
+    });
+
+    window.logout = async function() {
+      try {
+        await signOut(auth);
+        window.location.href = "index.html";
+      } catch (error) {
+        console.error('Erro ao fazer logout:', error);
+        window.location.href = "index.html";
+      }
+    };
+  </script>
+</body>
+</html> 

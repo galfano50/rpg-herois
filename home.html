@@ -3,159 +3,318 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bar do Truta RPG</title>
+    <title>RPG Heróis - Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap-custom.css">
     <script type="module" src="js/firebase-config.js"></script>
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Pirata+One&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Cardo:wght@700&display=swap');
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pirata+One&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cardo:wght@700&display=swap');
 
-    body {
-        background-color: #1c130a;
-        color: #e8ddc7;
-        font-family: 'Cardo', serif;
-        margin: 0;
-    }
+        body {
+            background-color: #1c130a;
+            color: #e8ddc7;
+            font-family: 'Cardo', serif;
+            margin: 0;
+            min-height: 100vh;
+        }
 
-    nav {
-        padding: 20px;
-        background: #3a2b1a;
-        border-top: 4px solid #8b5e3c;
-        border-bottom: 4px solid #8b5e3c;
-        max-width: 960px;
-        margin: 0 auto;
-    }
+        .navbar {
+            background: linear-gradient(145deg, #3a2b1a, #2c1f0e) !important;
+            border-bottom: 4px solid #8b5e3c !important;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
 
-    nav ul {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 16px 0;
-        padding: 0;
-        margin: 0;
-        list-style: none;
-        justify-content: center;
-    }
+        .navbar-brand {
+            font-family: 'Pirata One', cursive;
+            font-size: 2rem;
+            color: #f5c16c !important;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        }
 
-    nav li {
-        position: relative;
-        background: linear-gradient(145deg, #5b3a1e, #3a2412);
-        border: 2px solid #c2a87d;
-        border-radius: 12px;
-        box-shadow: 0 6px 10px rgba(0,0,0,0.4);
-        padding: 14px 24px;
-        font-weight: bold;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        cursor: pointer;
-        flex: 0 0 calc((100% / 5) - 12px);
-        margin-left: -20px;
-    }
+        .btn-logout {
+            background: linear-gradient(145deg, #dc3545, #c82333);
+            border: none;
+            color: white;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
 
-    nav li:nth-child(5n + 1) {
-        margin-left: 0;
-    }
+        .btn-logout:hover {
+            background: linear-gradient(145deg, #c82333, #dc3545);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+        }
 
-    nav li:hover {
-        background: linear-gradient(145deg, #7a4e25, #50331c);
-        transform: translateY(-6px) scale(1.05);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-        z-index: 10;
-    }
+        .main-content {
+            padding: 2rem 0;
+        }
 
-    nav li a {
-        text-decoration: none;
-        color: #f0e6d2;
-        font-family: 'Cardo', serif;
-        font-size: 16px;
-        display: block;
-        text-align: center;
-    }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
 
-    nav li a:focus,
-    nav li a:hover {
-        outline: none;
-        color: #ffe19c;
-    }
+        .menu-card {
+            background: linear-gradient(145deg, #3a2b1a, #2c1f0e);
+            border: 3px solid #8b5e3c;
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
 
-    header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px 40px;
-        background-color: #2c1f0e;
-        color: #fff;
-        box-shadow: 0 6px 10px rgba(0,0,0,0.5);
-        border-bottom: 3px solid #8b5e3c;
-        font-family: 'Pirata One', cursive;
-    }
+        .menu-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s;
+        }
 
-    header h1 {
-        font-size: 36px;
-        font-weight: normal;
-        color: #f5c16c;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-        margin: 0;
-        letter-spacing: 2px;
-    }
+        .menu-card:hover::before {
+            left: 100%;
+        }
 
-    #loading {
-        text-align: center;
-        margin-top: 20px;
-        font-weight: bold;
-        font-family: 'Cardo', serif;
-        font-size: 18px;
-        color: #ffcc66;
-    }
-</style>
+        .menu-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+            border-color: #c2a87d;
+        }
 
+        .menu-card i {
+            font-size: 3rem;
+            color: #f5c16c;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-card:hover i {
+            transform: scale(1.1);
+        }
+
+        .menu-card h3 {
+            font-family: 'Cardo', serif;
+            color: #f0e6d2;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .menu-card p {
+            color: #c2a87d;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .loading-spinner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 50vh;
+        }
+
+        .spinner-border {
+            color: #f5c16c;
+        }
+
+        .welcome-section {
+            background: linear-gradient(145deg, #2c1f0e, #1c130a);
+            border: 3px solid #8b5e3c;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .welcome-title {
+            font-family: 'Pirata One', cursive;
+            color: #f5c16c;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        }
+
+        .welcome-text {
+            color: #e8ddc7;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .menu-grid {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+            
+            .navbar-brand {
+                font-size: 1.5rem;
+            }
+            
+            .welcome-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-
-    <header>
-        <h1>RPG Herois</h1>
-        <button id="logout-btn">Sair</button>
-    </header>
-
-    <nav>
-        <ul>
-            <li><a href="Ficha.html" target="_blank">Ficha</a></li>
-            <li><a href="Conceitos.html" target="_blank">Conceitos Básicos</a></li>
-            <li><a href="Personagem.html" target="_blank">Criando seu personagem</a></li>
-            <li><a href="Atributos.html" target="_blank">Atributos</a></li>
-            <li><a href="Poderes.html" target="_blank">Lista de Poderes</a></li>
-            <li><a href="Jogabilidade.html" target="_blank">Jogabilidade</a></li>
-            <li><a href="Magia.html" target="_blank">Lista de magias</a></li>
-            <li><a href="Equipamentos.html" target="_blank">Equipamentos</a></li>
-            <li><a href="Pericias.html" target="_blank">Perícias</a></li>
-            <li><a href="Treinos.html" target="_blank">Treinos</a></li>
-            <li><a href="Nivel.html" target="_blank">Passagem de Nível</a></li>
-            <li><a href="Escala.html" target="_blank">Escala do RPG</a></li>
-            <li><a href="Mapas.html" target="_blank">Mapas</a></li>
-            <li><a href="aladomestre.html" target="_blank">Ala Mestre</a></li>
-        </ul>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-dragon me-2"></i>
+                RPG Heróis
+            </a>
+            <button class="btn btn-logout" id="logout-btn">
+                <i class="fas fa-sign-out-alt me-2"></i>
+                Sair
+            </button>
+        </div>
     </nav>
 
-    <div id="loading">Verificando autenticação...</div>
+    <!-- Loading Spinner -->
+    <div id="loading" class="loading-spinner">
+        <div class="text-center">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Carregando...</span>
+            </div>
+            <p class="text-warning mt-3">Verificando autenticação...</p>
+        </div>
+    </div>
 
+    <!-- Main Content (hidden initially) -->
+    <div id="main-content" class="main-content" style="display: none;">
+        <div class="container-fluid">
+            <!-- Welcome Section -->
+            <div class="welcome-section">
+                <h1 class="welcome-title">Bem-vindo, Aventureiro!</h1>
+                <p class="welcome-text">Escolha sua próxima aventura no menu abaixo</p>
+            </div>
+
+            <!-- Menu Grid -->
+            <div class="menu-grid">
+                <div class="menu-card" onclick="window.open('Ficha.html', '_blank')">
+                    <i class="fas fa-scroll"></i>
+                    <h3>Ficha</h3>
+                    <p>Gerencie sua ficha de personagem</p>
+                </div>
+
+                <div class="menu-card" onclick="window.open('Conceitos.html', '_blank')">
+                    <i class="fas fa-book-open"></i>
+                    <h3>Conceitos Básicos</h3>
+                    <p>Aprenda os fundamentos do RPG</p>
+                </div>
+
+                <div class="menu-card" onclick="window.open('Personagem.html', '_blank')">
+                    <i class="fas fa-user-plus"></i>
+                    <h3>Criando seu Personagem</h3>
+                    <p>Guia para criar seu herói</p>
+                </div>
+
+                <div class="menu-card" onclick="window.open('Atributos.html', '_blank')">
+                    <i class="fas fa-chart-bar"></i>
+                    <h3>Atributos</h3>
+                    <p>Entenda os atributos do personagem</p>
+                </div>
+
+                <div class="menu-card" onclick="window.open('Poderes.html', '_blank')">
+                    <i class="fas fa-magic"></i>
+                    <h3>Lista de Poderes</h3>
+                    <p>Explore os poderes disponíveis</p>
+                </div>
+
+                <div class="menu-card" onclick="window.open('Jogabilidade.html', '_blank')">
+                    <i class="fas fa-dice-d20"></i>
+                    <h3>Jogabilidade</h3>
+                    <p>Regras e mecânicas do jogo</p>
+                </div>
+
+                <div class="menu-card" onclick="window.open('Magia.html', '_blank')">
+                    <i class="fas fa-wand-magic-sparkles"></i>
+                    <h3>Lista de Magias</h3>
+                    <p>Catálogo completo de magias</p>
+                </div>
+
+                <div class="menu-card" onclick="window.open('Equipamentos.html', '_blank')">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Equipamentos</h3>
+                    <p>Armas, armaduras e itens</p>
+                </div>
+
+                <div class="menu-card" onclick="window.open('Pericias.html', '_blank')">
+                    <i class="fas fa-tools"></i>
+                    <h3>Perícias</h3>
+                    <p>Habilidades e especializações</p>
+                </div>
+
+                <div class="menu-card" onclick="window.open('Treinos.html', '_blank')">
+                    <i class="fas fa-dumbbell"></i>
+                    <h3>Treinos</h3>
+                    <p>Sistema de treinamento</p>
+                </div>
+
+                <div class="menu-card" onclick="window.open('Nivel.html', '_blank')">
+                    <i class="fas fa-level-up-alt"></i>
+                    <h3>Passagem de Nível</h3>
+                    <p>Como evoluir seu personagem</p>
+                </div>
+
+                <div class="menu-card" onclick="window.open('Escala.html', '_blank')">
+                    <i class="fas fa-ruler"></i>
+                    <h3>Escala do RPG</h3>
+                    <p>Medidas e proporções do mundo</p>
+                </div>
+
+                <div class="menu-card" onclick="window.open('Mapas.html', '_blank')">
+                    <i class="fas fa-map"></i>
+                    <h3>Mapas</h3>
+                    <p>Explore o mundo do RPG</p>
+                </div>
+
+                <div class="menu-card" onclick="window.open('aladomestre.html', '_blank')">
+                    <i class="fas fa-crown"></i>
+                    <h3>Ala Mestre</h3>
+                    <p>Área exclusiva para mestres</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script type="module">
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
         import { app } from "./js/firebase-config.js";
 
         const auth = getAuth(app);
         const loadingDiv = document.getElementById("loading");
-        const nav = document.querySelector("nav");
-        const header = document.querySelector("header");
-
-        // Inicialmente esconde tudo até autenticar
-        nav.style.display = "none";
-        header.style.display = "none";
+        const mainContent = document.getElementById("main-content");
 
         // Verifica o estado da autenticação
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 // Usuário autenticado -> exibe conteúdo
                 loadingDiv.style.display = "none";
-                nav.style.display = "block";
-                header.style.display = "flex";
+                mainContent.style.display = "block";
+                
+                // Adiciona animação de entrada
+                mainContent.style.opacity = "0";
+                mainContent.style.transform = "translateY(20px)";
+                setTimeout(() => {
+                    mainContent.style.transition = "all 0.6s ease";
+                    mainContent.style.opacity = "1";
+                    mainContent.style.transform = "translateY(0)";
+                }, 100);
             } else {
                 // Usuário não autenticado -> redireciona
                 window.location.href = "index.html";
@@ -163,12 +322,10 @@
         });
 
         // Função de logout
+        import { logout } from './js/auth.js';
+        
         document.getElementById("logout-btn").addEventListener("click", () => {
-            signOut(auth).then(() => {
-                window.location.href = "index.html";
-            }).catch((error) => {
-                console.error("Erro ao deslogar:", error.message);
-            });
+            logout();
         });
     </script>
 </body>

@@ -1,93 +1,325 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Conceitos Básicos</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <script type="module" src="js/firebase-config.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conceitos Básicos - Site RPG</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link href="css/style.css" rel="stylesheet">
+  
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      padding: 20px;
-      line-height: 1.6;
-      background-color: #fdfaf5;
-      color: #2c1f0e;
-    }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px;
-      background-color: #2c1f0e;
-      color: #fff;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-    }
-
-    header h1 {
+    .page-header {
+      background: linear-gradient(135deg, #2c1f0e 0%, #4b3b2b 100%);
       color: #f5c16c;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
-      margin: 0;
+      padding: 2rem 0;
+      margin-bottom: 2rem;
     }
-
-    h2 {
+    
+    .concept-card {
+      background: linear-gradient(145deg, #fdfaf5 0%, #f8f5f0 100%);
+      border: 2px solid #e8e0d0;
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 15px rgba(44, 31, 14, 0.1);
+      transition: all 0.3s ease;
+    }
+    
+    .concept-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(44, 31, 14, 0.15);
+      border-color: #f5c16c;
+    }
+    
+    .concept-card h3 {
       color: #4b3b2b;
-      margin-top: 30px;
+      border-bottom: 2px solid #f5c16c;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
     }
-
-    p {
-      margin-bottom: 16px;
+    
+    .concept-icon {
+      font-size: 2rem;
+      color: #f5c16c;
+      margin-bottom: 1rem;
     }
-
-    strong {
-      color: #000;
+    
+    .example-box {
+      background: linear-gradient(145deg, #fff 0%, #f8f9fa 100%);
+      border-left: 4px solid #f5c16c;
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 0 10px 10px 0;
+    }
+    
+    .level-table {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .level-table th {
+      background: linear-gradient(145deg, #4b3b2b 0%, #2c1f0e 100%);
+      color: #f5c16c;
+      font-weight: 600;
+      border: none;
     }
   </style>
 </head>
-<body>
-  <header>
-    <h1>Conceitos Básicos</h1>
-    <button id="logout-btn">Sair</button>
-  </header>
 
-  <main>
-    <p><strong>Mestre ou Narrador:</strong> É o jogador que fica responsável pelas regras do jogo. É uma espécie de diretor ou coordenador do jogo que controla os NPC’s, cria e executa as aventuras.</p>
+<body class="bg-light">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background: linear-gradient(135deg, #1a1a1a 0%, #2c1810 100%);">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="home.html">
+        <i class="fas fa-dragon me-2"></i>Site RPG
+      </a>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="home.html">
+              <i class="fas fa-home me-1"></i>Início
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="Ficha.html">
+              <i class="fas fa-scroll me-1"></i>Ficha
+            </a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown">
+              <i class="fas fa-book me-1"></i>Regras
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="Conceitos.html"><i class="fas fa-info-circle me-2"></i>Conceitos Básicos</a></li>
+              <li><a class="dropdown-item" href="Atributos.html"><i class="fas fa-dumbbell me-2"></i>Atributos</a></li>
+              <li><a class="dropdown-item" href="Pericias.html"><i class="fas fa-tools me-2"></i>Perícias</a></li>
+              <li><a class="dropdown-item" href="Poderes.html"><i class="fas fa-bolt me-2"></i>Poderes</a></li>
+              <li><a class="dropdown-item" href="Magia.html"><i class="fas fa-magic me-2"></i>Magia</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="Jogabilidade.html"><i class="fas fa-gamepad me-2"></i>Jogabilidade</a></li>
+              <li><a class="dropdown-item" href="Nivel.html"><i class="fas fa-level-up me-2"></i>Nível</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="aladomestre.html">
+              <i class="fas fa-crown me-1"></i>Ala do Mestre
+            </a>
+          </li>
+        </ul>
+        
+        <div class="navbar-nav">
+          <button class="btn btn-outline-warning" onclick="logout()">
+            <i class="fas fa-sign-out-alt me-1"></i>Sair
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
 
-    <p><strong>Atributos:</strong> São os atributos que descrevem como é o seu personagem e definem o sucesso ou não de seus testes. São um total de 8 e divididos em físicos e mentais. Os atributos físicos são: força, constituição, destreza e agilidade; enquanto os mentais são: inteligência, percepção, força de vontade e carisma.</p>
+  <!-- Header -->
+  <div class="page-header">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <h1 class="display-4 fw-bold mb-0">
+            <i class="fas fa-info-circle me-3"></i>Conceitos Básicos
+          </h1>
+          <p class="lead mb-0 mt-2">Fundamentos essenciais do sistema de RPG</p>
+        </div>
+        <div class="col-md-4 text-end">
+          <div class="badge bg-warning text-dark fs-6">
+            <i class="fas fa-graduation-cap me-1"></i>Guia Iniciante
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <p><strong>Nível:</strong> Em um jogo de RPG, normalmente precisamos de alguma coisa para comparar os personagens entre si. Os níveis variam de 1 a 50, e a cada nível o personagem ganha pontos para distribuir em HP, P.E. e Atributos, seguindo a tabela:</p>
-    <ul>
-      <li>Lv 1 ao 10: 1d6</li>
-      <li>Lv 11 ao 25: 1d10</li>
-      <li>Lv 26 ao 50: 1d20</li>
-    </ul>
+  <!-- Main Content -->
+  <div class="container">
+    <!-- Mestre ou Narrador -->
+    <div class="row">
+      <div class="col-12">
+        <div class="concept-card">
+          <div class="text-center mb-3">
+            <i class="fas fa-crown concept-icon"></i>
+          </div>
+          <h3>Mestre ou Narrador</h3>
+          <p class="mb-0">É o jogador que fica responsável pelas regras do jogo. É uma espécie de diretor ou coordenador do jogo que controla os NPC's, cria e executa as aventuras.</p>
+        </div>
+      </div>
+    </div>
 
-    <p><strong>Pontos de Vida (HP):</strong> É a energia vital do personagem. Quanto mais HP, mais difícil será matá-lo. Recupera-se com turnos e descanso, podendo melhorar com cuidados adequados.</p>
+    <!-- Atributos -->
+    <div class="row">
+      <div class="col-12">
+        <div class="concept-card">
+          <div class="text-center mb-3">
+            <i class="fas fa-dumbbell concept-icon"></i>
+          </div>
+          <h3>Atributos</h3>
+          <p class="mb-3">São os atributos que descrevem como é o seu personagem e definem o sucesso ou não de seus testes. São um total de 8 e divididos em físicos e mentais.</p>
+          
+          <div class="row">
+            <div class="col-md-6">
+              <h5 class="text-primary"><i class="fas fa-running me-2"></i>Atributos Físicos</h5>
+              <ul class="list-unstyled">
+                <li><i class="fas fa-fist-raised me-2"></i>Força</li>
+                <li><i class="fas fa-heart me-2"></i>Constituição</li>
+                <li><i class="fas fa-hand-paper me-2"></i>Destreza</li>
+                <li><i class="fas fa-running me-2"></i>Agilidade</li>
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <h5 class="text-info"><i class="fas fa-brain me-2"></i>Atributos Mentais</h5>
+              <ul class="list-unstyled">
+                <li><i class="fas fa-lightbulb me-2"></i>Inteligência</li>
+                <li><i class="fas fa-eye me-2"></i>Percepção</li>
+                <li><i class="fas fa-shield-alt me-2"></i>Força de Vontade</li>
+                <li><i class="fas fa-comments me-2"></i>Carisma</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <p><strong>Pontos de Energia (P.E.):</strong> Representa o vigor do personagem. Define sua resistência em lutas, corridas, etc. Também se recupera com descanso e alimentação.</p>
+    <!-- Nível -->
+    <div class="row">
+      <div class="col-12">
+        <div class="concept-card">
+          <div class="text-center mb-3">
+            <i class="fas fa-level-up concept-icon"></i>
+          </div>
+          <h3>Nível</h3>
+          <p class="mb-3">Em um jogo de RPG, normalmente precisamos de alguma coisa para comparar os personagens entre si. Os níveis variam de 1 a 50, e a cada nível o personagem ganha pontos para distribuir em HP, P.E. e Atributos.</p>
+          
+          <div class="table-responsive">
+            <table class="table level-table table-hover">
+              <thead>
+                <tr>
+                  <th>Nível</th>
+                  <th>Pontos Ganhos</th>
+                  <th>Dado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>1 ao 10</td><td>1 a 6 pontos</td><td>1d6</td></tr>
+                <tr><td>11 ao 25</td><td>1 a 10 pontos</td><td>1d10</td></tr>
+                <tr><td>26 ao 50</td><td>1 a 20 pontos</td><td>1d20</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <p><strong>Rodada:</strong> Uma rodada de aventura equivale a 2 minutos. No combate, cada rodada tem dois turnos (ação e contra-ação). Cada ação dura cerca de 10 segundos.</p>
+    <!-- Pontos de Vida -->
+    <div class="row">
+      <div class="col-md-6">
+        <div class="concept-card">
+          <div class="text-center mb-3">
+            <i class="fas fa-heartbeat concept-icon"></i>
+          </div>
+          <h3>Pontos de Vida (HP)</h3>
+          <p class="mb-0">É a energia vital do personagem. Quanto mais HP, mais difícil será matá-lo. Recupera-se com turnos e descanso, podendo melhorar com cuidados adequados.</p>
+        </div>
+      </div>
+      
+      <div class="col-md-6">
+        <div class="concept-card">
+          <div class="text-center mb-3">
+            <i class="fas fa-bolt concept-icon"></i>
+          </div>
+          <h3>Pontos de Energia (P.E.)</h3>
+          <p class="mb-0">Representa o vigor do personagem. Define sua resistência em lutas, corridas, etc. Também se recupera com descanso e alimentação.</p>
+        </div>
+      </div>
+    </div>
 
-    <p><strong>Exemplo:</strong> Tonny, o provedor da paz, usa um soco contra o vilão Professor das Marionetes. Ambos fazem um teste de DEX para determinar quem acerta primeiro.</p>
+    <!-- Rodada -->
+    <div class="row">
+      <div class="col-12">
+        <div class="concept-card">
+          <div class="text-center mb-3">
+            <i class="fas fa-clock concept-icon"></i>
+          </div>
+          <h3>Rodada</h3>
+          <p class="mb-3">Uma rodada de aventura equivale a 2 minutos. No combate, cada rodada tem dois turnos (ação e contra-ação). Cada ação dura cerca de 10 segundos.</p>
+          
+          <div class="example-box">
+            <h6><i class="fas fa-play me-2"></i>Exemplo:</h6>
+            <p class="mb-0">Tonny, o provedor da paz, usa um soco contra o vilão Professor das Marionetes. Ambos fazem um teste de DEX para determinar quem acerta primeiro.</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <p><strong>IP (Índice de Proteção):</strong> Representa a “armadura” do personagem, como coletes ou escudos. Protege contra tipos específicos de dano.</p>
+    <!-- IP e Dano -->
+    <div class="row">
+      <div class="col-md-6">
+        <div class="concept-card">
+          <div class="text-center mb-3">
+            <i class="fas fa-shield-alt concept-icon"></i>
+          </div>
+          <h3>IP (Índice de Proteção)</h3>
+          <p class="mb-0">Representa a "armadura" do personagem, como coletes ou escudos. Protege contra tipos específicos de dano.</p>
+        </div>
+      </div>
+      
+      <div class="col-md-6">
+        <div class="concept-card">
+          <div class="text-center mb-3">
+            <i class="fas fa-sword concept-icon"></i>
+          </div>
+          <h3>Dano</h3>
+          <p class="mb-2">Existem dois tipos:</p>
+          <ul class="list-unstyled">
+            <li><i class="fas fa-fist-raised me-2 text-danger"></i><strong>Dano 1:</strong> Impactos físicos (testa contra Constituição)</li>
+            <li><i class="fas fa-fire me-2 text-warning"></i><strong>Dano 2:</strong> Queimaduras, venenos etc. (testa contra proteção mágica ou tecnológica)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-    <p><strong>Dano:</strong> Existem dois tipos:
-      <ul>
-        <li><strong>Dano 1:</strong> Impactos físicos (testa contra Constituição).</li>
-        <li><strong>Dano 2:</strong> Queimaduras, venenos etc. (testa contra proteção mágica ou tecnológica).</li>
-      </ul>
-    </p>
+    <!-- Exemplo Final -->
+    <div class="row">
+      <div class="col-12">
+        <div class="concept-card">
+          <div class="text-center mb-3">
+            <i class="fas fa-lightbulb concept-icon"></i>
+          </div>
+          <h3>Exemplo Prático</h3>
+          <div class="example-box">
+            <p class="mb-0"><strong>Bruno Bucciarati</strong> atira em <strong>Mastrov</strong> com um revólver pesado (10 + 1D10 + crítico), usando um doppelganger como distração. O ataque é bem-sucedido, ignorando a defesa.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <p><strong>Exemplo:</strong> Bruno Bucciarati atira em Mastrov com um revólver pesado (10 + 1D10 + crítico), usando um doppelganger como distração. O ataque é bem-sucedido, ignorando a defesa.</p>
-  </main>
-
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Firebase Scripts -->
+  <script type="module" src="js/firebase-config.js"></script>
+  <script type="module" src="js/auth.js"></script>
+  
   <script type="module">
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-    import { app } from "./js/firebase-config.js";
-
-    const auth = getAuth(app);
+    import { auth } from "./js/firebase-config.js";
+    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 
     onAuthStateChanged(auth, (user) => {
       if (!user) {
@@ -95,11 +327,15 @@
       }
     });
 
-    document.getElementById("logout-btn").addEventListener("click", () => {
-      signOut(auth).then(() => {
+    window.logout = async function() {
+      try {
+        await signOut(auth);
         window.location.href = "index.html";
-      });
-    });
+      } catch (error) {
+        console.error('Erro ao fazer logout:', error);
+        window.location.href = "index.html";
+      }
+    };
   </script>
 </body>
 </html>

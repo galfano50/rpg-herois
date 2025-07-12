@@ -1,199 +1,463 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Atributos</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <script type="module" src="js/firebase-config.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atributos - Site RPG</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link href="css/style.css" rel="stylesheet">
+  
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      padding: 20px;
-      background-color: #fcf8f2;
-      color: #2c1f0e;
-      line-height: 1.6;
-    }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px;
-      background-color: #2c1f0e;
-      color: #fff;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-    }
-
-    header h1 {
-      margin: 0;
+    .page-header {
+      background: linear-gradient(135deg, #2c1f0e 0%, #4a3523 100%);
       color: #ffcb74;
+      padding: 2rem 0;
+      margin-bottom: 2rem;
     }
-
-    h2, h3 {
+    
+    .attribute-card {
+      background: linear-gradient(145deg, #fcf8f2 0%, #f5f0e8 100%);
+      border: 2px solid #d4c4a8;
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 15px rgba(44, 31, 14, 0.1);
+      transition: all 0.3s ease;
+    }
+    
+    .attribute-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(44, 31, 14, 0.15);
+      border-color: #ffcb74;
+    }
+    
+    .attribute-card h3 {
       color: #4a3523;
-      margin-top: 24px;
+      border-bottom: 2px solid #ffcb74;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
     }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 12px;
-      margin-bottom: 20px;
+    
+    .table-custom {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
-
-    table, th, td {
-      border: 1px solid #aaa;
-      padding: 8px;
-      text-align: left;
+    
+    .table-custom th {
+      background: linear-gradient(145deg, #4a3523 0%, #2c1f0e 100%);
+      color: #ffcb74;
+      font-weight: 600;
+      border: none;
     }
-
-    th {
-      background-color: #eee;
+    
+    .table-custom td {
+      border-color: #e9ecef;
+      vertical-align: middle;
     }
-
-    p, li {
-      margin-bottom: 10px;
+    
+    .table-custom tbody tr:hover {
+      background-color: #f8f9fa;
+    }
+    
+    .attribute-icon {
+      font-size: 2rem;
+      color: #ffcb74;
+      margin-bottom: 1rem;
+    }
+    
+    .section-divider {
+      border-top: 3px solid #ffcb74;
+      margin: 3rem 0;
+      opacity: 0.3;
     }
   </style>
 </head>
-<body>
-  <header>
-    <h1>Atributos</h1>
-    <button id="logout-btn">Sair</button>
-  </header>
 
-  <main>
-    <p>Atributos são os números que definem as características básicas de seu personagem. Eles são usados para testes e comparações com outros personagens, criaturas e obstáculos. Abaixo, exemplos ajudam a medir o nível de poder de cada atributo.</p>
+<body class="bg-light">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background: linear-gradient(135deg, #1a1a1a 0%, #2c1810 100%);">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="home.html">
+        <i class="fas fa-dragon me-2"></i>Site RPG
+      </a>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="home.html">
+              <i class="fas fa-home me-1"></i>Início
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="Ficha.html">
+              <i class="fas fa-scroll me-1"></i>Ficha
+            </a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown">
+              <i class="fas fa-book me-1"></i>Regras
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="Atributos.html"><i class="fas fa-dumbbell me-2"></i>Atributos</a></li>
+              <li><a class="dropdown-item" href="Pericias.html"><i class="fas fa-tools me-2"></i>Perícias</a></li>
+              <li><a class="dropdown-item" href="Poderes.html"><i class="fas fa-bolt me-2"></i>Poderes</a></li>
+              <li><a class="dropdown-item" href="Magia.html"><i class="fas fa-magic me-2"></i>Magia</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="Jogabilidade.html"><i class="fas fa-gamepad me-2"></i>Jogabilidade</a></li>
+              <li><a class="dropdown-item" href="Nivel.html"><i class="fas fa-level-up me-2"></i>Nível</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="aladomestre.html">
+              <i class="fas fa-crown me-1"></i>Ala do Mestre
+            </a>
+          </li>
+        </ul>
+        
+        <div class="navbar-nav">
+          <button class="btn btn-outline-warning" onclick="logout()">
+            <i class="fas fa-sign-out-alt me-1"></i>Sair
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
 
-    <h2>Atributos Físicos</h2>
+  <!-- Header -->
+  <div class="page-header">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <h1 class="display-4 fw-bold mb-0">
+            <i class="fas fa-dumbbell me-3"></i>Atributos
+          </h1>
+          <p class="lead mb-0 mt-2">Características básicas que definem seu personagem</p>
+        </div>
+        <div class="col-md-4 text-end">
+          <div class="badge bg-warning text-dark fs-6">
+            <i class="fas fa-info-circle me-1"></i>Guia de Referência
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <h3>1º - Força (FOR)</h3>
-    <p>Define a força muscular do personagem. Afeta o dano, o peso que pode carregar e o cálculo de HP.</p>
-    <table>
-      <tr><th>Força</th><th>Exemplo</th><th>Peso Máximo</th></tr>
-      <tr><td>14</td><td>Média humana</td><td>60 Kg</td></tr>
-      <tr><td>24</td><td>Humano forte</td><td>90 Kg</td></tr>
-      <tr><td>42</td><td>Bruce Lee</td><td>270 Kg</td></tr>
-      <tr><td>50</td><td>Ciclope, Batman</td><td>320 Kg</td></tr>
-      <tr><td>90</td><td>Wolverine, Capitão</td><td>2,1 Ton</td></tr>
-      <tr><td>106</td><td>Fera, Grodd</td><td>30 Ton</td></tr>
-      <tr><td>140</td><td>Homem-Aranha</td><td>180 Ton</td></tr>
-      <tr><td>160</td><td>Homem de Ferro</td><td>2.000 Ton</td></tr>
-      <tr><td>200</td><td>Vampira, Visão</td><td>9.000 Ton</td></tr>
-      <tr><td>240</td><td>Colossus</td><td>100.000 Ton</td></tr>
-      <tr><td>250</td><td>Coisa, Giganta</td><td>160.000 Ton</td></tr>
-      <tr><td>450</td><td>Hulk</td><td>6.000.000 Ton (Pirâmide)</td></tr>
-    </table>
+  <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="alert alert-info">
+          <i class="fas fa-info-circle me-2"></i>
+          <strong>Atributos</strong> são os números que definem as características básicas de seu personagem. Eles são usados para testes e comparações com outros personagens, criaturas e obstáculos. Abaixo, exemplos ajudam a medir o nível de poder de cada atributo.
+        </div>
+      </div>
+    </div>
 
-    <h3>2º - Constituição (CON)</h3>
-    <p>Reflete resistência física, saúde e resistência a fadiga, venenos e clima. Também impacta no HP.</p>
-    <table>
-      <tr><th>Constituição</th><th>Exemplo</th></tr>
-      <tr><td>10</td><td>Cap. antes do soro</td></tr>
-      <tr><td>15</td><td>Média humana</td></tr>
-      <tr><td>50</td><td>Ciclope, Batman</td></tr>
-      <tr><td>120</td><td>Capitão América</td></tr>
-      <tr><td>180</td><td>Homem-Aranha</td></tr>
-      <tr><td>210</td><td>Wolverine</td></tr>
-      <tr><td>220</td><td>Homem de Ferro (Mark 3)</td></tr>
-      <tr><td>260</td><td>Giganta</td></tr>
-      <tr><td>400</td><td>Colossus, Coisa</td></tr>
-      <tr><td>450</td><td>Hulk</td></tr>
-    </table>
+    <!-- Atributos Físicos -->
+    <div class="row">
+      <div class="col-12">
+        <h2 class="text-center mb-4">
+          <i class="fas fa-running me-2"></i>Atributos Físicos
+        </h2>
+      </div>
+    </div>
 
-    <h3>3º - Destreza (DEX)</h3>
-    <p>Coordenação com mãos e pés, usada em manuseio de ferramentas, equilíbrio, tiros e golpes curtos.</p>
-    <table>
-      <tr><th>Destreza</th><th>Exemplo</th></tr>
-      <tr><td>10</td><td>Coisa</td></tr>
-      <tr><td>30</td><td>Média humana</td></tr>
-      <tr><td>60</td><td>Mercenário</td></tr>
-      <tr><td>125</td><td>Bruce Lee, Justiceiro</td></tr>
-      <tr><td>160</td><td>Ciclope, Batman</td></tr>
-      <tr><td>220</td><td>Visão</td></tr>
-      <tr><td>360</td><td>Neo, Legolas</td></tr>
-      <tr><td>400</td><td>Homem-Aranha</td></tr>
-    </table>
+    <!-- Força -->
+    <div class="col-12">
+      <div class="attribute-card">
+        <div class="text-center mb-3">
+          <i class="fas fa-fist-raised attribute-icon"></i>
+        </div>
+        <h3>1º - Força (FOR)</h3>
+        <p class="mb-3">Define a força muscular do personagem. Afeta o dano, o peso que pode carregar e o cálculo de HP.</p>
+        
+        <div class="table-responsive">
+          <table class="table table-custom table-hover">
+            <thead>
+              <tr>
+                <th>Força</th>
+                <th>Exemplo</th>
+                <th>Peso Máximo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>14</td><td>Média humana</td><td>60 Kg</td></tr>
+              <tr><td>24</td><td>Humano forte</td><td>90 Kg</td></tr>
+              <tr><td>42</td><td>Bruce Lee</td><td>270 Kg</td></tr>
+              <tr><td>50</td><td>Ciclope, Batman</td><td>320 Kg</td></tr>
+              <tr><td>90</td><td>Wolverine, Capitão</td><td>2,1 Ton</td></tr>
+              <tr><td>106</td><td>Fera, Grodd</td><td>30 Ton</td></tr>
+              <tr><td>140</td><td>Homem-Aranha</td><td>180 Ton</td></tr>
+              <tr><td>160</td><td>Homem de Ferro</td><td>2.000 Ton</td></tr>
+              <tr><td>200</td><td>Vampira, Visão</td><td>9.000 Ton</td></tr>
+              <tr><td>240</td><td>Colossus</td><td>100.000 Ton</td></tr>
+              <tr><td>250</td><td>Coisa, Giganta</td><td>160.000 Ton</td></tr>
+              <tr><td>450</td><td>Hulk</td><td>6.000.000 Ton (Pirâmide)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 
-    <h3>4º - Agilidade (AGL)</h3>
-    <p>Movimentos corporais amplos: corrida, esquiva, danças e saltos.</p>
-    <table>
-      <tr><th>Agilidade</th><th>Exemplo</th></tr>
-      <tr><td>10</td><td>Modok</td></tr>
-      <tr><td>30</td><td>Média humana</td></tr>
-      <tr><td>60</td><td>Hulk</td></tr>
-      <tr><td>160</td><td>Ciclope, Batman</td></tr>
-      <tr><td>190</td><td>Capitão América</td></tr>
-      <tr><td>240</td><td>Predador, Fera</td></tr>
-      <tr><td>360</td><td>Legolas</td></tr>
-      <tr><td>400</td><td>Homem-Aranha</td></tr>
-    </table>
+    <!-- Constituição -->
+    <div class="col-12">
+      <div class="attribute-card">
+        <div class="text-center mb-3">
+          <i class="fas fa-heart attribute-icon"></i>
+        </div>
+        <h3>2º - Constituição (CON)</h3>
+        <p class="mb-3">Reflete resistência física, saúde e resistência a fadiga, venenos e clima. Também impacta no HP.</p>
+        
+        <div class="table-responsive">
+          <table class="table table-custom table-hover">
+            <thead>
+              <tr>
+                <th>Constituição</th>
+                <th>Exemplo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>10</td><td>Cap. antes do soro</td></tr>
+              <tr><td>15</td><td>Média humana</td></tr>
+              <tr><td>50</td><td>Ciclope, Batman</td></tr>
+              <tr><td>120</td><td>Capitão América</td></tr>
+              <tr><td>180</td><td>Homem-Aranha</td></tr>
+              <tr><td>210</td><td>Wolverine</td></tr>
+              <tr><td>220</td><td>Homem de Ferro (Mark 3)</td></tr>
+              <tr><td>260</td><td>Giganta</td></tr>
+              <tr><td>400</td><td>Colossus, Coisa</td></tr>
+              <tr><td>450</td><td>Hulk</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 
-    <h2>Atributos Mentais</h2>
+    <!-- Destreza -->
+    <div class="col-12">
+      <div class="attribute-card">
+        <div class="text-center mb-3">
+          <i class="fas fa-hand-paper attribute-icon"></i>
+        </div>
+        <h3>3º - Destreza (DEX)</h3>
+        <p class="mb-3">Coordenação com mãos e pés, usada em manuseio de ferramentas, equilíbrio, tiros e golpes curtos.</p>
+        
+        <div class="table-responsive">
+          <table class="table table-custom table-hover">
+            <thead>
+              <tr>
+                <th>Destreza</th>
+                <th>Exemplo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>10</td><td>Coisa</td></tr>
+              <tr><td>30</td><td>Média humana</td></tr>
+              <tr><td>60</td><td>Mercenário</td></tr>
+              <tr><td>125</td><td>Bruce Lee, Justiceiro</td></tr>
+              <tr><td>160</td><td>Ciclope, Batman</td></tr>
+              <tr><td>220</td><td>Visão</td></tr>
+              <tr><td>360</td><td>Neo, Legolas</td></tr>
+              <tr><td>400</td><td>Homem-Aranha</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 
-    <h3>5º - Inteligência (INT)</h3>
-    <p>Capacidade lógica, memória, aprendizado e tomada de decisões. Influencia descobertas e estratégias.</p>
-    <table>
-      <tr><th>Inteligência</th><th>Exemplo</th></tr>
-      <tr><td>12</td><td>Wolverine</td></tr>
-      <tr><td>30</td><td>Constantine</td></tr>
-      <tr><td>46</td><td>Ciclope</td></tr>
-      <tr><td>90</td><td>Duende Verde</td></tr>
-      <tr><td>120</td><td>Doutor Estranho</td></tr>
-      <tr><td>180</td><td>Homem-Aranha</td></tr>
-      <tr><td>255</td><td>Tony Stark</td></tr>
-      <tr><td>275</td><td>Dr. Destino</td></tr>
-      <tr><td>345</td><td>Sr. Fantástico</td></tr>
-    </table>
+    <!-- Agilidade -->
+    <div class="col-12">
+      <div class="attribute-card">
+        <div class="text-center mb-3">
+          <i class="fas fa-running attribute-icon"></i>
+        </div>
+        <h3>4º - Agilidade (AGL)</h3>
+        <p class="mb-3">Movimentos corporais amplos: corrida, esquiva, danças e saltos.</p>
+        
+        <div class="table-responsive">
+          <table class="table table-custom table-hover">
+            <thead>
+              <tr>
+                <th>Agilidade</th>
+                <th>Exemplo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>10</td><td>Modok</td></tr>
+              <tr><td>30</td><td>Média humana</td></tr>
+              <tr><td>60</td><td>Hulk</td></tr>
+              <tr><td>160</td><td>Ciclope, Batman</td></tr>
+              <tr><td>190</td><td>Capitão América</td></tr>
+              <tr><td>240</td><td>Predador, Fera</td></tr>
+              <tr><td>360</td><td>Legolas</td></tr>
+              <tr><td>400</td><td>Homem-Aranha</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 
-    <h3>6º - Força de Vontade (WIL)</h3>
-    <p>Capacidade de resistir a tortura, pânico, controle mental e hipnose. Muito ligada à magia.</p>
-    <table>
-      <tr><th>Vontade</th><th>Exemplo</th></tr>
-      <tr><td>10</td><td>Capangas</td></tr>
-      <tr><td>15</td><td>Média humana</td></tr>
-      <tr><td>25</td><td>Homem de Ferro</td></tr>
-      <tr><td>60</td><td>Demolidor</td></tr>
-      <tr><td>90</td><td>Capitão América</td></tr>
-      <tr><td>190</td><td>Dr. Destino</td></tr>
-      <tr><td>230</td><td>Professor X, Loki</td></tr>
-      <tr><td>350</td><td>Dr. Estranho</td></tr>
-    </table>
+    <div class="section-divider"></div>
 
-    <h3>7º - Percepção (PER)</h3>
-    <p>Capacidade de notar detalhes, armadilhas, sutilezas e perigos ocultos.</p>
-    <table>
-      <tr><th>Percepção</th><th>Exemplo</th></tr>
-      <tr><td>15</td><td>Coisa</td></tr>
-      <tr><td>40</td><td>Média humana</td></tr>
-      <tr><td>140</td><td>Unidades Especiais</td></tr>
-      <tr><td>270</td><td>Batman</td></tr>
-      <tr><td>330</td><td>Visão</td></tr>
-      <tr><td>350</td><td>Demolidor</td></tr>
-      <tr><td>380</td><td>Homem-Aranha</td></tr>
-      <tr><td>640</td><td>Homem-Aranha Cósmico</td></tr>
-    </table>
+    <!-- Atributos Mentais -->
+    <div class="row">
+      <div class="col-12">
+        <h2 class="text-center mb-4">
+          <i class="fas fa-brain me-2"></i>Atributos Mentais
+        </h2>
+      </div>
+    </div>
 
-    <h3>8º - Carisma (CAR)</h3>
-    <p>Capacidade de convencer, seduzir, liderar ou inspirar outros. Impacta interações sociais e diplomacia.</p>
-    <table>
-      <tr><th>Carisma</th><th>Exemplo</th></tr>
-      <tr><td>5</td><td>Wolverine</td></tr>
-      <tr><td>10</td><td>Média humana</td></tr>
-      <tr><td>30</td><td>Tony Stark, Ciclope</td></tr>
-      <tr><td>50</td><td>Steve Rogers</td></tr>
-      <tr><td>180</td><td>Hércules</td></tr>
-      <tr><td>220</td><td>Legolas</td></tr>
-      <tr><td>350</td><td>Afrodite</td></tr>
-    </table>
-  </main>
+    <!-- Inteligência -->
+    <div class="col-12">
+      <div class="attribute-card">
+        <div class="text-center mb-3">
+          <i class="fas fa-lightbulb attribute-icon"></i>
+        </div>
+        <h3>5º - Inteligência (INT)</h3>
+        <p class="mb-3">Capacidade lógica, memória, aprendizado e tomada de decisões. Influencia descobertas e estratégias.</p>
+        
+        <div class="table-responsive">
+          <table class="table table-custom table-hover">
+            <thead>
+              <tr>
+                <th>Inteligência</th>
+                <th>Exemplo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>12</td><td>Wolverine</td></tr>
+              <tr><td>30</td><td>Constantine</td></tr>
+              <tr><td>46</td><td>Ciclope</td></tr>
+              <tr><td>90</td><td>Duende Verde</td></tr>
+              <tr><td>120</td><td>Doutor Estranho</td></tr>
+              <tr><td>180</td><td>Homem-Aranha</td></tr>
+              <tr><td>255</td><td>Tony Stark</td></tr>
+              <tr><td>275</td><td>Dr. Destino</td></tr>
+              <tr><td>345</td><td>Sr. Fantástico</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 
+    <!-- Força de Vontade -->
+    <div class="col-12">
+      <div class="attribute-card">
+        <div class="text-center mb-3">
+          <i class="fas fa-shield-alt attribute-icon"></i>
+        </div>
+        <h3>6º - Força de Vontade (WIL)</h3>
+        <p class="mb-3">Capacidade de resistir a tortura, pânico, controle mental e hipnose. Muito ligada à magia.</p>
+        
+        <div class="table-responsive">
+          <table class="table table-custom table-hover">
+            <thead>
+              <tr>
+                <th>Vontade</th>
+                <th>Exemplo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>10</td><td>Capangas</td></tr>
+              <tr><td>15</td><td>Média humana</td></tr>
+              <tr><td>25</td><td>Homem de Ferro</td></tr>
+              <tr><td>60</td><td>Demolidor</td></tr>
+              <tr><td>90</td><td>Capitão América</td></tr>
+              <tr><td>190</td><td>Dr. Destino</td></tr>
+              <tr><td>230</td><td>Professor X, Loki</td></tr>
+              <tr><td>350</td><td>Dr. Estranho</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Percepção -->
+    <div class="col-12">
+      <div class="attribute-card">
+        <div class="text-center mb-3">
+          <i class="fas fa-eye attribute-icon"></i>
+        </div>
+        <h3>7º - Percepção (PER)</h3>
+        <p class="mb-3">Capacidade de notar detalhes, armadilhas, sutilezas e perigos ocultos.</p>
+        
+        <div class="table-responsive">
+          <table class="table table-custom table-hover">
+            <thead>
+              <tr>
+                <th>Percepção</th>
+                <th>Exemplo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>15</td><td>Coisa</td></tr>
+              <tr><td>40</td><td>Média humana</td></tr>
+              <tr><td>140</td><td>Unidades Especiais</td></tr>
+              <tr><td>270</td><td>Batman</td></tr>
+              <tr><td>330</td><td>Visão</td></tr>
+              <tr><td>350</td><td>Demolidor</td></tr>
+              <tr><td>380</td><td>Homem-Aranha</td></tr>
+              <tr><td>640</td><td>Homem-Aranha Cósmico</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carisma -->
+    <div class="col-12">
+      <div class="attribute-card">
+        <div class="text-center mb-3">
+          <i class="fas fa-comments attribute-icon"></i>
+        </div>
+        <h3>8º - Carisma (CAR)</h3>
+        <p class="mb-3">Capacidade de convencer, seduzir, liderar ou inspirar outros. Impacta interações sociais e diplomacia.</p>
+        
+        <div class="table-responsive">
+          <table class="table table-custom table-hover">
+            <thead>
+              <tr>
+                <th>Carisma</th>
+                <th>Exemplo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>5</td><td>Wolverine</td></tr>
+              <tr><td>10</td><td>Média humana</td></tr>
+              <tr><td>30</td><td>Tony Stark, Ciclope</td></tr>
+              <tr><td>50</td><td>Steve Rogers</td></tr>
+              <tr><td>180</td><td>Hércules</td></tr>
+              <tr><td>220</td><td>Legolas</td></tr>
+              <tr><td>350</td><td>Afrodite</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Firebase Scripts -->
+  <script type="module" src="js/firebase-config.js"></script>
+  <script type="module" src="js/auth.js"></script>
+  
   <script type="module">
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-    import { app } from "./js/firebase-config.js";
-
-    const auth = getAuth(app);
+    import { auth } from "./js/firebase-config.js";
+    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 
     onAuthStateChanged(auth, (user) => {
       if (!user) {
@@ -201,11 +465,15 @@
       }
     });
 
-    document.getElementById("logout-btn").addEventListener("click", () => {
-      signOut(auth).then(() => {
+    window.logout = async function() {
+      try {
+        await signOut(auth);
         window.location.href = "index.html";
-      });
-    });
+      } catch (error) {
+        console.error('Erro ao fazer logout:', error);
+        window.location.href = "index.html";
+      }
+    };
   </script>
 </body>
 </html>
