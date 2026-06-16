@@ -53,12 +53,12 @@ async function salvarFichaFirebase() {
 
     // Campos principais
     const campos = [
-      'nome','raca','classe','nivel','vida','energia','indice_protecao', 'indice_protecao2','xp','p_heroi','p_vilao',
+      'nome','raca','classe','nivel','vida','energia','indice_protecao','indice_protecao2','xp','p_heroi','p_vilao',
       'extra11','extra12','pontos','forca','constituicao','destreza','agilidade','inteligencia',
       'percepcao','vontade','carisma','extra1','extra2','extra3','extra4','extra5','extra6',
       'extra7','extra8','extra9','extra10','poder1','poder2','poder3','poder4','poder5','poder6',
       'poder7','poder8','poder9','soma1','soma2','soma3','soma4','soma5','soma6','soma7','soma8',
-      'aprimoramento1','aprimoramento2','aprimoramento3','aprimoramento4','positivo','negativo',
+      'aprimoramento1','aprimoramento2','positivo','negativo',
       'historia','primaria','secundaria','power1','power2','power3','power4','power5',
       'item1','item2','item3','item4','item5','golpes'
     ];
