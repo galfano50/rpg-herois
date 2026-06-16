@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Perícias - RPG Bar do Truta</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/stylePE.css" />
   <script type="module" src="js/firebase-config.js"></script>
 </head>
 <body>
@@ -14,25 +14,84 @@
     <button id="logout-btn">Sair</button>
   </header>
 
-  <main style="max-width: 960px; margin: 40px auto; padding: 20px;">
-    <h1>Perícias e Passagem de Nível</h1>
+  <main class="manual-rpg">
 
-    <h2>1º - Lista de Perícias</h2>
-    <p>
-      Adestrador (INT), Montaria (AGL), Armas Brancas (DEX), Armas de Fogo (DEX),<br>
-      Atuação (CAR), Canto (PER), Arte (DEX), Culinária (PER), Dança (AGL), Pintura (DEX),<br>
-      Escapismo (AGL), Ilusionismo (DEX), Música (PER), Prestidigitação (AGL),<br>
-      Artífice (DEX), Avaliação de Obj (PER), Pilotagem (AGL), Misticismo (VON),<br>
-      Alquimia (INT), Agricultura (INT), Arqueologia (INT), Astronomia (INT),<br>
-      Botânica (PER), Direito (INT), Física (INT), Genética (INT), Robótica (INT), História (INT),<br>
-      Geografia (PER), Química (INT), Teologia (INT), Disfarce (AGL), Escalada (AGL),<br>
-      Paraquedismo (AGL), Engenharia (INT), Escutar (PER), Esquiva (AGL), Acrobacia (AGL),<br>
-      Atletismo (AGL), Computação (INT), Artes Marciais (DEX), Boxer (AGL), Canoagem (AGL),<br>
-      Caça (DEX), Corrida (AGL), Mergulho (AGL), Etiqueta (CAR), Falsificação (INT),<br>
-      Idiomas (INT), Furtar (DEX), Furtividade (AGL), Emboscada (INT), Criptografia (INT),<br>
-      Informática (INT), Jogos (DEX), Lábia (CAR), Interrogatório (INT), Hipnose (INT),<br>
-      Investigação (INT), Sedução (CAR), Tortura (DEX), Sobrevivência (CON), Negociação (CAR)
-    </p>
+      <h1>Perícias</h1>
+
+      <h2>1º - Lista de Perícias</h2>
+
+      <p>
+          As perícias representam conhecimentos, técnicas e treinamentos específicos que um personagem pode possuir. Cada perícia está associada a um atributo principal utilizado durante os testes.
+      </p>
+
+      <ul class="lista-pericias">
+
+          <li><strong>Adestrador</strong> (INT)</li>
+          <li><strong>Montaria</strong> (AGL)</li>
+          <li><strong>Armas Brancas</strong> (DEX)</li>
+          <li><strong>Armas de Fogo</strong> (DEX)</li>
+          <li><strong>Atuação</strong> (CAR)</li>
+          <li><strong>Canto</strong> (PER)</li>
+          <li><strong>Arte</strong> (DEX)</li>
+          <li><strong>Culinária</strong> (PER)</li>
+          <li><strong>Dança</strong> (AGL)</li>
+          <li><strong>Pintura</strong> (DEX)</li>
+          <li><strong>Escapismo</strong> (AGL)</li>
+          <li><strong>Ilusionismo</strong> (DEX)</li>
+          <li><strong>Música</strong> (PER)</li>
+          <li><strong>Prestidigitação</strong> (AGL)</li>
+          <li><strong>Artífice</strong> (DEX)</li>
+          <li><strong>Avaliação de Objetos</strong> (PER)</li>
+          <li><strong>Pilotagem</strong> (AGL)</li>
+          <li><strong>Misticismo</strong> (VON)</li>
+          <li><strong>Alquimia</strong> (INT)</li>
+          <li><strong>Agricultura</strong> (INT)</li>
+          <li><strong>Arqueologia</strong> (INT)</li>
+          <li><strong>Astronomia</strong> (INT)</li>
+          <li><strong>Botânica</strong> (PER)</li>
+          <li><strong>Direito</strong> (INT)</li>
+          <li><strong>Física</strong> (INT)</li>
+          <li><strong>Genética</strong> (INT)</li>
+          <li><strong>Robótica</strong> (INT)</li>
+          <li><strong>História</strong> (INT)</li>
+          <li><strong>Geografia</strong> (PER)</li>
+          <li><strong>Química</strong> (INT)</li>
+          <li><strong>Teologia</strong> (INT)</li>
+          <li><strong>Disfarce</strong> (AGL)</li>
+          <li><strong>Escalada</strong> (AGL)</li>
+          <li><strong>Paraquedismo</strong> (AGL)</li>
+          <li><strong>Engenharia</strong> (INT)</li>
+          <li><strong>Escutar</strong> (PER)</li>
+          <li><strong>Esquiva</strong> (AGL)</li>
+          <li><strong>Acrobacia</strong> (AGL)</li>
+          <li><strong>Atletismo</strong> (AGL)</li>
+          <li><strong>Computação</strong> (INT)</li>
+          <li><strong>Artes Marciais</strong> (DEX)</li>
+          <li><strong>Boxer</strong> (AGL)</li>
+          <li><strong>Canoagem</strong> (AGL)</li>
+          <li><strong>Caça</strong> (DEX)</li>
+          <li><strong>Corrida</strong> (AGL)</li>
+          <li><strong>Mergulho</strong> (AGL)</li>
+          <li><strong>Etiqueta</strong> (CAR)</li>
+          <li><strong>Falsificação</strong> (INT)</li>
+          <li><strong>Idiomas</strong> (INT)</li>
+          <li><strong>Furtar</strong> (DEX)</li>
+          <li><strong>Furtividade</strong> (AGL)</li>
+          <li><strong>Emboscada</strong> (INT)</li>
+          <li><strong>Criptografia</strong> (INT)</li>
+          <li><strong>Informática</strong> (INT)</li>
+          <li><strong>Jogos</strong> (DEX)</li>
+          <li><strong>Lábia</strong> (CAR)</li>
+          <li><strong>Interrogatório</strong> (INT)</li>
+          <li><strong>Hipnose</strong> (INT)</li>
+          <li><strong>Investigação</strong> (INT)</li>
+          <li><strong>Sedução</strong> (CAR)</li>
+          <li><strong>Tortura</strong> (DEX)</li>
+          <li><strong>Sobrevivência</strong> (CON)</li>
+          <li><strong>Negociação</strong> (CAR)</li>
+
+      </ul>
+
   </main>
 
   <script type="module">

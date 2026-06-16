@@ -4,56 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Criando seu Personagem</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/styleP.css" />
   <script type="module" src="js/firebase-config.js"></script>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      padding: 20px;
-      background-color: #fdfaf5;
-      color: #2c1f0e;
-      line-height: 1.6;
-    }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px;
-      background-color: #2c1f0e;
-      color: #fff;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-    }
-
-    header h1 {
-      color: #f5c16c;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
-      margin: 0;
-    }
-
-    h2, h3 {
-      color: #4b3b2b;
-      margin-top: 24px;
-    }
-
-    ul {
-      margin-left: 20px;
-    }
-
-    table {
-      border-collapse: collapse;
-      margin: 10px 0;
-    }
-
-    table, th, td {
-      border: 1px solid #999;
-      padding: 6px;
-    }
-
-    pre {
-      white-space: pre-wrap;
-    }
-  </style>
 </head>
 <body>
   <header>
@@ -71,38 +23,27 @@
     <p>Como ele ganhou seus poderes? Qual sua profissão, personalidade, gostos e preferências?</p>
 
     <h2>3º - Determine os atributos</h2>
-    <p>Você tem 80 pontos para distribuir entre 8 atributos, com no mínimo 5 em cada:</p>
-    <table>
-      <tr><th>Atributos</th><th>Eduardo</th><th>Gustavo</th><th>Murilo</th></tr>
-      <tr><td>Força (FOR)</td><td>30</td><td>10</td><td>15</td></tr>
-      <tr><td>Constituição (CON)</td><td>20</td><td>10</td><td>10</td></tr>
-      <tr><td>Destreza (DEX)</td><td>5</td><td>15</td><td>10</td></tr>
-      <tr><td>Agilidade (AGL)</td><td>5</td><td>15</td><td>10</td></tr>
-      <tr><td>Inteligência (INT)</td><td>5</td><td>5</td><td>10</td></tr>
-      <tr><td>Vontade (WIL)</td><td>5</td><td>15</td><td>10</td></tr>
-      <tr><td>Percepção (PER)</td><td>5</td><td>5</td><td>10</td></tr>
-      <tr><td>Carisma (CAR)</td><td>5</td><td>5</td><td>5</td></tr>
-    </table>
+    <p>Você tem 40 pontos para distribuir entre 8 atributos, com no mínimo 3 em cada:</p>
 
     <h2>4º - Pontos de Perícias</h2>
-    <p>Escolha 2 perícias. Pontos = Idade + Inteligência. Máximo de 20 pts. Se a perícia for da sua profissão, +1D10.</p>
+    <p>Escolha 2 perícias. Pontos = Idade + Inteligência. Máximo de 10 pts. Se a perícia for da sua profissão, +1D6.</p>
     <p><strong>Exemplo:</strong> Lucas tenta usar Paraquedismo (AGL) sem possuir a perícia, recebe penalidade -20. Erra o teste e sofre queda grave.</p>
 
     <h2>5º - Escolha sua Classe e seus Poderes</h2>
     <p>Duas opções:</p>
     <ul>
-      <li><strong>Escolha Total:</strong> escolha 1 Classe e até 3 poderes.</li>
-      <li><strong>Sorteio:</strong> escolha 1 Classe e sorteie até 5 poderes.</li>
+      <li><strong>Escolha Total:</strong> escolha 1 Classe e até 1 poder.</li>
     </ul>
 
     <h3>Classes e Bônus</h3>
     <pre>
-Mutante → FOR +15; CON +15
-Tecnológico → +2 Perícias tecnológicas e +1D20 em cada
-Científico → INT +15; +2 Perícias Científicas
-Místico → Magia bônus, ver planos, evoluir sem transição
-Cósmico → +1D10 em poderes; +10 pts iniciais em poderes
-Lutador → +2 Perícias de luta; +1D20 em testes de perícia; bônus se sem poderes
+Mutante → Força (Np: Att: ); Constituição (Np:  Att: );
+Tecnológico → Armadura Corporal Artificial (NP, IP, Material) + Sorteie o material.
+Científico → Inteligência (Np:  Att: ); Defesa Mental (Np: )
+Místico → Perícia: Teoria da magia; + 2 magias básicas; Pode ver o plano mágico sem a necessidade de itens ou aprimoramentos e pode evoluir seus poderes para o nível ômega sem a necessidade de transição; apenas treinando 
+Cósmico → Adaptação corporal (Np: Duração: IP: ); Vôo (NP:  Carga: Velocidade: )
+Lutador → Bônus 1: + 2 Perícias de luta; + 1D6 para todos os testes de Perícia. → Bônus 2: Ganha +1D10 para os pontos da ficha (Nível) - APENAS PARA QUEM NÃO POSSUIR PODERES.
+
     </pre>
 
     <h2>6º - Pontos de Vida e Energia</h2>
@@ -112,40 +53,42 @@ Lutador → +2 Perícias de luta; +1D20 em testes de perícia; bônus se sem pod
     <h2>7º - Bônus do Mestre</h2>
     <p>Cada personagem recebe um sorteio positivo e um negativo.</p>
     <p><strong>Exemplo 1:</strong> Isaac Teller — CEO de empresa / Código de honra com dinheiro.</p>
-    <p><strong>Exemplo 2:</strong> Miller — Possui Fiat Uno Espacial / Deve sempre fazer uma dança.</p>
+    <p><strong>Exemplo 2:</strong> Miller — Possui Fiat Uno Espacial / Deve sempre fazer uma dançaao se apresentar.</p>
 
     <h2>8º - Aprimoramentos</h2>
     <ul>
-      <li><strong>Positivo:</strong> vantagem natural</li>
-      <li><strong>Evolutivo:</strong> ganha outra classe</li>
-      <li><strong>Próprio:</strong> aprimoramentos por experiências</li>
-      <li><strong>Aprimoramento de poderes:</strong> nível Ômega → até 2 aprimoramentos por poder</li>
+      <li><strong>Positivo:</strong> Se trata de uma passiva para seu personagem</li>
+      <li><strong>Aprimoramento de poderes:</strong> nível Ômega → até 1 aprimoramento por poder</li>
     </ul>
 
     <h2>9º - Raça</h2>
     <p>Se escolher uma raça, não escolhe classe ou poderes. Alguns exemplos:</p>
     <pre>
 Terráqueos:
-Humanos → escolha classe e poderes
+Humanos → escolha sua classe e seus respectivos bônus e escolha seu poder
 
-Atlântis → Cósmico: Controle de água, força, respiração aquática etc.
-Amazonas → Místico: Força, resistência, percepção
-
-Dracônicos → Místico: Vôo, fogo, resistência mágica
-Vampiros → Místico: Regeneração, penalidade solar
-Lobisomem → Místico: Berserker, penalidade com prata
-
+Atlântis → Cósmico: Força; Constituição; Resistência Corporal; Sentidos aprimorados; Respirar embaixo d'água; Controle de anfíbios ou Controle de água.
+Amazonas → Místico: Força; Constituição; Resistência Corporal; Resistência a magia; Sentidos aprimorados; Agilidade
+Dracônicos → Místico: Força; Constituição; Vôo (Asas); Gerar Fogo (Boca); Resistência Corporal; Armas
+naturais (Presas e Garras); Resistência a magia
+Vampiros → Místico: Força; Constituição; Corrida; Destreza; Hipnose; Sentidos Apurados; Regeneração.
+		Penalidades: Crítico Máximo e Queimadura de 3º Grau a cada turno exposto a luz solar.
+		Vantagem territorial: Quando estiver de noite
+Lobisomem → Místico: Força; Constituição; Agilidade; Sentidos aguçados → Só pode upar até o Grau Alfa Berserker Especial (Ao se transformar) → Bônus do Berserker: Força; Constituição; Corrida; Sentidos Aguçados; Cura em si
+		Penalidades: Alta contra Prata, sendo dano fatal se atingido em algum órgão vital.
+		Vantagem Territorial: Lua Cheia (Apenas para Alfas)
 Alienígenas:
-Marciano → Cósmico: Metamorfose, intangibilidade
-Tetlamando → Cósmico: Múltiplos membros
-Cerebrocrustaceano → Científico: Telepatia, inteligência
-Gordanianos → Científico: Adaptação corporal
-Reptilianos → Científico: Defesa mental, agilidade
-Zenkar → Cósmico: Sombras, penalidade solar
-Aasímar → Místico: Luz, magia, vantagem contra trevas
-
-Plano Superior:
-Anjos, Demônios, Panteão Divino...
+    Marciano → Cósmico: Metamorfose; Força; Constituição, Intangibilidade, Regeneração; Adaptação corpórea 
+    Tetlamando → Cósmico: Força; Constituição; Destreza; Percepção; Múltiplos membros (+2 braços +2 olhos)
+    Cerebrocrustaceano → Científico: Telepatia; Defesa Mental; Inteligência; Percepção
+    Gordanianos → Científico: Força; Constituição; Adaptação Corporal; Armadura corporal artificial
+    Reptilianos → Científico: Força; Constituição; Defesa Mental; Agilidade; Adaptação corporal
+    Zenkar → Cósmico: Absorção de energia (Escura); Controle de sombras; Intangibilidade; Espírito livre
+        Vantagem Territorial: Em escuridão
+        Penalidades: Penalidade Alta, Crítico e Queimadura Máximo, se exposto a luz solar.
+    Aasímar → Místico: Força; Constituição; Vôo (Asas); Portais; Campo de Marah; Controle de Luz; Magia
+		    Vantagem Territorial: Aplica penalidade Alta Contra seres da trevas
+        (Só pode em jornada)
     </pre>
   </main>
 
