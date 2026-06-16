@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Pirata+One&family=IM+Fell+English+SC&display=swap');
+
+.manual-rpg{
+    max-width:1400px;
+    margin:40px auto;
+    padding:35px;
+    background:#cec6c0;
+    border:3px solid #8b6f47;
+    border-radius:10px;
+}
+
+.manual-rpg h1{
+    font-family:'Pirata One', cursive;
+    font-size:3rem;
+    color:#5b3a1a;
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.manual-rpg h2{
+    font-family:'Pirata One', cursive;
+    color:#5b3a1a;
+    font-size:2rem;
+    margin:30px 0 15px;
+    border-bottom:2px solid #8b6f47;
+    padding-bottom:8px;
+}
+
+.manual-rpg p{
+    font-family:'IM Fell English SC', serif;
+    color:#4a2f16;
+    font-size:1.2rem;
+    line-height:1.8;
+    margin-bottom:20px;
+}
+
+.lista-pericias{
+    list-style:none;
+    padding:0;
+
+    display:grid;
+    grid-template-columns:
+        repeat(auto-fit,minmax(280px,1fr));
+
+    gap:12px;
+}
+
+.lista-pericias li{
+    background:#e6dfd8;
+    border-left:5px solid #8b6f47;
+    padding:12px 15px;
+    border-radius:6px;
+
+    color:#4a2f16;
+    font-family:'IM Fell English SC', serif;
+    font-size:1rem;
+
+    transition:.2s;
+}
+
+.lista-pericias li:hover{
+    transform:translateX(4px);
+    background:#f2ece6;
+}
+
+.lista-pericias strong{
+    color:#5b3a1a;
+}
+
+@media (max-width:768px){
+
+    .manual-rpg{
+        padding:20px;
+        margin:15px;
+    }
+
+    .manual-rpg h1{
+        font-size:2.2rem;
+    }
+
+    .manual-rpg h2{
+        font-size:1.7rem;
+    }
+
+    .lista-pericias{
+        grid-template-columns:1fr;
+    }
+}
