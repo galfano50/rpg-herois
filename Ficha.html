@@ -4,953 +4,1862 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ficha de Personagem - RPG Heróis</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/bootstrap-custom.css">
-    <script type="module" src="js/firebase-config.js"></script>
-    <script type="module" src="js/ficha.js"></script>
+    <script type="module" src="js/firebase2-config.js"></script>
+    <script type="module" src="js/ficha2.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Pirata+One&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Cardo:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Pirata+One&family=IM+Fell+English+SC&display=swap');
 
-        body {
-            background-color: #1c130a;
-            color: #e8ddc7;
-            font-family: 'Cardo', serif;
-            min-height: 100vh;
-            padding: 20px 0;
+        *{
+            box-sizing:border-box;
         }
 
-        .ficha-container {
-            background: linear-gradient(145deg, #3a2b1a, #2c1f0e);
-            border: 4px solid #8b5e3c;
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            margin: 0 auto;
-            max-width: 1200px;
+        body{
+            margin:0;
+            padding:8px;
+            background:#b8aca0;
+            font-family:'IM Fell English SC', serif;
+            color:#4a2f16;
         }
 
-        .section-title {
-            font-family: 'Pirata One', cursive;
-            color: #f5c16c;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            border-bottom: 2px solid #8b5e3c;
-            padding-bottom: 0.5rem;
+        .container-fluid{
+            width:100%;
+            max-width:1900px;
+            margin:auto;
+            padding:0;
         }
 
-        .form-control, .form-select {
-            background-color: #4f4b4b;
-            border: 2px solid #5a4b4b;
-            color: #f0e6d2;
-            font-size: 16px;
-            padding: 12px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
+        /* FICHA */
+
+        .ficha-container{
+            background:#cec6c0;
+            border:3px solid #8a6a47;
+            border-radius:12px;
+            padding:12px;
         }
 
-        .form-control:focus, .form-select:focus {
-            background-color: #6f4f29;
-            border-color: #f5c16c;
-            color: #f0e6d2;
-            box-shadow: 0 0 0 0.2rem rgba(245, 193, 108, 0.25);
+        /* CABEÇALHO */
+
+        .header-grid{
+            display:grid;
+            grid-template-columns:
+            repeat(auto-fit,minmax(170px,1fr));
+            gap:8px;
         }
 
-        .form-control::placeholder {
-            color: #c2a87d;
+        .mb-3{
+            margin-bottom:6px !important;
         }
 
-        .form-label {
-            color: #f0e6d2;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
+        /* CAMPOS */
+
+        .form-label{
+            display:block;
+            margin-bottom:2px;
+            font-size:.95rem;
+            font-weight:bold;
+            color:#5b3a1a;
         }
 
-        .card-section {
-            background: linear-gradient(145deg, #4f4b4b, #3a2b1a);
-            border: 2px solid #8b5e3c;
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            transition: all 0.3s ease;
+        .form-control{
+            height:34px;
+            border:2px solid #8a6a47;
+            border-radius:6px;
+            background:#f7f3ef;
+            color:#4a2f16;
         }
 
-        .card-section:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        .form-control:focus{
+            border-color:#5b3a1a;
+            box-shadow:none;
         }
 
-        .btn-rpg {
-            background: linear-gradient(145deg, #8b5e3c, #6f4f29);
-            border: none;
-            color: #f0e6d2;
-            font-weight: bold;
-            padding: 12px 24px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            font-size: 16px;
+        /* BOTÕES */
+
+        .btn-secondary{
+            background:#6b4b2c;
+            border:none;
         }
 
-        .btn-rpg:hover {
-            background: linear-gradient(145deg, #b77f56, #8b5e3c);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(139, 94, 60, 0.4);
-            color: #f0e6d2;
+        .btn-secondary:hover
+
+        /* TÍTULOS */
+
+        .section-title{
+            font-family:'Pirata One', cursive;
+            color:#5b3a1a;
+            font-size:1.8rem;
+            margin-bottom:10px;
+            padding-bottom:6px;
+            border-bottom:2px solid #8a6a47;
         }
 
-        .btn-rpg:active {
-            transform: translateY(0);
+        /* PONTOS */
+
+        .points-display{
+            margin:10px 0;
+            padding:8px;
+            text-align:center;
+            font-family:'Pirata One', cursive;
+            font-size:1.7rem;
+            color:#5b3a1a;
+            background:#e7dfd8;
+            border:2px solid #8a6a47;
+            border-radius:8px;
         }
 
-        .dice-roller {
-            background: linear-gradient(145deg, #4f4b4b, #3a2b1a);
-            border: 2px solid #8b5e3c;
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
+        /* ATRIBUTOS + PODERES */
+
+        .stats-layout{
+            display:grid;
+            grid-template-columns:320px 1fr;
+            gap:12px;
+            margin-top:12px;
         }
 
-        .dice-result {
-            background: linear-gradient(145deg, #6f4f29, #5a4b4b);
-            border: 2px solid #f5c16c;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-top: 1rem;
-            text-align: center;
-            font-weight: bold;
-            color: #f0e6d2;
-            display: none;
+        .atributos-box,
+        .poderes-box{
+            background:#ddd5cf;
+            border:2px solid #8a6a47;
+            border-radius:10px;
+            padding:10px;
         }
 
-        .dice-result.show {
-            display: block;
-            animation: fadeInUp 0.5s ease;
+        /* ATRIBUTOS */
+
+        .atributos-grid{
+            display:flex;
+            flex-direction:column;
+            gap:2px;
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
+        .atributo-linha{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:6px 0;
+            border-bottom:1px dotted #8a6a47;
+        }
+
+        .atributo-nome{
+            color:#5b3a1a;
+            font-weight:bold;
+            font-size:1rem;
+        }
+
+        .atributo-valor{
+            width:45px;
+            border:none;
+            background:transparent;
+            text-align:center;
+            font-size:1.15rem;
+            font-weight:bold;
+            color:#5b3a1a;
+            padding:0;
+        }
+
+        .atributo-valor:focus{
+            outline:none;
+            box-shadow:none;
+        }
+
+        /* PODERES */
+
+        #dadosClasse{
+            display:flex;
+            flex-wrap:wrap;
+            gap:15px;
+            align-items:flex-start;
+        }
+
+        .sem-poderes{
+            padding:10px 0;
+            color:#4a2f16;
+        }
+
+        .poder-ficha{
+            flex:1 1 320px;
+            min-width:320px;
+            padding:12px;
+            background:#cec6c0;
+            border:1px solid #8a6a47;
+            border-radius:8px;
+            box-sizing:border-box;
+        }
+
+        .poder-ficha:last-child{
+            border-bottom:none;
+        }
+
+        .poder-titulo{
+            font-family:'IM Fell English SC', serif;
+            font-size:1.2rem;
+            font-weight:bold;
+            color:#5b3a1a;
+            padding:8px 0;
+        }
+
+        .linha-poder{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:6px 0;
+            border-bottom:1px dotted #b89a78;
+        }
+
+        .linha-poder:last-child{
+            border-bottom:none;
+        }
+
+        .linha-poder span{
+            color:#4a2f16;
+            font-weight:bold;
+        }
+
+        .linha-poder input{
+            width:60px;
+            border:none;
+            background:transparent;
+            text-align:center;
+            font-weight:bold;
+            color:#5b3a1a;
+        }
+
+        .linha-poder input:focus{
+            outline:none;
+            box-shadow:none;
+        }
+
+        #listaPoderesClasse{
+            margin-top:8px;
+        }
+
+        .poder-item-rpg{
+            display:flex;
+            align-items:center;
+            gap:8px;
+            padding:8px 0;
+            border-bottom:1px dotted #8a6a47;
+        }
+
+        .poder-item-rpg input{
+            cursor:pointer;
+        }
+
+        .poder-label-rpg{
+            cursor:pointer;
+            color:#4a2f16;
+            font-weight:bold;
+            width:100%;
+        }
+
+        /* CAMPOS SOMENTE LEITURA */
+
+        input[readonly]{
+            background:#e7dfd8 !important;
+        }
+
+        .ficha-resumo{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+            gap:6px 20px;
+        }
+
+        .ficha-linha{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:6px 0;
+            border-bottom:1px dotted #8a6a47;
+        }
+
+        .ficha-label{
+            font-weight:bold;
+            color:#5b3a1a;
+        }
+
+        .ficha-numero{
+            width:60px;
+            border:none;
+            background:transparent;
+            text-align:center;
+            font-weight:bold;
+            color:#5b3a1a;
+            font-size:1.1rem;
+        }
+
+        .ficha-valor-texto{
+            width:180px;
+            border:none;
+            background:transparent;
+            text-align:right;
+            color:#5b3a1a;
+        }
+
+        .ficha-select{
+            border:none;
+            background:transparent;
+            color:#5b3a1a;
+            font-weight:bold;
+            text-align:right;
+        }
+
+        .btn-poderes{
+            border:none;
+            background:#6b4b2c;
+            color:white;
+            border-radius:6px;
+            padding:4px 10px;
+        }
+
+        .ficha-numero:focus,
+        .ficha-select:focus,
+        .ficha-valor-texto:focus{
+            outline:none;
+            box-shadow:none;
+        }
+
+        #dadosClasse{
+            margin-top:8px;
+        }
+
+        .classe-rpg{
+            display:flex;
+            flex-direction:column;
+        }
+
+        .classe-nome{
+            font-family:'IM Fell English SC', serif;
+            font-size:1.35rem;
+            font-weight:bold;
+            color:#5b3a1a;
+            padding:8px 0;
+            border-bottom:1px dotted #8a6a47;
+        }
+
+        .classe-item{
+            padding:8px 0;
+            border-bottom:1px dotted #8a6a47;
+            color:#4a2f16;
+        }
+
+        /* APRIMORAMENTOS E HISTÓRIA */
+
+        .ficha-extra{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:15px;
+            margin-top:15px;
+        }
+
+        .bloco-rpg{
+            background:#ddd5cf;
+            border:2px solid #8a6a47;
+            border-radius:10px;
+            padding:12px;
+        }
+
+        .campo-rpg{
+            margin-bottom:12px;
+        }
+
+        .campo-rpg label{
+            display:block;
+            font-weight:bold;
+            color:#5b3a1a;
+            margin-bottom:4px;
+            border-bottom:1px dotted #8a6a47;
+            padding-bottom:3px;
+        }
+
+        .texto-rpg{
+            width:100%;
+            min-height:80px;
+
+            border:none;
+            background:transparent;
+
+            resize:vertical;
+
+            color:#4a2f16;
+            font-family:'IM Fell English SC', serif;
+            font-size:1rem;
+
+            padding:6px;
+        }
+
+        .texto-rpg:focus{
+            outline:none;
+            box-shadow:none;
+        }
+
+        #historia{
+            min-height:180px;
+        }
+
+        .arsenal-grid{
+            display:grid;
+            grid-template-columns:
+                repeat(auto-fit,minmax(250px,1fr));
+            gap:12px;
+        }
+
+        .arsenal-grid .texto-rpg{
+            min-height:70px;
+        }
+
+        .arsenal-grid .ficha-valor-texto{
+            width:100%;
+            border:none;
+            background:transparent;
+            color:#5b3a1a;
+            padding:4px;
+        }
+
+        .arsenal-grid .ficha-valor-texto:focus{
+            outline:none;
+            box-shadow:none;
+        }
+
+        /* PERÍCIAS */
+
+        .lista-pericias{
+            display:grid;
+            grid-template-columns:
+                repeat(auto-fill,minmax(300px,1fr));
+            gap:8px;
+        }
+
+        .pericia-item{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+
+            padding:6px;
+
+            border-bottom:
+                1px dotted #8a6a47;
+        }
+
+        /* MOCHILA */
+
+        .lista-mochila{
+            display:grid;
+            grid-template-columns:
+                repeat(auto-fill,minmax(250px,1fr));
+
+            gap:8px;
+        }
+
+        /* BOTÕES */
+
+        .acoes-ficha{
+            display:flex;
+            flex-wrap:wrap;
+            gap:10px;
+            margin-top:12px;
+        }
+
+        .btn-rpg{
+            border:none;
+
+            background:#6b4b2c;
+
+            color:white;
+
+            padding:8px 16px;
+
+            border-radius:8px;
+
+            font-family:
+                'IM Fell English SC',
+                serif;
+
+            cursor:pointer;
+        }
+
+        .btn-rpg:hover{
+            background:#5b3a1a;
+        }
+
+        .lista-pericias{
+            display:grid;
+            grid-template-columns:
+                repeat(auto-fit,minmax(280px,1fr));
+            gap:6px;
+        }
+
+        .pericia-item{
+            display:flex;
+            align-items:center;
+            gap:8px;
+
+            padding:6px 0;
+
+            border-bottom:
+                1px dotted #8a6a47;
+        }
+
+        .pericia-numero{
+            width:25px;
+            font-weight:bold;
+            color:#5b3a1a;
+        }
+
+        .pericia-nome{
+            flex:1;
+
+            border:none;
+            background:transparent;
+
+            color:#5b3a1a;
+
+            font-family:
+                'IM Fell English SC',
+                serif;
+        }
+
+        .pericia-valor{
+            width:50px;
+
+            border:none;
+            background:transparent;
+
+            text-align:center;
+
+            font-weight:bold;
+
+            color:#5b3a1a;
+        }
+
+        .pericia-nome:focus,
+        .pericia-valor:focus{
+            outline:none;
+            box-shadow:none;
+        }
+
+        .resultado-dado{
+            margin-top:10px;
+            padding:10px;
+            border:2px solid #8a6a47;
+            background:#f5f0eb;
+            border-radius:6px;
+            color:#5b3a1a;
+            font-weight:bold;
+            min-height:45px;
+            word-break:break-word;
+
+            opacity:0;
+            transition:opacity .8s ease;
+        }
+
+        .resultado-rolagens{
+            color:#5b3a1a;
+            font-size:1rem;
+            margin-bottom:5px;
+        }
+
+        .resultado-total{
+            font-family:'Pirata One', cursive;
+            font-size:1.6rem;
+            color:#5b3a1a;
+        }    
+            
+        .alerta-rpg{
+            position:fixed;
+            top:15px;
+            right:15px;
+            z-index:99999;
+
+            min-width:250px;
+            max-width:400px;
+
+            padding:12px 18px;
+
+            border-radius:8px;
+            border:2px solid #8a6a47;
+
+            background:#ece3d8;
+
+            color:#4a2f16;
+
+            font-weight:bold;
+
+            box-shadow:0 4px 12px rgba(0,0,0,.25);
+
+            transition:.5s;
+        }
+
+        .alerta-rpg.success{
+            background:#d7ead5;
+        }
+
+        .alerta-rpg.error{
+            background:#f3d2d2;
+        }
+
+        .alerta-rpg.info{
+            background:#ece3d8;
+        }
+
+        .alerta-rpg.sumir{
+            opacity:0;
+            transform:translateY(-10px);
+        }
+
+        @media (max-width:900px){
+
+            .ficha-extra{
+                grid-template-columns:1fr;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+
         }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+        /* CELULAR */
+
+        @media (max-width:900px){
+
+        .header-grid{
+            grid-template-columns:1fr;
         }
 
-        .table-responsive {
-            border-radius: 8px;
-            overflow: hidden;
+        .stats-layout{
+            grid-template-columns:1fr;
         }
 
-        .table {
-            background-color: #4f4b4b;
-            color: #f0e6d2;
-            margin-bottom: 0;
+        #dadosClasse{
+            grid-template-columns:1fr;
         }
 
-        .table th {
-            background-color: #3a2b1a;
-            color: #f5c16c;
-            border-color: #8b5e3c;
-            font-weight: bold;
-            padding: 12px;
+        .section-title{
+            text-align:center;
+            font-size:1.5rem;
         }
 
-        .table td {
-            border-color: #5a4b4b;
-            padding: 12px;
-            vertical-align: middle;
+        .points-display{
+            font-size:1.3rem;
         }
 
-        .table input, .table textarea {
-            background-color: #6f4f29;
-            border: 1px solid #8b5e3c;
-            color: #f0e6d2;
-            border-radius: 4px;
-            padding: 8px;
-            width: 100%;
-        }
-
-        .table input:focus, .table textarea:focus {
-            background-color: #8b5e3c;
-            border-color: #f5c16c;
-            color: #f0e6d2;
-        }
-
-        .points-display {
-            background: linear-gradient(145deg, #8b5e3c, #6f4f29);
-            color: #f0e6d2;
-            padding: 1rem;
-            border-radius: 8px;
-            text-align: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-            border: 2px solid #f5c16c;
-        }
-
-        .header-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .textarea-auto-resize {
-            min-height: 60px;
-            resize: none;
-            overflow-y: hidden;
-        }
-
-        /* Mobile optimizations */
-        @media (max-width: 768px) {
-            .ficha-container {
-                padding: 1rem;
-                margin: 10px;
-            }
-
-            .header-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .form-control, .form-select {
-                font-size: 16px; /* Prevents zoom on iOS */
-                padding: 15px; /* Larger touch targets */
-            }
-
-            .btn-rpg {
-                width: 100%;
-                margin-bottom: 0.5rem;
-                padding: 15px;
-                font-size: 18px;
-            }
-
-            .table input, .table textarea {
-                font-size: 16px;
-                padding: 12px;
-            }
-
-            .section-title {
-                font-size: 1.3rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            body {
-                padding: 10px 0;
-            }
-
-            .ficha-container {
-                padding: 0.5rem;
-                margin: 5px;
-            }
-
-            .card-section {
-                padding: 1rem;
-            }
-        }
-
-        /* Auto-resize textarea */
-        .textarea-auto-resize {
-            transition: height 0.2s ease;
-        }
-
-        /* Loading states */
-        .btn-loading {
-            position: relative;
-            pointer-events: none;
-        }
-
-        .btn-loading::after {
-            content: '';
-            position: absolute;
-            width: 16px;
-            height: 16px;
-            margin: auto;
-            border: 2px solid transparent;
-            border-top-color: #ffffff;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        }    
     </style>
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="ficha-container">
-            <!-- Header Section -->
-            <div class="header-grid">
-                <div class="mb-3">
-                    <label class="form-label">Nome</label>
-                    <input type="text" class="form-control" id="nome" placeholder="Nome do personagem">
+    <div class="ficha-container">
+        <div class="ficha-resumo">
+            <div class="ficha-linha">
+                <span class="ficha-label">📝 Nome</span>
+                <input type="text" id="nome" class="ficha-valor-texto"
+                    placeholder="Nome do personagem">
+            </div>
+            <div class="ficha-linha">
+                    <span class="ficha-label">🌎 Raça</span>
+                    <select id="raca" class="ficha-select" onchange="carregarRaca()">
+                        <option value="Humano">Humano</option>
+                        <option value="Atlântis">Atlântis</option>
+                        <option value="Amazonas">Amazonas</option>
+                        <option value="Dracônicos">Dracônicos</option>
+                        <option value="Vampiros">Vampiros</option>
+                        <option value="Lobisomem">Lobisomem</option>
+                        <option value="Marciano">Marciano</option>
+                        <option value="Tetlamando">Tetlamando</option>
+                    </select>
+            </div>
+            <div class="ficha-linha">
+                    <span class="ficha-label">⚔ Classe</span>
+                    <select id="classe" class="ficha-select" onchange="carregarClasse()">
+                        <option value="">Selecione</option>
+                        <option value="Mutante">Mutante</option>
+                        <option value="Tecnológico">Tecnológico</option>
+                        <option value="Científico">Científico</option>
+                        <option value="Místico">Místico</option>
+                        <option value="Cósmico">Cósmico</option>
+                        <option value="Lutador">Lutador</option>
+                    </select>
+            </div>
+            <div class="ficha-linha">
+                    <span class="ficha-label">✨ Poderes</span>
+                    <button
+                        type="button"
+                        class="btn-poderes"
+                        onclick="togglePoderes()">
+                        Selecionar
+                    </button>
+            </div>
+            <div id="listaPoderesClasse"></div>
+            <div class="ficha-linha">
+                    <span class="ficha-label">⭐ Nível</span>
+                    <input type="number" id="nivel"
+                        class="ficha-numero"
+                        min="1"
+                        max="50"
+                        value="1"
+                        oninput="atualizarNivel()">
+            </div>
+            <div class="ficha-linha">
+                    <span class="ficha-label">❤ Vida</span>
+                    <input type="number"
+                        id="vida"
+                        class="ficha-numero"
+                        readonly>
+            </div>
+            <div class="ficha-linha">
+                    <span class="ficha-label">🔷 Energia</span>
+                    <input type="number"
+                        id="energia"
+                        class="ficha-numero"
+                        readonly>
+            </div>
+            <div class="ficha-linha">
+                <span class="ficha-label">🛡 Índice de Proteção Cinético</span>
+                <input type="number"
+                    id="indice_protecao"
+                    class="ficha-numero">
+            </div>
+            <div class="ficha-linha">
+                <span class="ficha-label">🛡 Índice de Proteção Balístico</span>
+                <input type="number"
+                    id="indice_protecao2"
+                    class="ficha-numero">
+            </div>
+            <div class="ficha-linha">
+                    <span class="ficha-label">🏆 XP</span>
+                    <input type="number"
+                        id="xp"
+                        class="ficha-numero">
+            </div>
+            <div class="ficha-linha">
+                    <span class="ficha-label">🦸 Pontos Heróicos</span>
+                    <input type="number"
+                        id="p_heroi"
+                        class="ficha-numero">
+            </div>
+            <div class="ficha-linha">
+                    <span class="ficha-label">😈 Pontos Vilanescos</span>
+                    <input type="number"
+                        id="p_vilao"
+                        class="ficha-numero">
+            </div>
+            <div class="ficha-linha">
+                    <span class="ficha-label">💥 Dano Sofrido</span>
+                    <input type="number"
+                        id="extra11"
+                        class="ficha-numero"
+                        value="0"
+                        oninput="atualizarNivel()">
+            </div>
+            <div class="ficha-linha">
+                    <span class="ficha-label">⚡ Gasto de Energia</span>
+                    <input type="number"
+                        id="extra12"
+                        class="ficha-numero"
+                        value="0"
+                        oninput="atualizarNivel()">
+            </div>
+        </div>
+        <div class="points-display" id="pontos">
+                💫 Pontos Disponíveis: 40
+        </div>
+        <div class="stats-layout">
+            <div class="atributos-box">
+
+                <h3 class="section-title">
+                    <i class="fas fa-chart-bar me-2"></i>
+                    Atributos
+                </h3>
+
+                <div class="atributos-grid">
+
+                    <div class="atributo-linha">
+                        <span class="atributo-nome">💫 Força</span>
+                        <input
+                            type="number"
+                            id="forca"
+                            class="atributo-valor"
+                            min="0"
+                            value="0"
+                            oninput="atualizarAtributos()">
+                    </div>
+
+                    <div class="atributo-linha">
+                        <span class="atributo-nome">💫 Constituição</span>
+                        <input
+                            type="number"
+                            id="constituicao"
+                            class="atributo-valor"
+                            min="0"
+                            value="0"
+                            oninput="atualizarAtributos()">
+                    </div>
+
+                    <div class="atributo-linha">
+                        <span class="atributo-nome">💫 Destreza</span>
+                        <input
+                            type="number"
+                            id="destreza"
+                            class="atributo-valor"
+                            min="0"
+                            value="0"
+                            oninput="atualizarAtributos()">
+                    </div>
+
+                    <div class="atributo-linha">
+                        <span class="atributo-nome">💫 Agilidade</span>
+                        <input
+                            type="number"
+                            id="agilidade"
+                            class="atributo-valor"
+                            min="0"
+                            value="0"
+                            oninput="atualizarAtributos()">
+                    </div>
+
+                    <div class="atributo-linha">
+                        <span class="atributo-nome">💫 Inteligência</span>
+                        <input
+                            type="number"
+                            id="inteligencia"
+                            class="atributo-valor"
+                            min="0"
+                            value="0"
+                            oninput="atualizarAtributos()">
+                    </div>
+
+                    <div class="atributo-linha">
+                        <span class="atributo-nome">💫 Percepção</span>
+                        <input
+                            type="number"
+                            id="percepcao"
+                            class="atributo-valor"
+                            min="0"
+                            value="0"
+                            oninput="atualizarAtributos()">
+                    </div>
+
+                    <div class="atributo-linha">
+                        <span class="atributo-nome">💫 Vontade</span>
+                        <input
+                            type="number"
+                            id="vontade"
+                            class="atributo-valor"
+                            min="0"
+                            value="0"
+                            oninput="atualizarAtributos()">
+                    </div>
+
+                    <div class="atributo-linha">
+                        <span class="atributo-nome">💫 Carisma</span>
+                        <input
+                            type="number"
+                            id="carisma"
+                            class="atributo-valor"
+                            min="0"
+                            value="0"
+                            oninput="atualizarAtributos()">
+                    </div>
+
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Raça</label>
-                    <input type="text" class="form-control" id="raca" placeholder="Raça">
+
+            </div>
+            <div class="poderes-box">
+
+                <h3 class="section-title">
+                    Habilidades e Poderes da Classe
+                </h3>
+
+                <div id="dadosClasse">
+                    Selecione uma classe.
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Classe</label>
-                    <input type="text" class="form-control" id="classe" placeholder="Classe">
+
+                <div id="listaPoderes">
+                    Nenhum poder selecionado.
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Nível</label>
-                    <input type="number" class="form-control" id="nivel" min="1" max="50" value="1" oninput="atualizarValores()">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Vida</label>
-                    <input type="number" class="form-control" id="vida" readonly>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Energia</label>
-                    <input type="number" class="form-control" id="energia" readonly>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Índice de Proteção Cinético</label>
-                    <input type="number" class="form-control" id="indice_protecao" min="0" placeholder="0">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Índice de Proteção Balístico</label>
-                    <input type="number" class="form-control" id="indice_protecao2" min="0" placeholder="0">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">XP</label>
-                    <input type="number" class="form-control" id="xp" min="0" placeholder="0">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Pontos Heróicos</label>
-                    <input type="number" class="form-control" id="p_heroi" min="0" max="100" placeholder="0">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Pontos de Corrupção</label>
-                    <input type="number" class="form-control" id="p_vilao" min="0" max="100" placeholder="0">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Dano Sofrido</label>
-                    <input type="number" class="form-control" id="extra11" value="0" oninput="modificarPontos(); atualizarVidaEnergia()">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Gasto de Energia</label>
-                    <input type="number" class="form-control" id="extra12" value="0" oninput="modificarPontos(); atualizarVidaEnergia()">
-                </div>
+
+            </div>
+        </div>
+        <div class="bloco-rpg">
+
+            <h3 class="section-title">
+                🎲 Rolador de Dados
+            </h3>
+
+            <div class="rolador-rpg">
+
+                <input
+                    type="text"
+                    id="diceInput"
+                    class="input-dado"
+                    placeholder="Ex: 1d10+2d6+5">
+
+                <button
+                    type="button"
+                    class="btn-rpg"
+                    onclick="rollDice()">
+
+                    Rolar
+
+                </button>
+
             </div>
 
-            <!-- Points Display -->
-            <div class="points-display" id="pontos">Pontos: 41</div>
-
-            <!-- Stats Grid -->
-            <div class="stats-grid">
-                <!-- Atributos -->
-                <div class="card-section">
-                    <h3 class="section-title"><i class="fas fa-chart-bar me-2"></i>Atributos</h3>
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="form-label">Força</label>
-                            <input type="number" class="form-control" id="forca" min="0" value="0" oninput="modificarPontos()">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Constituição</label>
-                            <input type="number" class="form-control" id="constituicao" min="0" value="0" oninput="modificarPontos()">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Destreza</label>
-                            <input type="number" class="form-control" id="destreza" min="0" value="0" oninput="modificarPontos()">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Agilidade</label>
-                            <input type="number" class="form-control" id="agilidade" min="0" value="0" oninput="modificarPontos()">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Inteligência</label>
-                            <input type="number" class="form-control" id="inteligencia" min="0" value="0" oninput="modificarPontos()">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Percepção</label>
-                            <input type="number" class="form-control" id="percepcao" min="0" value="0" oninput="modificarPontos()">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Vontade</label>
-                            <input type="number" class="form-control" id="vontade" min="0" value="0" oninput="modificarPontos()">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Carisma</label>
-                            <input type="number" class="form-control" id="carisma" min="0" value="0" oninput="modificarPontos()">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Extras -->
-                <div class="card-section">
-                    <h3 class="section-title"><i class="fas fa-plus-circle me-2"></i>Extras</h3>
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="form-label">Fr Extra</label>
-                            <input type="number" class="form-control" id="extra1" value="0" oninput="modificarPontos()">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Cons Extra</label>
-                            <input type="number" class="form-control" id="extra2" value="0" oninput="modificarPontos()">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Dex Extra</label>
-                            <input type="number" class="form-control" id="extra3" value="0" oninput="modificarPontos()">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Agil Extra</label>
-                            <input type="number" class="form-control" id="extra4" value="0" oninput="modificarPontos()">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Int Extra</label>
-                            <input type="number" class="form-control" id="extra5" value="0" oninput="modificarPontos()">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Perc Extra</label>
-                            <input type="number" class="form-control" id="extra6" value="0" oninput="modificarPontos()">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Vont Extra</label>
-                            <input type="number" class="form-control" id="extra7" value="0" oninput="modificarPontos()">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Cari Extra</label>
-                            <input type="number" class="form-control" id="extra8" value="0" oninput="modificarPontos()">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Vida Extra</label>
-                            <input type="number" class="form-control" id="extra9" value="0" oninput="modificarPontos(); atualizarVidaEnergia()">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Energia Extra</label>
-                            <input type="number" class="form-control" id="extra10" value="0" oninput="modificarPontos(); atualizarVidaEnergia()">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Poder -->
-                <div class="card-section">
-                    <h3 class="section-title"><i class="fas fa-magic me-2"></i>Poder</h3>
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="form-label">Fr Poder</label>
-                            <input type="number" class="form-control" id="poder1" min="0" value="0" oninput="modificarPontos(); atualizarVidaEnergia()">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Cons Poder</label>
-                            <input type="number" class="form-control" id="poder2" min="0" value="0" oninput="modificarPontos(); atualizarVidaEnergia()">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Dex Poder</label>
-                            <input type="number" class="form-control" id="poder3" min="0" value="0" oninput="modificarPontos()">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Agil Poder</label>
-                            <input type="number" class="form-control" id="poder4" min="0" value="0" oninput="modificarPontos()">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Int Poder</label>
-                            <input type="number" class="form-control" id="poder5" min="0" value="0" oninput="modificarPontos()">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Perc Poder</label>
-                            <input type="number" class="form-control" id="poder6" min="0" value="0" oninput="modificarPontos()">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Vont Poder</label>
-                            <input type="number" class="form-control" id="poder7" min="0" value="0" oninput="modificarPontos(); atualizarVidaEnergia()">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Cari Poder</label>
-                            <input type="number" class="form-control" id="poder8" min="0" value="0" oninput="modificarPontos()">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Pvs Poder</label>
-                            <input type="number" class="form-control" id="poder9" min="0" value="0" oninput="modificarPontos(); atualizarVidaEnergia()">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Total -->
-                <div class="card-section">
-                    <h3 class="section-title"><i class="fas fa-calculator me-2"></i>Total</h3>
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="form-label">Fr Total</label>
-                            <div class="form-control-plaintext" id="soma1">0</div>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Cons Total</label>
-                            <div class="form-control-plaintext" id="soma2">0</div>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Dex Total</label>
-                            <div class="form-control-plaintext" id="soma3">0</div>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Agil Total</label>
-                            <div class="form-control-plaintext" id="soma4">0</div>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Int Total</label>
-                            <div class="form-control-plaintext" id="soma5">0</div>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Perc Total</label>
-                            <div class="form-control-plaintext" id="soma6">0</div>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Vont Total</label>
-                            <div class="form-control-plaintext" id="soma7">0</div>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Cari Total</label>
-                            <div class="form-control-plaintext" id="soma8">0</div>
-                        </div>
-                    </div>
-                </div>
+            <div id="result" class="resultado-dado">
+                Aguardando rolagem...
             </div>
 
-            <!-- Dice Roller -->
-            <div class="dice-roller">
-                <h3 class="section-title"><i class="fas fa-dice-d20 me-2"></i>Rolador de Dados</h3>
-                <div class="row g-3">
-                    <div class="col-md-8">
-                        <input type="text" class="form-control" id="diceInput" placeholder="Ex: 1d10+5d20+3d6">
+        </div>
+        <div class="ficha-extra">
+            <div class="bloco-rpg">
+
+                <h3 class="section-title">
+                    ✦ Aprimoramentos
+                </h3>
+
+                <div class="campo-rpg">
+
+                    <label>Aprimoramento 1</label>
+
+                    <textarea
+                        id="aprimoramento1"
+                        class="texto-rpg"
+                        placeholder="Descreva o aprimoramento"></textarea>
+
+                </div>
+
+                <div class="campo-rpg">
+
+                    <label>Aprimoramento 2</label>
+
+                    <textarea
+                        id="aprimoramento2"
+                        class="texto-rpg"
+                        placeholder="Descreva o aprimoramento"></textarea>
+
+                </div>
+
+            </div>
+            <div class="bloco-rpg">
+
+                <h3 class="section-title">
+                    ✦ Características do Personagem
+                </h3>
+
+                <div class="campo-rpg">
+
+                    <label>Positivo</label>
+
+                    <textarea
+                        id="positivo"
+                        class="texto-rpg"
+                        placeholder="Características positivas"></textarea>
+
+                </div>
+
+                <div class="campo-rpg">
+
+                    <label>Negativo</label>
+
+                    <textarea
+                        id="negativo"
+                        class="texto-rpg"
+                        placeholder="Características negativas"></textarea>
+
+                </div>
+
+                <div class="campo-rpg">
+
+                    <label>História</label>
+
+                    <textarea
+                        id="historia"
+                        class="texto-rpg"
+                        placeholder="História do personagem"></textarea>
+
+                </div>
+
+            </div>
+            <div class="bloco-rpg">
+
+                <h3 class="section-title">
+                    ⚔ Arsenal e Equipamentos
+                </h3>
+
+                <div class="arsenal-grid">
+
+                    <div class="campo-rpg">
+                        <label>Arma Primária</label>
+                        <textarea
+                            id="primaria"
+                            class="texto-rpg"
+                            placeholder="Descreva a arma principal"></textarea>
                     </div>
-                    <div class="col-md-4">
-                        <button type="button" class="btn btn-rpg w-100" onclick="rollDice()">
-                            <i class="fas fa-dice me-2"></i>Rolar
+
+                    <div class="campo-rpg">
+                        <label>Arma Secundária</label>
+                        <textarea
+                            id="secundaria"
+                            class="texto-rpg"
+                            placeholder="Descreva a arma secundária"></textarea>
+                    </div>
+
+                    <div class="campo-rpg">
+                        <label>Armadura</label>
+                        <textarea
+                            id="armadura"
+                            class="texto-rpg"
+                            placeholder="Descreva a armadura"></textarea>
+                    </div>
+
+                    <div class="campo-rpg">
+                        <label>Item 1</label>
+                        <input
+                            type="text"
+                            id="item1"
+                            class="ficha-valor-texto"
+                            placeholder="Item">
+                    </div>
+
+                    <div class="campo-rpg">
+                        <label>Item 2</label>
+                        <input
+                            type="text"
+                            id="item2"
+                            class="ficha-valor-texto"
+                            placeholder="Item">
+                    </div>
+
+                    <div class="campo-rpg">
+                        <label>Item 3</label>
+                        <input
+                            type="text"
+                            id="item3"
+                            class="ficha-valor-texto"
+                            placeholder="Item">
+                    </div>
+
+                    <div class="campo-rpg">
+                        <label>Item 4</label>
+                        <input
+                            type="text"
+                            id="item4"
+                            class="ficha-valor-texto"
+                            placeholder="Item">
+                    </div>
+
+                    <div class="campo-rpg">
+                        <label>Item 5</label>
+                        <input
+                            type="text"
+                            id="item5"
+                            class="ficha-valor-texto"
+                            placeholder="Item">
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="bloco-rpg">
+
+                    <h3 class="section-title">
+                        ✦ Perícias
+                    </h3>
+
+                    <div id="skillsTableBody"
+                        class="lista-pericias">
+                    </div>
+
+            </div>
+            <div class="bloco-rpg">
+
+                    <h3 class="section-title">
+                        🎒 Mochila
+                    </h3>
+
+                    <div id="backpackTableBody"
+                        class="lista-mochila">
+                    </div>
+
+            </div>            
+            <div class="bloco-rpg">
+
+                    <h3 class="section-title">
+                        📜 Registro da Ficha
+                    </h3>
+
+                    <div class="ficha-linha">
+
+                        <span class="ficha-label">
+                            ID do Personagem
+                        </span>
+
+                        <input
+                            type="text"
+                            id="personagemId"
+                            class="ficha-valor-texto"
+                            placeholder="Ex: Personagem1">
+
+                    </div>
+
+                    <div class="acoes-ficha">
+
+                        <button
+                            class="btn-rpg"
+                            onclick="salvarFichaFirebase()">
+
+                            Salvar
+
                         </button>
-                    </div>
-                </div>
-                <div id="result" class="dice-result"></div>
-            </div>
 
-            <!-- Aprimoramentos -->
-            <div class="row g-4">
-                <div class="col-lg-6">
-                    <div class="card-section">
-                        <h3 class="section-title"><i class="fas fa-star me-2"></i>Aprimoramentos</h3>
-                        <div class="mb-3">
-                            <label class="form-label">Aprimoramento 1</label>
-                            <textarea class="form-control textarea-auto-resize" id="aprimoramento1" placeholder="Descreva o aprimoramento"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Aprimoramento 2</label>
-                            <textarea class="form-control textarea-auto-resize" id="aprimoramento2" placeholder="Descreva o aprimoramento"></textarea>
-                        </div>
-                    </div>
-                </div>
+                        <button
+                            class="btn-rpg"
+                            onclick="carregarFichaFirebase()">
 
-                <div class="col-lg-6">
-                    <div class="card-section">
-                        <h3 class="section-title"><i class="fas fa-user me-2"></i>Características do Personagem</h3>
-                        <div class="mb-3">
-                            <label class="form-label">Positivo</label>
-                            <textarea class="form-control textarea-auto-resize" id="positivo" placeholder="Características positivas"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Negativo</label>
-                            <textarea class="form-control textarea-auto-resize" id="negativo" placeholder="Características negativas"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">História</label>
-                            <textarea class="form-control textarea-auto-resize" id="historia" placeholder="História do personagem"></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                            Carregar
 
-            <!-- Armas e Itens -->
-            <div class="card-section">
-                <h3 class="section-title"><i class="fas fa-sword me-2"></i>Armas</h3>
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <label class="form-label">Arma Primária</label>
-                        <textarea class="form-control textarea-auto-resize" id="primaria" placeholder="Descreva a arma primária"></textarea>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Arma Secundária</label>
-                        <textarea class="form-control textarea-auto-resize" id="secundaria" placeholder="Descreva a arma secundária"></textarea>
-                    </div>
-                </div>
-            </div>
+                        </button>
 
-            <!-- Lista de Poderes -->
-            <div class="row g-4">
-                <div class="col-lg-4">
-                    <div class="card-section">
-                        <h3 class="section-title"><i class="fas fa-magic me-2"></i>Poderes</h3>
-                        <div class="mb-3">
-                            <label class="form-label">Poder 1</label>
-                            <textarea class="form-control textarea-auto-resize" id="power1" placeholder="Descreva o poder"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Poder 2</label>
-                            <textarea class="form-control textarea-auto-resize" id="power2" placeholder="Descreva o poder"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Poder 3</label>
-                            <textarea class="form-control textarea-auto-resize" id="power3" placeholder="Descreva o poder"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Poder 4</label>
-                            <textarea class="form-control textarea-auto-resize" id="power4" placeholder="Descreva o poder"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Poder 5</label>
-                            <textarea class="form-control textarea-auto-resize" id="power5" placeholder="Descreva o poder"></textarea>
-                        </div>
-                    </div>
-                </div>
+                        <button
+                            class="btn-rpg"
+                            onclick="resetarFicha()">
 
-                <div class="col-lg-4">
-                    <div class="card-section">
-                        <h3 class="section-title"><i class="fas fa-fist-raised me-2"></i>Golpes</h3>
-                        <div class="mb-3">
-                            <label class="form-label">Golpes</label>
-                            <textarea class="form-control textarea-auto-resize" id="golpes" placeholder="Descreva os golpes especiais"></textarea>
-                        </div>
-                    </div>
-                </div>
+                            Resetar
 
-                <div class="col-lg-4">
-                    <div class="card-section">
-                        <h3 class="section-title"><i class="fas fa-box me-2"></i>Itens</h3>
-                        <div class="mb-3">
-                            <label class="form-label">Item 1</label>
-                            <textarea class="form-control textarea-auto-resize" id="item1" placeholder="Descreva o item"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Item 2</label>
-                            <textarea class="form-control textarea-auto-resize" id="item2" placeholder="Descreva o item"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Item 3</label>
-                            <textarea class="form-control textarea-auto-resize" id="item3" placeholder="Descreva o item"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Item 4</label>
-                            <textarea class="form-control textarea-auto-resize" id="item4" placeholder="Descreva o item"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Item 5</label>
-                            <textarea class="form-control textarea-auto-resize" id="item5" placeholder="Descreva o item"></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        </button>
 
-            <!-- Tabela de Perícias -->
-            <div class="card-section">
-                <h3 class="section-title"><i class="fas fa-tools me-2"></i>Perícias</h3>
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Perícia</th>
-                                <th>Att Atrelado</th>
-                                <th>Pts</th>
-                            </tr>
-                        </thead>
-                        <tbody id="skillsTableBody">
-                            <!-- Skills will be generated by JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Mochila -->
-            <div class="card-section">
-                <h3 class="section-title"><i class="fas fa-backpack me-2"></i>Mochila</h3>
-                <div class="table-responsive">
-                    <table class="table">
-                        <tbody id="backpackTableBody">
-                            <!-- Backpack items will be generated by JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Action Buttons -->
-            <div class="card-section">
-                <h3 class="section-title"><i class="fas fa-save me-2"></i>Salvar/Carregar</h3>
-                <div class="row g-3">
-                    <div class="col-md-4">
-                        <label class="form-label">ID do Personagem</label>
-                        <input type="text" class="form-control" id="personagemId" placeholder="Ex: Personagem1">
                     </div>
-                    <div class="col-md-8">
-                        <div class="d-grid gap-2 d-md-flex">
-                            <button class="btn btn-rpg" onclick="salvarFichaFirebase()">
-                                <i class="fas fa-save me-2"></i>Salvar Ficha
-                            </button>
-                            <button class="btn btn-rpg" onclick="carregarFichaFirebase()">
-                                <i class="fas fa-folder-open me-2"></i>Carregar Ficha
-                            </button>
-                            <button class="btn btn-rpg" onclick="resetarFicha()">
-                                <i class="fas fa-undo me-2"></i>Resetar Ficha
-                            </button>
-                        </div>
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Generate skills table
-        function generateSkillsTable() {
-            const tbody = document.getElementById('skillsTableBody');
-            for (let i = 0; i < 20; i++) {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td><input type="text" class="form-control" placeholder="Nome da perícia"></td>
-                    <td><input type="text" class="form-control" placeholder="Atributo"></td>
-                    <td><input type="number" class="form-control" placeholder="0"></td>
-                `;
-                tbody.appendChild(row);
+        const classesRPG = {
+            Mutante: {
+                nome: "Mutante",
+                bonus: [
+                    "Força (NP, Forca)",
+                    "Constituição (NP, Constituicao)",
+                ]
+            },
+            Tecnológico: {
+                nome: "Tecnológico",
+                bonus: [
+                    "Armadura Corporal Artificial (NP, IP, Material)",
+                    "Sortear Material"
+                ]
+            },
+            Científico: {
+                nome: "Científico",
+                bonus: [
+                    "Inteligência (NP, Inteligencia)",
+                    "Defesa Mental (NP)"
+                ]
+            },
+            Místico: {
+                nome: "Místico",
+                bonus: [
+                    "Perícia: Teoria da Magia",
+                    "+2 Magias Básicas",
+                    "Pode enxergar o Plano Mágico",
+                    "Pode evoluir poderes até Ômega sem transição"
+                ]
+            },
+            Cósmico: {
+                nome: "Cósmico",
+                bonus: [
+                    "Adaptação Corporal (NP, Duração, IP)",
+                    "Voo (NP, Carga, Velocidade)"
+                ]
+            },
+            Lutador: {
+                nome: "Lutador",
+                bonus: [
+                    "+2 Perícias de Luta",
+                    "+1D6 em todos os testes de Perícia",
+                    "+1D10 por nível caso NÃO possua poderes"
+                ]
             }
-        }
-
-        // Generate backpack table
-        function generateBackpackTable() {
-            const tbody = document.getElementById('backpackTableBody');
-            for (let i = 0; i < 20; i++) {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td><textarea class="form-control textarea-auto-resize" placeholder="Item da mochila"></textarea></td>
-                `;
-                tbody.appendChild(row);
+        };
+        
+        function carregarClasse() {
+            const classe = document.getElementById("classe").value;
+            const area = document.getElementById("dadosClasse");
+            if (!classe) {
+                area.innerHTML = "Selecione uma classe.";
+                return;
             }
-        }
-
-        // Auto-resize textarea function
-        function autoResizeTextarea(element) {
-            element.style.height = 'auto';
-            element.style.height = element.scrollHeight + 'px';
-        }
-
-        // Add event listeners for textarea auto-resize
-        document.addEventListener('DOMContentLoaded', function() {
-            generateSkillsTable();
-            generateBackpackTable();
-            
-            // Add auto-resize to all textareas
-            document.querySelectorAll('.textarea-auto-resize').forEach(textarea => {
-                textarea.addEventListener('input', function() {
-                    autoResizeTextarea(this);
-                });
-            });
-
-            // Initialize values
-            atualizarValores();
-        });
-
-        // Função para atualizar Vida e Energia com base no nível e atributos
-        function atualizarVidaEnergia() {
-            let nivelElemento = document.getElementById("nivel");
-            if (!nivelElemento) return;
-
-            let nivel = parseInt(nivelElemento.value) || 1;
-
-            // Valores base
-            let vidaBase = 21;
-            let energiaBase = 11;
-            let vidaExtra = 0;
-            let energiaExtra = 0;
-
-            // Cálculo de bônus por nível
-            if (nivel <= 10) {
-                vidaExtra = nivel - 1;  
-                energiaExtra = nivel - 1;
-            } else if (nivel <= 25) {
-                vidaExtra = 9 + (nivel - 10) * 2;
-                energiaExtra = 9 + (nivel - 10);
-            } else {
-                vidaExtra = 39 + (nivel - 25) * 3;
-                energiaExtra = 24 + (nivel - 25) * 2;
-            }
-        
-            // Lista de atributos a serem considerados
-            let atributos = ["forca", "constituicao", "vontade"];
-            let poderes = ["poder1", "poder2", "poder7", "poder9"];
-            let extras = ["extra9", "extra10", "extra11", "extra12"];
-        
-            let valores = {};
-
-            atributos.forEach(atributo => {
-                let elemento = document.getElementById(atributo);
-                valores[atributo] = elemento ? parseInt(elemento.value) || 0 : 0;
-            });
-
-            extras.forEach((extra, index) => {
-                let elemento = document.getElementById(extra);
-                valores[extra] = elemento ? parseInt(elemento.value) || 0 : 0;
-            });
-        
-            poderes.forEach((poder, index) => {
-                let elemento = document.getElementById(poder);
-                valores[poder] = elemento ? parseInt(elemento.value) || 0 : 0;
-            });
-        
-            let bonusVida = valores["forca"] + valores["constituicao"] + valores["poder1"] + valores["poder2"]+ valores["poder9"]+ valores["extra9"]- valores["extra11"];
-            let bonusEnergia = valores["vontade"] + valores["poder7"]+ valores["extra10"]- valores["extra12"];
-        
-            // Atualiza os campos de Vida e Energia se existirem
-            let vidaElemento = document.getElementById("vida");
-            let energiaElemento = document.getElementById("energia");
-        
-            if (vidaElemento) vidaElemento.value = vidaBase + vidaExtra + bonusVida;
-            if (energiaElemento) energiaElemento.value = energiaBase + energiaExtra + bonusEnergia;
-        }
-
-        function atualizarValores() {
-            let nivel = parseInt(document.getElementById("nivel").value) || 1;
-
-            // Cálculo dos Pontos para Distribuir
-            let pontosBase = 41;
-            let pontosExtras = (nivel <= 25) ? nivel - 1 : 24 + (nivel - 25) * 1;
-            let totalPontos = pontosBase + pontosExtras;
-
-            // Atualiza os pontos restantes após a distribuição nos atributos
-            let pontosGastos = calcularPontosGastos();
-            let pontosRestantes = totalPontos - pontosGastos;
-
-            document.getElementById("pontos").textContent = `Pontos: ${pontosRestantes}`;
-
-            // Cálculo de Vida e Energia por Nível
-            let vidaBase = 21;
-            let energiaBase = 11;
-            let vidaExtra = 0;
-            let energiaExtra = 0;
-
-            if (nivel <= 10) {
-                vidaExtra = nivel - 1;
-                energiaExtra = nivel - 1;
-            } else if (nivel <= 25) {
-                vidaExtra = 9 + (nivel - 10) * 2;
-                energiaExtra = 9 + (nivel - 10);
-            } else {
-                vidaExtra = 39 + (nivel - 25) * 3;
-                energiaExtra = 24 + (nivel - 25) * 2;
-            }
-        
-            let vidaTotal = vidaBase + vidaExtra;
-            let energiaTotal = energiaBase + energiaExtra;
-        
-            document.getElementById("vida").value = vidaTotal;
-            document.getElementById("energia").value = energiaTotal;
-        
-            atualizarVidaEnergia();
-        }
-
-        function calcularPontosGastos() {
-            let atributos = ["forca", "constituicao", "destreza", "agilidade", "inteligencia", "percepcao", "vontade", "carisma"];
-
-            let pontosGastos = 0;
-
-            atributos.forEach((atributo) => {
-                let valor = parseInt(document.getElementById(atributo).value) || 0;
-                pontosGastos += valor;
-            });
-        
-            return pontosGastos;
-        }
-
-        function modificarPontos() {
-            const atributos = ["forca", "constituicao", "destreza", "agilidade", "inteligencia", "percepcao", "vontade", "carisma"];
+            const dados = classesRPG[classe];
+            let html = `
+                <div class="classe-rpg">
                 
-            atributos.forEach((atributo, index) => {
-                let base = parseInt(document.getElementById(atributo).value) || 0;
-                let extra = parseInt(document.getElementById(`extra${index + 1}`).value) || 0;
-                let poder = parseInt(document.getElementById(`poder${index + 1}`).value) || 0;
+                    <div class="classe-nome">
+                        ⚔ ${dados.nome}
+                    </div>
+            `;                
+            dados.bonus.forEach(item => {
             
-                let total = base + extra + poder;
-                document.getElementById(`soma${index + 1}`).textContent = total;
+                html += `
+                    <div class="classe-item">
+                        • ${item}
+                    </div>
+                `;                
             });
-        
-            atualizarVidaEnergia();
-            atualizarValores();
+            html += `
+                </div>
+            `;            
+            area.innerHTML = html;           
+            carregarPoderesClasse(classe);
+            atualizarPainelClasseRaca();     
+        }
+      
+        const poderesPorClasse = {
+            "Cósmico": [
+                "Disparo de Energia (NP, Dano 1, Alcance, Ataques)",
+                "Adaptação Corpórea (NP, Multiplicador, Duração)",
+                "Agilidade (NP, Agilidade)",
+                "Armadura Corpórea (NP, IP)",
+                "Barreira Astral (NP, IP, Raio)",
+                "Berserker (NP, Multiplicador, Duração)"
+            ],
+            "Tecnológico": [
+                "Armadura Corpórea Artificial (NP, IP)",
+                "Armadura Corpórea (NP, IP)",
+                "Ataques Sonoros (NP, Dano 1, Alcance, Raio)",
+                "Campo de Força (NP, IP, Raio)",
+                "Cientista Louco (NP)",
+                "Comunicação com Cibernéticos (NP, Alcance, Alvos)"
+            ],
+            "Mutante": [
+                "Absorção de Energia (NP, Absorção, Alcance)",
+                "Adaptação Corpórea (NP, Duração)",
+                "Agilidade (NP, Multiplicador)",
+                "Força (NP, Forca)",
+                "Alongamento Corpóreo (NP, Membros, Alcance)",
+                "Alterações de Sentidos (NP, Alcance)"
+            ],
+            "Místico": [
+                "Absorção de Energia (NP, Absorção, Alcance)",
+                "Alterações de Sonhos (NP, Influência, Alcance)",
+                "Alucinações (NP, Influência, Raio)",
+                "Animação de Imagens (NP, Alvos, Raio)",
+                "Animação de Objetos (NP, Carga, Alcance, Alvos)",
+                "Barreira Astral (NP, IP, Raio)"
+            ],
+            "Científico": [
+                "Absorção de Energia (NP, Absorção, Alcance)",
+                "Alterações de Sonhos (NP, Influência, Alcance)",
+                "Alucinações (NP, Influência, Raio)",
+                "Animação de Imagens (NP, Alvos, Raio)",
+                "Animação de Objetos (NP, Carga, Alcance, Alvos)",
+                "Barreira Astral (NP, IP, Raio)"
+            ]
+        };
+
+        function carregarPoderesClasse(classe){
+            const lista = document.getElementById("listaPoderesClasse");
+            lista.innerHTML = "";
+            if(!poderesPorClasse[classe]) return;
+            poderesPorClasse[classe].forEach((poder,index)=>{
+                lista.innerHTML += `
+                    <div class="poder-item-rpg">
+                        <input
+                            class="poder-checkbox"
+                            type="checkbox"
+                            id="poder_${index}"
+                            value="${poder}"
+                            onchange="atualizarPoderesSelecionados()">
+                        <label
+                            for="poder_${index}"
+                            class="poder-label-rpg">
+                            ✦ ${poder}
+                        </label>
+                    </div>
+                `;
+            });
         }
 
-        // Rolador de Dados
-        function rollDice() {
-            const input = document.getElementById("diceInput").value.replace(/\s+/g, "");
-            const resultDiv = document.getElementById("result");
-            const diceRegex = /(-?\d*)d(\d+)/g;
-            const numberRegex = /([-+]?\d+)/g;
-            let total = 0;
-            let rolls = [];
-                
-            let match;
-            while ((match = diceRegex.exec(input)) !== null) {
-                let count = match[1] ? parseInt(match[1]) : 1;
-                let sides = parseInt(match[2]);
+        let timerPoderes;
+
+        function togglePoderes(){
+            const lista = document.getElementById("listaPoderesClasse");
+            if(lista.style.display === "none"){
+                lista.style.display = "block";
+            }else{
+                lista.style.display = "none";
+            }
+        }
+
+        function atualizarPoderesSelecionados(){
+            const marcados =
+                    document.querySelectorAll(".poder-checkbox:checked");
+                const lista =
+                    document.getElementById("listaPoderes");
+
+                    document.getElementById(
+                        "listaPoderes"
+                    ).style.display = "none";
+
+                clearTimeout(timerPoderes);
+
+                timerPoderes = setTimeout(() => {
+                    document.getElementById(
+                        "listaPoderesClasse"
+                    ).style.display = "none";
+                }, 3000);
+                atualizarPainelClasseRaca();
+            }
+   
+        const racasRPG = {
+            "Humano": {
+                classe: "",
+                poderes: []
+            },
+            "Atlântis": {
+                classe: "Cósmico",
+                poderes: [
+                    "Força (Np, Forca)",
+                    "Constituição (Np, Constituicao)",
+                    "Sentidos Aprimorados (Np, Alcance)",
+                    "Respirar Embaixo D'água (Np, Duração)",
+                    "Controle de Anfíbios (Np, Influência, Alcance)",
+                    "Controle de Água (Np, Alcance, Raio)"
+                ]
+            },
+            "Amazonas": {
+                classe: "Místico",
+                poderes: [
+                    "Força (Np, Forca)",
+                    "Constituição (Np, Constituicao)",
+                    "Sentidos Aprimorados (Np, Alcance)",
+                    "Resistência à Magia (Np, IP)",
+                    "Destreza (Np, Att)",
+                    "Agilidade (Np, Att)"
+                ]
+            },
+            "Dracônicos": {
+                classe: "Místico",
+                poderes: [
+                    "Força (Np, Forca)",
+                    "Constituição (Np, Constituicao)",
+                    "Voo - Asas (Np, Velocidade, Carga)",
+                    "Gerar Fogo - Boca (Np, Dano2, Alcance, Raio)",
+                    "Invulnerabilidade (Np, IP)",
+                    "Armas Naturais - Presas (Np, Dano2, Ataques)",
+                    "Resistência à Magia (Np, IP)"
+                ]
+            },
+            "Vampiros": {
+                classe: "Místico",
+                poderes: [
+                    "Força (Np, Forca)",
+                    "Constituição (Np, Constituicao)",
+                    "Corrida (Np, Velocidade, Carga)",
+                    "Destreza (Np, Att)",
+                    "Hipnose (Np, Influência, Alcance, Duração)",
+                    "Sentidos Apurados (Np, Alcance)",
+                    "Regeneração (Np, Pvs)",
+                    "Penalidade: Crítico Máximo ao Sol",
+                    "Penalidade: Queimadura de 3º Grau ao Sol",
+                    "Vantagem Territorial: Noite"
+                ]
+            },
+            "Lobisomem": {
+                classe: "Místico",
+                poderes: [
+                    "Força (Np, Forca)",
+                    "Constituição (Np, Constituicao)",
+                    "Agilidade (Np, Att)",
+                    "Sentidos Aguçados (Np, Alcance)",
+                    "Corrida (Np, Velocidade, Carga)",
+                    "Cura em Si (Np, Pvs)",
+                    "Penalidade: Vulnerabilidade à Prata",
+                    "Vantagem Territorial: Lua Cheia"
+                ]
+            },
+            "Marciano": {
+                classe: "Cósmico",
+                poderes: [
+                    "Metamorfose (Np, Duração)",
+                    "Força (Np, Forca)",
+                    "Constituição (Np, Constituicao)",
+                    "Intangibilidade (Np, duração)",
+                    "Regeneração (Np, Pvs)",
+                    "Adaptação Corpórea (Np, IP)"
+                ]
+            },
+            "Tetlamando": {
+                classe: "Cósmico",
+                poderes: [
+                    "Força (Np, Forca)",
+                    "Constituição (Np, Constituicao)",
+                    "Destreza (Np, Att)",
+                    "Percepção (Np, Att)",
+                    "Múltiplos Membros (+2 braços +2 olhos)"
+                ]
+            }
+        };            
+
+        function carregarRaca(){
+            atualizarPainelClasseRaca();
+        }
+   
+        function atualizarPainelClasseRaca(){
+            const classe =
+                document.getElementById("classe").value;
+            const raca =
+                document.getElementById("raca").value;
+            const painel =
+                document.getElementById("dadosClasse");
             
-                for (let i = 0; i < Math.abs(count); i++) {
-                    let roll = Math.floor(Math.random() * sides) + 1;
-                    rolls.push(count < 0 ? -roll : roll);
-                    total += count < 0 ? -roll : roll;
+            let poderes = [];
+
+            if(classe && raca === "Humano"){
+                const dadosClasse =
+                    classesRPG[classe];
+                if(dadosClasse){
+                    poderes.push(...dadosClasse.bonus);
                 }
             }
-        
-            input.replace(diceRegex, "+").match(numberRegex)?.forEach(num => {
-                let parsedNum = parseInt(num);
-                total += parsedNum;
-                rolls.push(parsedNum);
-            });
-        
-            resultDiv.textContent = `Rolagens: ${rolls.join(", ")} | Total: ${total}`;
-            resultDiv.classList.add("show");
-        
-            setTimeout(() => {
-                resultDiv.classList.remove("show");
-            }, 3000);
-        }
 
-        // Add event listener for Enter key on dice input
-        document.addEventListener('DOMContentLoaded', function() {
-            const diceInput = document.getElementById("diceInput");
-            if (diceInput) {
-                diceInput.addEventListener("keypress", function(event) {
-                    if (event.key === "Enter") {
-                        rollDice();
-                    }
+            if(raca && raca !== "Humano"){
+                const dadosRaca =
+                    racasRPG[raca];
+                if(dadosRaca){
+                    poderes.push(...dadosRaca.poderes);
+                }
+            }
+
+            document
+                .querySelectorAll(".poder-checkbox:checked")
+                .forEach(item => {
+                    poderes.push(item.value);
                 });
+
+            poderes = [...new Set(poderes)];
+            if(poderes.length === 0){
+                painel.innerHTML = `
+                    <div class="sem-poderes">
+                        Nenhuma habilidade disponível.
+                    </div>
+                `;
+                return;
             }
-        });
-
-        // Placeholder functions for Firebase operations
-        function salvarFichaFirebase() {
-            alert("Funcionalidade de salvar será implementada quando o Firebase estiver configurado");
+            let html = "";
+            poderes.forEach((poder,index)=>{
+                let nomePoder = poder;
+                let campos = [];
+                const match =
+                    poder.match(/(.*?)\((.*?)\)/);
+                if(match){
+                    nomePoder =
+                        match[1].trim();
+                    campos =
+                        match[2]
+                        .split(",")
+                        .map(campo => campo.trim());
+                }
+                html += `
+                    <div class="poder-ficha">
+                        <div class="poder-titulo">
+                            ✦ ${nomePoder}
+                        </div>
+                `;
+                campos.forEach(campo => {
+                    const campoLimpo =
+                        campo.trim().toLowerCase();
+                    let atributo = "";
+                    if(campoLimpo === "forca"){
+                        atributo = "forca";
+                    }
+                    else if(campoLimpo === "constituicao"){
+                        atributo = "constituicao";
+                    }
+                    else if(campoLimpo === "vontade"){
+                        atributo = "vontade";
+                    }
+                    html += `
+                    <div class="linha-poder">
+                        <span>${campo}</span>
+                        <input
+                            type="number"
+                            min="0"
+                            value="0"
+                            class="campo-poder"
+                            data-poder="${index}"
+                            data-campo="${campoLimpo}"
+                            data-atributo="${atributo}"
+                            onchange="atualizarGrau(${index}); atualizarNivel();">
+                    </div>
+                    `;
+                });
+                html += `
+                    <div class="linha-poder">
+                        <span>Grau</span>
+                        <input
+                            type="text"
+                            id="grau_${index}"
+                            value="Beta"
+                            readonly>
+                    </div>
+                    <div class="linha-poder">
+                        <span>Dado</span>
+                        <input
+                            type="text"
+                            id="dado_${index}"
+                            value="1D6"
+                            readonly>
+                    </div>
+                </div>
+                `;
+            });
+            painel.innerHTML = html;
         }
 
-        function carregarFichaFirebase() {
-            alert("Funcionalidade de carregar será implementada quando o Firebase estiver configurado");
+        function somarBonus(atributo){
+            console.log(
+                document.querySelectorAll(
+                    `.campo-poder[data-atributo="${atributo}"]`
+                )
+            );
+            let total = 0;
+            document
+                .querySelectorAll(
+                    `.campo-poder[data-atributo="${atributo}"]`
+                )
+                .forEach(campo => {
+                    total += parseInt(campo.value) || 0;
+                });
+            return total;
         }
 
-        function resetarFicha() {
-            if (confirm("Tem certeza que deseja resetar toda a ficha?")) {
-                location.reload();
+        function atualizarGrau(index){
+            let total = 0;
+            document
+                .querySelectorAll(
+                    `[data-poder="${index}"]`
+                )
+                .forEach(campo => {
+                    total +=
+                        parseInt(campo.value) || 0;
+                });
+            let grau = "Beta";
+            let dado = "1D6";
+            if(total >= 21){
+                grau = "Alfa";
+                dado = "1D10";
             }
+            if(total >= 41){
+                grau = "Transição";
+                dado = "1D12";
+            }
+            if(total >= 61){
+                grau = "Ômega";
+                dado = "1D20";
+            }
+            document.getElementById(
+                `grau_${index}`
+            ).value = grau;
+            document.getElementById(
+                `dado_${index}`
+            ).value = dado;
         }
+
+        function atualizarNivel() {
+            let nivel = parseInt(
+                document.getElementById("nivel").value
+            ) || 1;
+            if (nivel < 1) nivel = 1;
+            if (nivel > 50) nivel = 50;
+            let vida = 20;
+            let energia = 10;
+            for (let i = 2; i <= nivel; i++) {
+                if (i <= 10) {
+                    vida += 1;
+                } else if (i <= 25) {
+                    vida += 2;
+                } else {
+                    vida += 3;
+                }
+                if (i <= 25) {
+                    energia += 1;
+                } else {
+                    energia += 2;
+                }
+            }
+            // Atributos da ficha
+            const forca =
+                parseInt(document.getElementById("forca").value) || 0;
+            const constituicao =
+                parseInt(document.getElementById("constituicao").value) || 0;
+            const vontade =
+                parseInt(document.getElementById("vontade").value) || 0;
+            // Bônus vindos de Classe, Raça e Poderes
+            const bonusForca =
+                somarBonus("forca");
+            const bonusConstituicao =
+                somarBonus("constituicao");
+            const bonusVontade =
+                somarBonus("vontade");
+            // Vida e Energia finais
+            vida +=
+                forca +
+                constituicao +
+                bonusForca +
+                bonusConstituicao;
+            energia +=
+                vontade +
+                bonusVontade;
+            const danoSofrido =
+                parseInt(
+                    document.getElementById("extra11")?.value
+                ) || 0;
+            const gastoEnergia =
+                parseInt(
+                    document.getElementById("extra12")?.value
+                ) || 0;
+            vida -= danoSofrido;
+            energia -= gastoEnergia;
+            if (vida < 0) vida = 0;
+            if (energia < 0) energia = 0;
+            document.getElementById(
+                "vida"
+            ).value = vida;
+            document.getElementById(
+                "energia"
+            ).value = energia;
+            const atributos = [
+                "forca",
+                "constituicao",
+                "destreza",
+                "agilidade",
+                "inteligencia",
+                "percepcao",
+                "vontade",
+                "carisma"
+            ];
+            let pontosGastos = 0;
+            atributos.forEach(id => {
+                pontosGastos += parseInt(
+                    document.getElementById(id)?.value
+                ) || 0;
+            });
+            let pontosTotais = 40 + (nivel - 1);
+            let pontosRestantes =
+                pontosTotais - pontosGastos;
+            document.getElementById("pontos")
+                .textContent =
+                "Pontos: " + pontosRestantes;
+
+        }
+
+        function atualizarAtributos(){
+            const atributos = [
+                "forca",
+                "constituicao",
+                "destreza",
+                "agilidade",
+                "inteligencia",
+                "percepcao",
+                "vontade",
+                "carisma"
+            ];
+            let pontosGastos = 0;
+            atributos.forEach(id => {
+                pontosGastos += parseInt(
+                    document.getElementById(id).value
+                ) || 0;
+            });
+            let nivel = parseInt(
+                document.getElementById("nivel").value
+            ) || 1;
+            // Pontos totais do nível
+            let pontosTotais =
+                40 + (nivel - 1);
+            let pontosRestantes =
+                pontosTotais - pontosGastos;
+            document.getElementById(
+                "pontos"
+            ).textContent =
+                "Pontos: " + pontosRestantes;
+            atualizarNivel();
+        }
+
+        function generateSkillsTable() {
+            const area =
+                document.getElementById(
+                    "skillsTableBody"
+                );
+            if (!area) return;
+            let html = "";
+            for (let i = 1; i <= 20; i++) {
+                html += `
+                    <div class="pericia-item">
+                        <span class="pericia-numero">
+                            ${i}.
+                        </span>
+                        <input
+                            type="text"
+                            placeholder="Nome da Perícia"
+                            class="pericia-nome">
+                        <input
+                            type="number"
+                            min="0"
+                            value="0"
+                            class="pericia-valor">
+                    </div>
+                `;
+            }
+            area.innerHTML = html;
+        }
+
+        function generateBackpackTable() {
+                    const area =
+                        document.getElementById(
+                            "backpackTableBody"
+                        );
+                    if (!area) return;
+                    let html = "";
+                    for (let i = 1; i <= 20; i++) {
+                        html += `
+                            <div class="item-mochila">
+                                <span>🎒</span>
+                                <input
+                                    type="text"
+                                    placeholder="Item ${i}"
+                                    class="ficha-valor-texto">
+                            </div>
+                        `;
+                    }
+                    area.innerHTML = html;
+                }
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            () => {
+
+                generateSkillsTable();
+
+                generateBackpackTable();
+
+                atualizarNivel();
+
+                const diceInput =
+                            document.getElementById(
+                                "diceInput"
+                            );
+
+                        if (diceInput) {
+
+                            diceInput.addEventListener(
+                                "keydown",
+                                function(event){
+
+                                    if(
+                                        event.key === "Enter"
+                                    ){
+
+                                        rollDice();
+
+                                    }
+
+                                }
+                            );
+
+                        }
+
+            }
+        );
+
+        function rollDice() {
+
+            const campo =
+                document.getElementById("diceInput");
+
+            const resultado =
+                document.getElementById("result");
+
+            if (!campo || !resultado) return;
+
+            const formula =
+                campo.value.replace(/\s+/g, "");
+
+            const diceRegex =
+                /(-?\d*)d(\d+)/gi;
+
+            const numberRegex =
+                /([-+]?\d+)/g;
+
+            let total = 0;
+
+            let rolagens = [];
+
+            let match;
+
+            while (
+                (match = diceRegex.exec(formula))
+                !== null
+            ) {
+
+                let quantidade =
+                    match[1]
+                    ? parseInt(match[1])
+                    : 1;
+
+                let lados =
+                    parseInt(match[2]);
+
+                for (
+                    let i = 0;
+                    i < Math.abs(quantidade);
+                    i++
+                ) {
+
+                    let valor =
+                        Math.floor(
+                            Math.random() * lados
+                        ) + 1;
+
+                    if (quantidade < 0) {
+
+                        valor *= -1;
+
+                    }
+
+                    rolagens.push(valor);
+
+                    total += valor;
+
+                }
+
+            }
+
+            formula
+                .replace(diceRegex, "+")
+                .match(numberRegex)
+                ?.forEach(num => {
+
+                    let valor =
+                        parseInt(num);
+
+                    total += valor;
+
+                    rolagens.push(valor);
+
+                });
+
+                resultado.innerHTML = `
+                    <strong>Total:</strong> ${total}
+                    <br>
+                    Rolagens: ${rolagens.join(", ")}
+                `;
+
+                resultado.style.opacity = "1";
+
+                setTimeout(() => {
+
+                    resultado.style.opacity = "0";
+
+                }, 5000);
+
+        }
+
     </script>
 </body>
 </html>
