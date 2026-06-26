@@ -1072,20 +1072,23 @@
                     "Constituição (NP, Constituicao)",
                 ]
             },
+
             Tecnológico: {
                 nome: "Tecnológico",
                 bonus: [
-                    "Armadura Corporal Artificial (NP, IP +Material, Material)",
+                    "Armadura Corporal Artificial (NP, IP, Material)",
                     "Sortear Material"
                 ]
             },
+
             Científico: {
                 nome: "Científico",
                 bonus: [
                     "Inteligência (NP, Inteligencia)",
-                    "Defesa Mental (NP +Vontade)"
+                    "Defesa Mental (NP +Inteligência)"
                 ]
             },
+
             Místico: {
                 nome: "Místico",
                 bonus: [
@@ -1095,13 +1098,15 @@
                     "Pode evoluir poderes até Ômega sem transição"
                 ]
             },
+
             Cósmico: {
                 nome: "Cósmico",
                 bonus: [
-                    "Adaptação Corporal (NP, Duração x2min, IP)",
+                    "Adaptação Corporal (NP, Duração x10min, IP)",
                     "Voo (NP, Carga, Velocidade)"
                 ]
             },
+
             Lutador: {
                 nome: "Lutador",
                 bonus: [
@@ -1145,19 +1150,19 @@
       
         const poderesPorClasse = {
             "Cósmico": [
-                "Disparo de Energia (NP, Dano 1, Alcance x2m)",
-                "Adaptação Corpórea (NP, Multiplicador, Duração x2min)",
+                "Disparo de Energia (NP, Dano 1, Alcance x6m)",
+                "Adaptação Corpórea (NP, IP, Duração x10min)",
                 "Agilidade (NP, Agilidade)",
                 "Armadura Corpórea (NP, IP)",
                 "Barreira Astral (NP, IP, Raio x4m²)",
                 "Berserker (NP, Multiplicador, Duração x2min)",
-                "Caminho de Energia (NP, Alcance x2m, Duração x2min)",
-                "Campo Antimagia (NP +Vontade, Raio, Duração)",
-                "Campo de Força (NP +Vontade, IP, Raio x4m²)",
+                "Caminho de Energia (NP, Alcance x6m, Duração x2min)",
+                "Campo Antimagia (NP, Raio x4m², Duração x2min)",
+                "Campo de Força (NP, IP, Raio x4m²)",
                 "Clair Audiência (NP, Alcance x2m)",
                 "Conhecimento de Encarnações (NP)",
                 "Constituição (NP, Constituicao)",
-                "Controle de Poderes (NP, Influência +Vontade, Alcance x2m)",
+                "Controle de Poderes (NP, Influência, Alcance x2m)",
                 "Controle de Trevas (NP, Alcance x2m, Raio x4m², Dano 2)",
                 "Controle de Energia (NP, Alcance x2m, Raio x4m²)",
                 "Controle Elemental (NP, Alcance x2m, Raio x4m²)",
@@ -1167,10 +1172,10 @@
                 "Crescimento (NP, Multiplicador, Carga, IP)",
                 "Criação Elemental (NP, Alcance x2m, Alvos)",
                 "Detectar Magia (NP, Alcance x2m)",
-                "Dark Force (NP +Vontade, Dano 2, Alcance x2m, Raio x4m²)",
-                "Destreza (NP, Multiplicador)",
-                "Detectar Energia (NP +Percepção, Alcance x2m)",
-                "Detectar Poder (NP +Percepção, Alcance x2m)",
+                "Dark Force (NP, Dano 2, Alcance x2m, Raio x4m²)",
+                "Destreza (NP, Destreza)",
+                "Detectar Energia (NP, Alcance x2m)",
+                "Detectar Poder (NP, Alcance x2m)",
                 "Doppelganger Energético (NP, Alvos, Duração x2min)",
                 "Focus (NP, Multiplicador)",
                 "Força (NP, Forca)",
@@ -1181,13 +1186,13 @@
                 "Poscognição (NP)",
                 "Precognição (NP)",
                 "Sentidos Cósmicos (NP, Alcance x6m)",
-                "Sentidos Protegidos (NP +Vontade)",
+                "Sentidos Protegidos (NP)",
                 "Sentidos Remotos (NP, Alcance x2m)",
-                "Sentir o Chi (NP +Percepção, Alcance x2m)",
-                "Sexto Sentido (NP +Percepção)",
+                "Sentir o Chi (NP, Alcance x2m)",
+                "Sexto Sentido (NP)",
                 "Viagem Dimensional (NP, Alcance x6m, Duração x4min)",
                 "Voo (NP, Voo, Carga)",
-                "Manipulação Gravitacional (NP +Vontade, Alcance x4m, Raio x8m², Carga)",
+                "Manipulação Gravitacional (NP, Alcance x4m, Raio x8m², Carga)",
                 "Anulação de Energia (NP, Absorção, Alcance x2m)",
                 "Estrela Viva (NP, IP, Dano 1, Dano 2, Duração x2min)"                
             ],
@@ -1196,25 +1201,25 @@
                 "Armadura Corpórea Artificial (NP, IP)",
                 "Armadura Corpórea (NP, IP)",
                 "Ataques Sonoros (NP, Dano 1, Alcance x2m, Raio x4m²)",
-                "Campo de Força (NP+Vontade, IP, Raio x4m²)",
+                "Campo de Força (NP, IP, Raio x4m²)",
                 "Cientista Louco (NP+Inteligência)",
                 "Comunicação com Cibernéticos (NP, Alcance x2m, Alvos)",
                 "Criação de Armamentos (NP, Duração x2min)",
                 "Criação de Mísseis (NP, Dano 1, Alcance x2m)",
                 "Criação Mecânica (NP, Duração x2min, Alvos)",
                 "Detectar Fraqueza (NP +Inteligência, Alcance x2m)",
-                "Detectar Poder (NP +Percepção, Alcance x2m)",
+                "Detectar Poder (NP, Alcance x2m)",
                 "Disco Voador (NP, Voo, Carga)",
                 "Foguete (NP, Voo, Carga)",
-                "Radar (NP +Percepção, Alcance x2m)",
+                "Radar (NP, Alcance x2m)",
                 "Raio Laser (NP, Dano 1, Alcance x2m)",
-                "Visão 360º (NP +Percepção)",
-                "Visão Raio-X (NP +Percepção, Alcance x2m)",
-                "Visão Microscópica (NP +Percepção)",
-                "Visão Macroscópica (NP +Percepção)",
-                "Visão Telescópica (NP +Percepção, Alcance x2m)",
-                "Visão Termográfica (NP +Percepção)",
-                "Visão Ultravioleta (NP +Percepção)",
+                "Visão 360º (NP)",
+                "Visão Raio-X (NP, Alcance x2m)",
+                "Visão Microscópica (NP)",
+                "Visão Macroscópica (NP)",
+                "Visão Telescópica (NP, Alcance x2m)",
+                "Visão Termográfica (NP)",
+                "Visão Ultravioleta (NP)",
                 "Nanotecnologia (NP, IP, Duração x2min)",
                 "Drone de Combate (NP, Dano 1, Alcance x2m)",
                 "Hackeamento Universal (NP, Influência, Alcance x2m)",
@@ -1230,34 +1235,34 @@
                 "Força (NP, Forca)",
                 "Alongamento Corpóreo (NP, Membros, Alcance x2m)",
                 "Alterações de Sentidos (NP, Alcance x2m)",
-                "Alterações de Sonhos (NP, Influência +Vontade, Alcance x2m)",
-                "Alucinações (NP, Influência +Vontade, Raio x4m²)",
+                "Alterações de Sonhos (NP, Influência, Alcance x2m)",
+                "Alucinações (NP, Influência, Raio x4m²)",
                 "Armadura Corpórea (NP, IP)",
                 "Armas Naturais (NP, Dano 1)",
                 "Ataques Sonoros (NP, Dano 1, Alcance x2m, Raio x4m²)",
                 "Atrito (NP, Dano 1, Alcance x2m)",
-                "Bio Vampirismo (NP +Vontade, Absorção, Alcance x2m, Duração x2min)",
+                "Bio Vampirismo (NP , Absorção, Alcance x2m, Duração x2min)",
                 "Bolha (NP, IP, Raio x4m²)",
                 "Cabelos Vivos (NP, Membros, Alcance x2m)",
-                "Campo de Força (NP +Vontade, IP, Raio x4m²)",
+                "Campo de Força (NP, IP, Raio x4m²)",
                 "Cauda (NP, Forca, Dano 1)",
                 "Coloração (NP, Duração x2min)",
                 "Combustão (NP, Dano 2, Alcance x2m)",
                 "Comunicação com Animais (NP, Alcance x2m, Alvos)",
                 "Constituição (NP, Constituicao)",
                 "Controle de Eletricidade (NP, Dano 2, Alcance x6m, Raio x12m²)",
-                "Controle de Fogo (NP +Vontade, Dano 2, Alcance x4m, Raio x8m²)",
-                "Controle de Luz (NP +Vontade, Alcance x6m, Raio x12m²)",
-                "Controle de Gravidade (NP +Vontade, Alcance x10m, Raio x20m², Carga)",
-                "Controle de Magnetismo (NP +Vontade, Alcance x8m, Raio x16m², Carga)",
-                "Controle de Máquinas (NP, Influência +Inteligência, Alcance x2m)",
+                "Controle de Fogo (NP, Dano 2, Alcance x4m, Raio x8m²)",
+                "Controle de Luz (NP, Alcance x6m, Raio x12m²)",
+                "Controle de Gravidade (NP, Alcance x10m, Raio x20m², Carga)",
+                "Controle de Magnetismo (NP, Alcance x8m, Raio x16m², Carga)",
+                "Controle de Máquinas (NP, Influência, Alcance x2m)",
                 "Controle de Ondas de Rádio (NP, Alcance x2m)",
-                "Controle de Plantas (NP +Vontade, Alcance x2m, Alvos)",
-                "Controle de Radiação (NP +Vontade, Dano 2, Alcance x10m, Raio x20m²)",
-                "Controle de Som (NP +Vontade, Alcance x2m, Raio x4m²)",
-                "Controle de Clima (NP +Vontade, Alcance x2m, Raio x4m², Duração x2min)",
-                "Controle Hipnótico (NP, Influência +Vontade, Alcance x2m)",
-                "Controle Vocal (NP, Influência +Vontade, Alcance x2m)",
+                "Controle de Plantas (NP, Alcance x2m, Alvos)",
+                "Controle de Radiação (NP, Dano 2, Alcance x10m, Raio x20m²)",
+                "Controle de Som (NP, Alcance x2m, Raio x4m²)",
+                "Controle de Clima (NP, Alcance x2m, Raio x4m², Duração x2min)",
+                "Controle Hipnótico (NP, Influência, Alcance x2m)",
+                "Controle Vocal (NP, Influência, Alcance x2m)",
                 "Conversão de Energia (NP, Absorção)",
                 "Conversão Elementar (NP, Duração x2min)",
                 "Conversão Molecular (NP, Duração x2min)",
@@ -1270,51 +1275,51 @@
                 "Defesa Mental (NP, IP)",
                 "Desintegração (NP, Dano 2, Alcance x2m)",
                 "Dreno Mental (NP, Influência, Alcance x2m)",
-                "Duplicação de Poderes (NP +Vontade, Duração x2min)",
+                "Duplicação de Poderes (NP, Duração x2min)",
                 "Duplicação Ilusória (NP, Alvos, Duração x2min)",
                 "Duplicação Mental (NP, Alvos, Duração x2min)",
                 "Empatia (NP, Influência, Alcance x2m)",
                 "Escalar Paredes (NP, carga, Velocidade)",
                 "Escavações (NP, Corrida)",
-                "Feromônios (NP, Influência +Vontade, Raio x4m²)",
-                "Geração de Eletricidade (NP +Vontade, Dano 2, Alcance x2m)",
-                "Geração de Fogo (NP +Vontade, Dano 2, Alcance x2m)",
-                "Geração de Frio (NP +Vontade, Dano 2, Alcance x2m)",
-                "Geração de Radioatividade (NP +Vontade, Dano 2, Alcance x2m)",
-                "Ilusões (NP, Influência +Vontade, Raio x4m²)",
+                "Feromônios (NP, Influência, Raio x4m²)",
+                "Geração de Eletricidade (NP, Dano 2, Alcance x2m)",
+                "Geração de Fogo (NP, Dano 2, Alcance x2m)",
+                "Geração de Frio (NP, Dano 2, Alcance x2m)",
+                "Geração de Radioatividade (NP, Dano 2, Alcance x2m)",
+                "Ilusões (NP, Influência, Raio x4m²)",
                 "Intangibilidade (NP, Duração x2min)",
                 "Invisibilidade (NP, Duração x2min)",
-                "Levitação (NP, Voo, Carga +Vontade)",
+                "Levitação (NP, Voo, Carga)",
                 "Manipulação de Massa (NP, Carga)",
                 "Metamorfose (NP, Duração x2min)",
                 "Moldar Carne (NP, Alcance x2m)",
                 "Multiplicação (NP, Alvos, Duração x2min)",
                 "Portal (NP, Alcance x10m, Alvos)",
                 "Regeneração (NP, Pvs)",
-                "Telecinésia (NP, Carga +Vontade, Alcance x20m)",
-                "Telepatia (NP, Influência +Vontade, Alcance x2m, Alvos)",
+                "Telecinésia (NP, Carga, Alcance x20m)",
+                "Telepatia (NP, Influência, Alcance x2m, Alvos)",
                 "Teleportação (NP, Alcance x20m, Alvos)",
                 "Transformação Corpórea (NP, Multiplicador, Duração x2min)",
                 "Transformação em Animais (NP, Duração x2min)",
-                "Vampirismo de Poderes (NP +Vontade, Absorção, Alcance x2m)",
+                "Vampirismo de Poderes (NP, Absorção, Alcance x2m)",
                 "Vampirismo Energético (NP, Absorção, Alcance x2m)",
                 "Voo (NP, Voo, Carga)"
             ],
 
             "Místico": [
                 "Absorção de Energia (NP, Absorção, Alcance x2m)",
-                "Alterações de Sonhos (NP, Influência +Vontade, Alcance x2m)",
-                "Alucinações (NP, Influência +Vontade, Raio x4m²)",
+                "Alterações de Sonhos (NP, Influência, Alcance x2m)",
+                "Alucinações (NP, Influência, Raio x4m²)",
                 "Animação de Imagens (NP, Alvos, Raio x4m²)",
                 "Animação de Objetos (NP, Carga, Alcance x2m, Alvos)",
-                "Barreira Astral (NP +Vontade, IP, Raio x4m²)",
-                "Aprisionamento Espiritual (NP, Influência +Vontade, Duração x20min)",
+                "Barreira Astral (NP, IP, Raio x4m²)",
+                "Aprisionamento Espiritual (NP, Influência, Duração x20min)",
                 "Aura Maldita (NP, Raio x4m², Influência)",
                 "Aura Sagrada (NP, Raio x4m², Influência)",
                 "Banimento (NP, Influência, Alcance x20m)",
                 "Bênção (NP, Multiplicador, Alvos, Duração x2min)",
-                "Campo Antimagia (NP +Vontade, Raio x4m², Duração x2min)",
-                "Campo de Marah (NP, Influência +Vontade, Raio x4m²)",
+                "Campo Antimagia (NP, Raio x4m², Duração x2min)",
+                "Campo de Marah (NP, Influência, Raio x4m²)",
                 "Chama Espiritual (NP, Dano 2, Alcance x2m)",
                 "Clarividência (NP, Alcance x2m)",
                 "Conhecimento de Encarnações (NP)",
@@ -1327,29 +1332,29 @@
                 "Cura em Outras Pessoas (NP, Alcance x2m, Alvos)",
                 "Detectar Espíritos (NP, Alcance x6m)",
                 "Detectar Magia (NP, Alcance x8m)",
-                "Dissipação Mágica (NP +Vontade, Alcance x2m, Raio x4m²)",
+                "Dissipação Mágica (NP, Alcance x2m, Raio x4m²)",
                 "Doppelganger Energético (NP, Alvos, Duração x2min)",
                 "Encantamento (NP, Influência, Duração x2min)",
-                "Escudo Profano (NP +Vontade, IP, Duração x2min)",
-                "Escudo Sagrado (NP +Vontade, IP, Duração x2min)",
-                "Espírito Livre (NP, Possessão +Vontade, Duração x2min)",
-                "Exorcismo (NP, Influência +Vontade, Alcance x2m)",
+                "Escudo Profano (NP, IP, Duração x2min)",
+                "Escudo Sagrado (NP, IP, Duração x2min)",
+                "Espírito Livre (NP, Possessão, Duração x2min)",
+                "Exorcismo (NP, Influência, Alcance x2m)",
                 "Habilidade de Gnomo (NP, Multiplicador)",
                 "Invisibilidade Mística (NP, Duração x2min)",
                 "Invocação (NP, Alvos, Duração x10min)",
-                "Julgamento (NP, Dano 2, Influência +Vontade)",
-                "Leitura da Alma (NP, Alcance x2m, Influência +Vontade)",
-                "Maldição (NP, Influência +Vontade, Alcance x2m, Duração x20min)",
-                "Manipulação de Karma (NP, Influência +Vontade, Duração x20min)",
-                "Manipulação Espiritual (NP, Influência +Vontade, Alcance x2m)",
-                "Marca Arcana (NP, Influência +Vontade, Duração x20min)",
-                "Milagre (NP, Influência +Vontade, Alvos)",
+                "Julgamento (NP, Dano 2, Influência)",
+                "Leitura da Alma (NP, Alcance x2m, Influência)",
+                "Maldição (NP, Influência, Alcance x2m, Duração x20min)",
+                "Manipulação de Karma (NP, Influência, Duração x20min)",
+                "Manipulação Espiritual (NP, Influência, Alcance x2m)",
+                "Marca Arcana (NP, Influência, Duração x20min)",
+                "Milagre (NP, Influência, Alvos)",
                 "Necromancia (NP, Alvos, Duração x2min)",
                 "Pacto Sobrenatural (NP, Multiplicador, Duração x12min)",
                 "Passagem Fantasma (NP, Duração x2min)",
                 "Plasmas (NP, Dano 2, Alcance x2m)",
                 "Portal (NP, Alcance x20m, Alvos)",
-                "Possessão Espiritual (NP, Possessão +Vontade, Duração x2min)",
+                "Possessão Espiritual (NP, Possessão, Duração x2min)",
                 "Prisão Dimensional (NP, Alcance x20m, Duração x2min)",
                 "Profecia (NP)",
                 "Proteção (NP, IP, Duração x2min)",
@@ -1360,8 +1365,8 @@
 
             "Científico": [
                 "Absorção de Energia (NP, Absorção, Alcance x2m)",
-                "Alterações de Sonhos (NP, Influência +Vontade, Alcance x2m)",
-                "Alucinações (NP, Influência +Vontade, Raio x4m²)",
+                "Alterações de Sonhos (NP, Influência, Alcance x2m)",
+                "Alucinações (NP, Influência, Raio x4m²)",
                 "Animação de Imagens (NP, Alvos, Raio x4m²)",
                 "Animação de Objetos (NP, Carga, Alcance x2m, Alvos)",
                 "Agilidade (NP, Multiplicador)",
@@ -1372,10 +1377,10 @@
                 "Ataques Sonoros (NP, Dano 1, Alcance x2m, Raio x4m²)",
                 "Atrito (NP, Dano 1, Alcance x2m)",
                 "Berserker (NP, Multiplicador, Pvs, Duração x2min)",
-                "Bio Vampirismo (NP +Vontade, Absorção, Alcance x2m, Duração x2min)",
+                "Bio Vampirismo (NP, Absorção, Alcance x2m, Duração x2min)",
                 "Bolha (NP, IP, Raio x4m²)",
                 "Cabelos Vivos (NP, Membros, Alcance x2m)",
-                "Campo de Força (NP +Vontade, IP, Raio x4m²)",
+                "Campo de Força (NP, IP, Raio x4m²)",
                 "Carisma (NP, Multiplicador)",
                 "Cauda (NP, Forca, Dano 1)",
                 "Cientista Louco (NP)",
@@ -1384,18 +1389,18 @@
                 "Comunicação com Cibernéticos (NP, Alcance x10m, Alvos)",
                 "Constituição (NP, Constituicao)",
                 "Controle de Eletricidade (NP, Dano 2, Alcance x6m, Raio x12m²)",
-                "Controle de Fogo (NP +Vontade, Dano 2, Alcance x4m, Raio x8m²)",
-                "Controle de Luz (NP +Vontade, Alcance x6m, Raio x12m²)",
-                "Controle de Gravidade (NP +Vontade, Alcance x10m, Raio x20m², Carga)",
-                "Controle de Magnetismo (NP +Vontade, Alcance x8m, Raio x16m², Carga)",
-                "Controle de Máquinas (NP, Influência +Inteligência, Alcance x2m)",
+                "Controle de Fogo (NP, Dano 2, Alcance x4m, Raio x8m²)",
+                "Controle de Luz (NP, Alcance x6m, Raio x12m²)",
+                "Controle de Gravidade (NP, Alcance x10m, Raio x20m², Carga)",
+                "Controle de Magnetismo (NP , Alcance x8m, Raio x16m², Carga)",
+                "Controle de Máquinas (NP, Influência, Alcance x2m)",
                 "Controle de Ondas de Rádio (NP, Alcance x2m)",
-                "Controle de Plantas (NP +Vontade, Alcance x2m, Alvos)",
-                "Controle de Radiação (NP +Vontade, Dano 2, Alcance x10m, Raio x20m²)",
-                "Controle de Som (NP +Vontade, Alcance x2m, Raio x4m²)",
-                "Controle de Clima (NP +Vontade, Alcance x2m, Raio x4m², Duração x2min)",
-                "Controle Hipnótico (NP, Influência +Vontade, Alcance x2m)",
-                "Controle Vocal (NP, Influência +Vontade, Alcance x2m)",
+                "Controle de Plantas (NP, Alcance x2m, Alvos)",
+                "Controle de Radiação (NP, Dano 2, Alcance x10m, Raio x20m²)",
+                "Controle de Som (NP, Alcance x2m, Raio x4m²)",
+                "Controle de Clima (NP, Alcance x2m, Raio x4m², Duração x2min)",
+                "Controle Hipnótico (NP, Influência, Alcance x2m)",
+                "Controle Vocal (NP, Influência, Alcance x2m)",
                 "Conversão de Energia (NP, Absorção)",
                 "Conversão Elementar (NP, Duração x2min)",
                 "Conversão Molecular (NP, Duração x2min)",
@@ -1410,8 +1415,8 @@
                 "Cura em Outras Pessoas (NP, Alcance x2m, Alvos)",
                 "Desintegração (NP, Dano 2, Alcance x2m)",
                 "Destreza (NP, Multiplicador)",
-                "Detectar Fraqueza (NP +Inteligência, Alcance x2m)",
-                "Detectar Poder (NP +Percepção, Alcance x2m)",
+                "Detectar Fraqueza (NP, Alcance x2m)",
+                "Detectar Poder (NP, Alcance x2m)",
                 "Diminuição de Tamanho (NP, Duração x2min)",
                 "Disco Voador (NP, Voo, Carga)",
                 "Disfarce Camaleão (NP, Duração x2min)",
@@ -1430,10 +1435,10 @@
                 "Furação (NP, Dano 1, Raio x4m²)",
                 "Fusão (NP, Duração x2min)",
                 "Geoforça (NP, Dano 1, Carga)",
-                "Geração de Eletricidade (NP +Vontade, Dano 2, Alcance x2m)",
-                "Geração de Fogo (NP +Vontade, Dano 2, Alcance x2m)",
-                "Geração de Frio (NP +Vontade, Dano 2, Alcance x2m)",
-                "Geração de Radioatividade (NP +Vontade, Dano 2, Alcance x2m)",
+                "Geração de Eletricidade (NP, Dano 2, Alcance x2m)",
+                "Geração de Fogo (NP, Dano 2, Alcance x2m)",
+                "Geração de Frio (NP, Dano 2, Alcance x2m)",
+                "Geração de Radioatividade (NP, Dano 2, Alcance x2m)",
                 "Golpe Cinético (NP, Dano 1, Alcance x2m)",
                 "Habilidades Animais (NP, Multiplicador)",
                 "Habilidades Botânicas (NP, Multiplicador)",
@@ -1450,7 +1455,7 @@
                 "Liberdade de Movimento (NP)",
                 "Manipulação de Massa (NP, Carga)",
                 "Manipulação de Frio (NP, Dano 2, Alcance x2m)",
-                "Manipulação Neural (NP, Influência +Vontade, Alcance x2m)",
+                "Manipulação Neural (NP, Influência, Alcance x2m)",
                 "Molas (NP, Corrida, Saltos)",
                 "Moldar Matéria (NP, Alcance x2m, Carga)",
                 "Mudança de Idade (NP, Duração x2min)",
@@ -1463,7 +1468,7 @@
                 "Portal (NP, Alcance x20m, Alvos)",
                 "Pragas (NP, Alvos, Duração x2min)",
                 "Rajada Mental (NP, Dano 2, Alcance x2m)",
-                "Rastreamento (NP +Percepção, Alcance x2m)",
+                "Rastreamento (NP, Alcance x2m)",
                 "Reformulação Corporal (NP, Duração x2min)",
                 "Regeneração (NP, Pvs)",
                 "Resistência a Ácidos (NP, Absorção)",
@@ -1483,28 +1488,28 @@
                 "Sentidos Aguçados - Olfato (NP, Alcance x2m)",
                 "Separação Anatômica (NP, Membros)",
                 "Sexto Sentido (NP)",
-                "Sonar (NP +Percepção, Alcance x2m)",
+                "Sonar (NP, Alcance x2m)",
                 "Sonda Mental (NP, Influência, Alcance x2m)",
                 "Spray (NP, Dano 2, Alcance x2m)",
                 "Teias (NP, Alcance x2m, Alvos)",
-                "Telecinésia (NP, Carga +Vontade, Alcance x12m)",
+                "Telecinésia (NP, Carga, Alcance x12m)",
                 "Telelocalização (NP, Alcance x2m)",
-                "Telepatia (NP, Influência +Vontade, Alcance x12m, Alvos)",
+                "Telepatia (NP, Influência, Alcance x12m, Alvos)",
                 "Teleportação (NP, Alcance x20m, Alvos)",
                 "Toque Químico (NP, Dano 2)",
-                "Transferência de Mentes (NP, Possessão +Vontade, Duração x2min)",
-                "Transferência de Poderes (NP, Influência +Vontade, Duração x2min)",
+                "Transferência de Mentes (NP, Possessão, Duração x2min)",
+                "Transferência de Poderes (NP, Influência, Duração x2min)",
                 "Transformação Corpórea (NP, Multiplicador, Duração x2min)",
                 "Transformação em Animais (NP, Duração x2min)",
                 "Vertigem (NP, Influência, Alcance x2m)",
                 "Vibração (NP, Alcance x2m, Duração x2min)",
-                "Visão 360º (NP +Percepção)",
-                "Visão Raio-X (NP +Percepção, Alcance x2m)",
-                "Visão Microscópica (NP +Percepção)",
-                "Visão Macroscópica (NP +Percepção)",
-                "Visão Telescópica (NP +Percepção, Alcance x2m)",
-                "Visão Termográfica (NP +Percepção)",
-                "Visão Ultravioleta (NP +Percepção)",
+                "Visão 360º (NP)",
+                "Visão Raio-X (NP, Alcance x2m)",
+                "Visão Microscópica (NP)",
+                "Visão Macroscópica (NP)",
+                "Visão Telescópica (NP, Alcance x2m)",
+                "Visão Termográfica (NP)",
+                "Visão Ultravioleta (NP )",
                 "Voo (NP, Voo, carga)"
             ]
         };
@@ -1568,86 +1573,93 @@
                 classe: "",
                 poderes: []
             },
+            
             "Atlântis": {
                 classe: "Cósmico",
                 poderes: [
                     "Força (Np, Forca)",
                     "Constituição (Np, Constituicao)",
-                    "Sentidos Aprimorados (Np, Alcance)",
-                    "Respirar Embaixo D'água (Np, Duração)",
-                    "Controle de Anfíbios (Np, Influência, Alcance)",
-                    "Controle de Água (Np, Alcance, Raio)"
+                    "Sentidos Aprimorados (Np, Alcance x2m)",
+                    "Respirar Embaixo D'água (Np, Duração x24hrs)",
+                    "Controle de Anfíbios (Np, Influência, Alcance x10m)",
+                    "Controle de Água (Np, Alcance x10, Raio x20m²)"
                 ]
             },
+
             "Amazonas": {
                 classe: "Místico",
                 poderes: [
                     "Força (Np, Forca)",
                     "Constituição (Np, Constituicao)",
-                    "Sentidos Aprimorados (Np, Alcance)",
+                    "Sentidos Aprimorados (Np, Alcance x10m)",
                     "Resistência à Magia (Np, IP)",
-                    "Destreza (Np, Att)",
-                    "Agilidade (Np, Att)"
+                    "Destreza (Np, Destreza)",
+                    "Agilidade (Np, Agilidade)"
                 ]
             },
+
             "Dracônicos": {
                 classe: "Místico",
                 poderes: [
                     "Força (Np, Forca)",
                     "Constituição (Np, Constituicao)",
                     "Voo - Asas (Np, Velocidade, Carga)",
-                    "Gerar Fogo - Boca (Np, Dano2, Alcance, Raio)",
+                    "Gerar Fogo - Boca (Np, Dano2, Alcance x2m, Raio x4m²)",
                     "Invulnerabilidade (Np, IP)",
-                    "Armas Naturais - Presas (Np, Dano2, Ataques)",
+                    "Armas Naturais - Presas (Np, Dano 2)",
                     "Resistência à Magia (Np, IP)"
                 ]
             },
+
             "Vampiros": {
                 classe: "Místico",
                 poderes: [
                     "Força (Np, Forca)",
                     "Constituição (Np, Constituicao)",
                     "Corrida (Np, Velocidade, Carga)",
-                    "Destreza (Np, Att)",
-                    "Hipnose (Np, Influência, Alcance, Duração)",
-                    "Sentidos Apurados (Np, Alcance)",
+                    "Destreza (Np, Destreza)",
+                    "Hipnose (Np, Influência, Alcance x2m, Duração x4 min)",
+                    "Sentidos Apurados (Np, Alcance x10m)",
                     "Regeneração (Np, Pvs)",
                     "Penalidade: Crítico Máximo ao Sol",
                     "Penalidade: Queimadura de 3º Grau ao Sol",
                     "Vantagem Territorial: Noite"
                 ]
             },
+
             "Lobisomem": {
                 classe: "Místico",
                 poderes: [
                     "Força (Np, Forca)",
                     "Constituição (Np, Constituicao)",
                     "Agilidade (Np, Att)",
-                    "Sentidos Aguçados (Np, Alcance)",
+                    "Sentidos Aguçados (Np, Alcance x10m)",
                     "Corrida (Np, Velocidade, Carga)",
                     "Cura em Si (Np, Pvs)",
                     "Penalidade: Vulnerabilidade à Prata",
                     "Vantagem Territorial: Lua Cheia"
                 ]
             },
+
             "Marciano": {
                 classe: "Cósmico",
                 poderes: [
-                    "Metamorfose (Np, Duração)",
+                    "Metamorfose (Np, Duração x10min)",
                     "Força (Np, Forca)",
                     "Constituição (Np, Constituicao)",
-                    "Intangibilidade (Np, duração)",
+                    "Intangibilidade (Np, duração x4 min)",
                     "Regeneração (Np, Pvs)",
-                    "Adaptação Corpórea (Np, IP)"
+                    "Adaptação Corpórea (Np, Duração x24 hrs, IP)"
                 ]
             },
+
             "Tetlamando": {
                 classe: "Cósmico",
                 poderes: [
                     "Força (Np, Forca)",
                     "Constituição (Np, Constituicao)",
-                    "Destreza (Np, Att)",
-                    "Percepção (Np, Att)",
+                    "Destreza (Np, Destreza)",
+                    "Percepção (Np, Percepção)",
                     "Múltiplos Membros (+2 braços +2 olhos)"
                 ]
             }
@@ -1660,11 +1672,12 @@
         function atualizarPainelClasseRaca(){
             const classe =
                 document.getElementById("classe").value;
+
             const raca =
                 document.getElementById("raca").value;
+
             const painel =
                 document.getElementById("dadosClasse");
-            
             let poderes = [];
 
             if(classe && raca === "Humano"){
@@ -1678,6 +1691,7 @@
             if(raca && raca !== "Humano"){
                 const dadosRaca =
                     racasRPG[raca];
+
                 if(dadosRaca){
                     poderes.push(...dadosRaca.poderes);
                 }
@@ -1698,12 +1712,18 @@
                 `;
                 return;
             }
+
             let html = "";
+
             poderes.forEach((poder,index)=>{
+
                 let nomePoder = poder;
+
                 let campos = [];
+
                 const match =
                     poder.match(/(.*?)\((.*?)\)/);
+
                 if(match){
                     nomePoder =
                         match[1].trim();
@@ -1712,16 +1732,22 @@
                         .split(",")
                         .map(campo => campo.trim());
                 }
+
                 html += `
                     <div class="poder-ficha">
                         <div class="poder-titulo">
                             ✦ ${nomePoder}
                         </div>
                 `;
+
                 campos.forEach(campo => {
                     const campoLimpo =
-                        campo.trim().toLowerCase();
+                        campo
+                        .trim()
+                        .toLowerCase();
+
                     let atributo = "";
+
                     if(campoLimpo === "forca"){
                         atributo = "forca";
                     }
@@ -1731,41 +1757,65 @@
                     else if(campoLimpo === "vontade"){
                         atributo = "vontade";
                     }
+
+                    const tipoInput =
+                        campoLimpo === "material"
+                        ? "text"
+                        : "number";
+
+                    const minInput =
+                        tipoInput === "number"
+                        ? `min="0"`
+                        : "";
+
+                    const valorPadrao =
+                        tipoInput === "number"
+                        ? "0"
+                        : "";
+
+                    const evento =
+                        tipoInput === "number"
+                        ? `onchange="atualizarGrau(${index}); atualizarNivel();"`
+                        : "";
+
                     html += `
-                    <div class="linha-poder">
-                        <span>${campo}</span>
-                        <input
-                            type="number"
-                            min="0"
-                            value="0"
-                            class="campo-poder"
-                            data-poder="${index}"
-                            data-campo="${campoLimpo}"
-                            data-atributo="${atributo}"
-                            onchange="atualizarGrau(${index}); atualizarNivel();">
-                    </div>
+                        <div class="linha-poder">
+                            <span>${campo}</span>
+                            <input
+                                type="${tipoInput}"
+                                ${minInput}
+                                value="${valorPadrao}"
+                                class="campo-poder"
+                                data-poder="${index}"
+                                data-campo="${campoLimpo}"
+                                data-atributo="${atributo}"
+                                placeholder="${campo}"
+                                ${evento}>
+                        </div>
                     `;
                 });
+
                 html += `
-                    <div class="linha-poder">
-                        <span>Grau</span>
-                        <input
-                            type="text"
-                            id="grau_${index}"
-                            value="Beta"
-                            readonly>
+                        <div class="linha-poder">
+                            <span>Grau</span>
+                            <input
+                                type="text"
+                                id="grau_${index}"
+                                value="Beta"
+                                readonly>
+                        </div>
+                        <div class="linha-poder">
+                            <span>Dado</span>
+                            <input
+                                type="text"
+                                id="dado_${index}"
+                                value="1D6"
+                                readonly>
+                        </div>
                     </div>
-                    <div class="linha-poder">
-                        <span>Dado</span>
-                        <input
-                            type="text"
-                            id="dado_${index}"
-                            value="1D6"
-                            readonly>
-                    </div>
-                </div>
                 `;
             });
+
             painel.innerHTML = html;
         }
 
@@ -2034,89 +2084,127 @@
 
             if (!campo || !resultado) return;
 
-            const formula =
-                campo.value.replace(/\s+/g, "");
+            let formula =
+                campo.value
+                .replace(/\s+/g, "")
+                .toLowerCase();
 
-            const diceRegex =
-                /(-?\d*)d(\d+)/gi;
-
-            const numberRegex =
-                /([-+]?\d+)/g;
+            if (!formula) return;
 
             let total = 0;
 
-            let rolagens = [];
+            let detalhes = [];
 
-            let match;
+            // Garante que sinais fiquem separados
+            formula =
+                formula.replace(/-/g, "+-");
 
-            while (
-                (match = diceRegex.exec(formula))
-                !== null
-            ) {
+            const partes =
+                formula.split("+").filter(p => p !== "");
 
-                let quantidade =
-                    match[1]
-                    ? parseInt(match[1])
-                    : 1;
+            partes.forEach(parte => {
 
-                let lados =
-                    parseInt(match[2]);
+                if (parte.includes("d")) {
 
-                for (
-                    let i = 0;
-                    i < Math.abs(quantidade);
-                    i++
-                ) {
+                    const [qtdTexto, ladosTexto] =
+                        parte.split("d");
 
-                    let valor =
-                        Math.floor(
-                            Math.random() * lados
-                        ) + 1;
+                    let quantidade =
+                        qtdTexto === "" || qtdTexto === "+"
+                        ? 1
+                        : qtdTexto === "-"
+                        ? -1
+                        : parseInt(qtdTexto);
 
-                    if (quantidade < 0) {
+                    const lados =
+                        parseInt(ladosTexto);
 
-                        valor *= -1;
+                    if (
+                        isNaN(quantidade) ||
+                        isNaN(lados) ||
+                        lados <= 0
+                    ) {
+                        return;
+                    }
+
+                    let somaDados = 0;
+
+                    let rolagens = [];
+
+                    for (
+                        let i = 0;
+                        i < Math.abs(quantidade);
+                        i++
+                    ) {
+
+                        let valor =
+                            Math.floor(
+                                Math.random() * lados
+                            ) + 1;
+
+                        rolagens.push(valor);
+
+                        somaDados += valor;
 
                     }
 
-                    rolagens.push(valor);
+                    if (quantidade < 0) {
 
-                    total += valor;
+                        somaDados *= -1;
+
+                    }
+
+                    total += somaDados;
+
+                    detalhes.push(
+                        `${parte}: [${rolagens.join(", ")}]`
+                    );
+
+                } else {
+
+                    const numero =
+                        parseInt(parte);
+
+                    if (!isNaN(numero)) {
+
+                        total += numero;
+
+                        detalhes.push(
+                            `${numero}`
+                        );
+
+                    }
 
                 }
 
-            }
+            });
 
-            formula
-                .replace(diceRegex, "+")
-                .match(numberRegex)
-                ?.forEach(num => {
+            resultado.innerHTML = `
+                <strong>Total:</strong> ${total}
+                <br>
+                Rolagens: ${detalhes.join(" + ")}
+            `;
 
-                    let valor =
-                        parseInt(num);
+            resultado.style.opacity = "1";
 
-                    total += valor;
+            resultado.style.display = "block";
 
-                    rolagens.push(valor);
+            clearTimeout(window.timerResultadoDado);
 
-                });
+            window.timerResultadoDado = setTimeout(() => {
 
-                resultado.innerHTML = `
-                    <strong>Total:</strong> ${total}
-                    <br>
-                    Rolagens: ${rolagens.join(", ")}
-                `;
-
-                resultado.style.opacity = "1";
+                resultado.style.opacity = "0";
 
                 setTimeout(() => {
 
-                    resultado.style.opacity = "0";
+                    resultado.style.display = "none";
 
-                }, 5000);
+                }, 500);
+
+            }, 5000);
 
         }
 
-    </script>
+</script>
 </body>
 </html>
