@@ -30,541 +30,534 @@ onAuthStateChanged(auth, (user) => {
 });
 
 async function salvarFichaFirebase() {
-  try {
+    try {
 
-      // Verificar Firebase
+        if (!isFirebaseInitialized()) {
 
-      if (!isFirebaseInitialized()) {
+            const {
+                auth: authInstance,
+                db: dbInstance
+            } = getFirebaseInstances();
 
-          const {
-              auth: authInstance,
-              db: dbInstance
-          } = getFirebaseInstances();
+            if (!authInstance || !dbInstance) {
 
-          if (!authInstance || !dbInstance) {
+                showAlert(
+                    "Erro: Firebase não foi inicializado corretamente.",
+                    "error"
+                );
 
-              showAlert(
-                  "Erro: Firebase não foi inicializado corretamente.",
-                  "error"
-              );
+                return;
 
-              return;
-          }
+            }
 
-      }
+        }
 
-      if (!usuarioLogado) {
+        if (!usuarioLogado) {
 
-          alert(
-              "Você precisa estar logado para salvar a ficha."
-          );
+            alert("Você precisa estar logado para salvar a ficha.");
 
-          return;
-      }
+            return;
 
-      // =========================
-      // OBJETO PRINCIPAL
-      // =========================
+        }
 
-      const ficha = {
+        const ficha = {
+            uid: usuarioLogado.uid,
+            personagemId: personagemId,
+            dataSalvamento: new Date().toISOString(),
+            timestamp: Date.now()
+        };
 
-          uid: usuarioLogado.uid,
+        // =========================
+        // CAMPOS NORMAIS
+        // =========================
 
-          personagemId: personagemId,
+        document
+            .querySelectorAll("input, textarea, select")
+            .forEach(el => {
 
-          dataSalvamento:
-              new Date().toISOString(),
+                if (!el.id) return;
 
-          timestamp:
-              Date.now()
+                if (el.id === "diceInput") return;
 
-      };
+                ficha[el.id] = el.value;
 
-      // =========================
-      // CAMPOS DA FICHA
-      // =========================
+            });
 
-      document
-          .querySelectorAll(
-              "input, textarea, select"
-          )
-          .forEach(el => {
+        // =========================
+        // PONTOS
+        // =========================
 
-              if (!el.id) return;
+        const pontos =
+            document.getElementById("pontos");
 
-              // Não salvar campo do rolador
+        if (pontos) {
 
-              if (el.id === "diceInput")
-                  return;
+            ficha.pontos =
+                parseInt(
+                    pontos.textContent.replace(/\D/g, "")
+                ) || 0;
 
-              ficha[el.id] = el.value;
+        }
 
-          });
+        // =========================
+        // PERÍCIAS
+        // =========================
 
-      // =========================
-      // PONTOS RESTANTES
-      // =========================
+        ficha.pericias = [];
 
-      const pontos =
-          document.getElementById(
-              "pontos"
-          );
+        document
+            .querySelectorAll("#skillsTableBody .pericia-item")
+            .forEach(item => {
 
-      if (pontos) {
+                const nome =
+                    item.querySelector(".pericia-nome")?.value || "";
 
-          ficha.pontos =
-              parseInt(
-                  pontos.textContent
-                  .replace(/\D/g, "")
-              ) || 0;
+                const valor =
+                    item.querySelector(".pericia-valor")?.value || "";
 
-      }
+                ficha.pericias.push({
+                    nome,
+                    valor
+                });
 
-      // =========================
-      // PODERES MARCADOS
-      // =========================
+            });
 
-      ficha.poderesSelecionados = [];
+        // =========================
+        // MOCHILA
+        // =========================
 
-      document
-          .querySelectorAll(
-              ".poder-checkbox"
-          )
-          .forEach(cb => {
+        ficha.mochila = [];
 
-              ficha.poderesSelecionados.push({
+        document
+            .querySelectorAll("#backpackTableBody .item-mochila")
+            .forEach(item => {
 
-                  poder:
-                      cb.value,
+                const nome =
+                    item.querySelector("input")?.value || "";
 
-                  marcado:
-                      cb.checked
+                ficha.mochila.push({
+                    nome
+                });
 
-              });
+            });
 
-          });
+        // =========================
+        // PODERES MARCADOS
+        // =========================
 
-      // =========================
-      // CAMPOS DOS PODERES
-      // =========================
+        ficha.poderesSelecionados = [];
 
-      ficha.camposPoderes = [];
+        document
+            .querySelectorAll(".poder-checkbox")
+            .forEach(cb => {
 
-      document
-          .querySelectorAll(
-              ".campo-poder"
-          )
-          .forEach(campo => {
+                ficha.poderesSelecionados.push({
+                    poder: cb.value,
+                    marcado: cb.checked
+                });
 
-              ficha.camposPoderes.push({
+            });
 
-                  poder:
-                      campo.dataset.poder || "",
+        // =========================
+        // CAMPOS DOS PODERES
+        // =========================
 
-                  atributo:
-                      campo.dataset.atributo || "",
+        ficha.camposPoderes = [];
 
-                  campo:
-                      campo.dataset.campo || "",
+        document
+            .querySelectorAll(".campo-poder")
+            .forEach(campo => {
 
-                  valor:
-                      campo.value || 0
+                ficha.camposPoderes.push({
+                    poder: campo.dataset.poder || "",
+                    atributo: campo.dataset.atributo || "",
+                    campo: campo.dataset.campo || "",
+                    valor: campo.value || 0
+                });
 
-              });
+            });
 
-          });
+        // =========================
+        // GRAUS
+        // =========================
 
-      // =========================
-      // GRAUS
-      // =========================
+        ficha.grausPoderes = [];
 
-      ficha.grausPoderes = [];
+        document
+            .querySelectorAll("[id^='grau_']")
+            .forEach(el => {
 
-      document
-          .querySelectorAll(
-              "[id^='grau_']"
-          )
-          .forEach(el => {
+                ficha.grausPoderes.push({
+                    id: el.id,
+                    valor: el.value
+                });
 
-              ficha.grausPoderes.push({
+            });
 
-                  id:
-                      el.id,
+        // =========================
+        // DADOS
+        // =========================
 
-                  valor:
-                      el.value
+        ficha.dadosPoderes = [];
 
-              });
+        document
+            .querySelectorAll("[id^='dado_']")
+            .forEach(el => {
 
-          });
+                ficha.dadosPoderes.push({
+                    id: el.id,
+                    valor: el.value
+                });
 
-      // =========================
-      // DADOS
-      // =========================
+            });
 
-      ficha.dadosPoderes = [];
+        // =========================
+        // FEEDBACK BOTÃO
+        // =========================
 
-      document
-          .querySelectorAll(
-              "[id^='dado_']"
-          )
-          .forEach(el => {
+        const saveBtn =
+            document.querySelector(
+                'button[onclick="salvarFichaFirebase()"]'
+            );
 
-              ficha.dadosPoderes.push({
+        let textoOriginal = "";
 
-                  id:
-                      el.id,
+        if (saveBtn) {
 
-                  valor:
-                      el.value
+            textoOriginal = saveBtn.innerHTML;
 
-              });
+            saveBtn.innerHTML = "Salvando...";
 
-          });
+            saveBtn.disabled = true;
 
-      // =========================
-      // FEEDBACK VISUAL
-      // =========================
+        }
 
-      const saveBtn =
-          document.querySelector(
-              'button[onclick="salvarFichaFirebase()"]'
-          );
+        // =========================
+        // SALVAR FIRESTORE
+        // =========================
 
-      let textoOriginal = "";
+        await setDoc(
+            doc(
+                db,
+                "usuarios",
+                usuarioLogado.uid,
+                "personagens",
+                personagemId
+            ),
+            ficha
+        );
 
-      if (saveBtn) {
+        if (saveBtn) {
 
-          textoOriginal =
-              saveBtn.innerHTML;
+            saveBtn.innerHTML = textoOriginal;
 
-          saveBtn.innerHTML =
-              '<i class="fas fa-spinner fa-spin me-2"></i>Salvando...';
+            saveBtn.disabled = false;
 
-          saveBtn.disabled = true;
+        }
 
-      }
+        showAlert(
+            "Ficha salva com sucesso!",
+            "success"
+        );
 
-      // =========================
-      // SALVAR FIRESTORE
-      // =========================
+    } catch (error) {
 
-      await setDoc(
+        console.error("Erro ao salvar ficha:", error);
 
-          doc(
-              db,
-              "usuarios",
-              usuarioLogado.uid,
-              "personagens",
-              personagemId
-          ),
+        showAlert(
+            "Erro ao salvar ficha: " + error.message,
+            "error"
+        );
 
-          ficha
-
-      );
-
-      // =========================
-      // SUCESSO
-      // =========================
-
-      if (saveBtn) {
-
-          saveBtn.innerHTML =
-              textoOriginal;
-
-          saveBtn.disabled = false;
-
-      }
-
-      showAlert(
-          "Ficha salva com sucesso!",
-          "success"
-      );
-
-  }
-
-  catch (error) {
-
-      console.error(
-          "Erro ao salvar ficha:",
-          error
-      );
-
-      showAlert(
-          "Erro ao salvar ficha: "
-          + error.message,
-          "error"
-      );
-
-  }
+    }
 }
 
 async function carregarFichaFirebase() {
-  try {
+    try {
 
-      if (!isFirebaseInitialized()) {
+        if (!isFirebaseInitialized()) {
 
-          const {
-              auth: authInstance,
-              db: dbInstance
-          } = getFirebaseInstances();
+            const {
+                auth: authInstance,
+                db: dbInstance
+            } = getFirebaseInstances();
 
-          if (!authInstance || !dbInstance) {
+            if (!authInstance || !dbInstance) {
 
-              showAlert(
-                  "Erro: Firebase não foi inicializado corretamente.",
-                  "error"
-              );
+                showAlert(
+                    "Erro: Firebase não foi inicializado corretamente.",
+                    "error"
+                );
 
-              return;
-          }
+                return;
 
-      }
+            }
 
-      if (!usuarioLogado) {
+        }
 
-          alert(
-              "Você precisa estar logado para carregar a ficha."
-          );
+        if (!usuarioLogado) {
 
-          return;
+            alert("Você precisa estar logado para carregar a ficha.");
 
-      }
+            return;
 
-      const docRef = doc(
-          db,
-          "usuarios",
-          usuarioLogado.uid,
-          "personagens",
-          personagemId
-      );
+        }
 
-      const snap = await getDoc(docRef);
+        const docRef = doc(
+            db,
+            "usuarios",
+            usuarioLogado.uid,
+            "personagens",
+            personagemId
+        );
 
-      if (!snap.exists()) {
+        const snap = await getDoc(docRef);
 
-          showAlert(
-              "Ficha ainda não cadastrada.",
-              "info"
-          );
+        if (!snap.exists()) {
 
-          return;
+            showAlert(
+                "Ficha ainda não cadastrada.",
+                "info"
+            );
 
-      }
+            return;
 
-      const ficha = snap.data();
+        }
 
-      // =========================
-      // CAMPOS NORMAIS
-      // =========================
+        const ficha = snap.data();
 
-      Object.entries(ficha)
-          .forEach(([chave, valor]) => {
+        // =========================
+        // CAMPOS NORMAIS
+        // =========================
 
-              if (
+        Object.entries(ficha)
+            .forEach(([chave, valor]) => {
 
-                  chave === "uid" ||
-                  chave === "personagemId" ||
-                  chave === "timestamp" ||
-                  chave === "dataSalvamento" ||
+                if (
+                    chave === "uid" ||
+                    chave === "personagemId" ||
+                    chave === "timestamp" ||
+                    chave === "dataSalvamento" ||
+                    chave === "pericias" ||
+                    chave === "mochila" ||
+                    chave === "poderesSelecionados" ||
+                    chave === "camposPoderes" ||
+                    chave === "grausPoderes" ||
+                    chave === "dadosPoderes"
+                ) {
+                    return;
+                }
 
-                  chave === "poderesSelecionados" ||
-                  chave === "camposPoderes" ||
-                  chave === "grausPoderes" ||
-                  chave === "dadosPoderes"
+                const el =
+                    document.getElementById(chave);
 
-              ) return;
+                if (!el) return;
 
-              const el =
-                  document.getElementById(chave);
+                if (
+                    el.tagName === "INPUT" ||
+                    el.tagName === "TEXTAREA" ||
+                    el.tagName === "SELECT"
+                ) {
 
-              if (!el) return;
+                    el.value = valor ?? "";
 
-              if (
+                }
 
-                  el.tagName === "INPUT" ||
-                  el.tagName === "TEXTAREA" ||
-                  el.tagName === "SELECT"
+            });
 
-              ) {
+        // =========================
+        // CARREGAR PERÍCIAS
+        // =========================
 
-                  el.value =
-                      valor ?? "";
+        if (Array.isArray(ficha.pericias)) {
 
-              }
+            const linhas =
+                document.querySelectorAll(
+                    "#skillsTableBody .pericia-item"
+                );
 
-          });
+            ficha.pericias.forEach((pericia, index) => {
 
-      // =========================
-      // RECRIAR CLASSE
-      // =========================
+                const linha = linhas[index];
 
-      if (ficha.classe) {
+                if (!linha) return;
 
-          document.getElementById(
-              "classe"
-          ).value = ficha.classe;
+                const nome =
+                    linha.querySelector(".pericia-nome");
 
-          carregarClasse();
+                const valor =
+                    linha.querySelector(".pericia-valor");
 
-      }
+                if (nome) nome.value = pericia.nome || "";
 
-      // =========================
-      // RECRIAR RAÇA
-      // =========================
+                if (valor) valor.value = pericia.valor || 0;
 
-      if (ficha.raca) {
+            });
 
-          document.getElementById(
-              "raca"
-          ).value = ficha.raca;
+        }
 
-          carregarRaca();
+        // =========================
+        // CARREGAR MOCHILA
+        // =========================
 
-      }
+        if (Array.isArray(ficha.mochila)) {
 
-      // Aguarda renderização
+            const linhas =
+                document.querySelectorAll(
+                    "#backpackTableBody .item-mochila"
+                );
 
-      setTimeout(() => {
+            ficha.mochila.forEach((item, index) => {
 
-          // =========================
-          // CHECKBOXES DOS PODERES
-          // =========================
+                const linha = linhas[index];
 
-          if (ficha.poderesSelecionados) {
+                if (!linha) return;
 
-              ficha.poderesSelecionados
-                  .forEach(p => {
+                const input =
+                    linha.querySelector("input");
 
-                      document
-                          .querySelectorAll(
-                              ".poder-checkbox"
-                          )
-                          .forEach(cb => {
+                if (input) input.value = item.nome || "";
 
-                              if (
-                                  cb.value === p.poder
-                              ) {
+            });
 
-                                  cb.checked =
-                                      p.marcado;
+        }
 
-                              }
+        // =========================
+        // RECRIAR CLASSE
+        // =========================
 
-                          });
+        if (ficha.classe) {
 
-                  });
+            const classeEl =
+                document.getElementById("classe");
 
-          }
+            if (classeEl) {
 
-          atualizarPainelClasseRaca();
+                classeEl.value = ficha.classe;
 
-          setTimeout(() => {
+                carregarClasse();
 
-              // =========================
-              // CAMPOS DOS PODERES
-              // =========================
+            }
 
-              if (ficha.camposPoderes) {
+        }
 
-                  const campos =
-                      document.querySelectorAll(
-                          ".campo-poder"
-                      );
+        // =========================
+        // RECRIAR RAÇA
+        // =========================
 
-                  ficha.camposPoderes
-                      .forEach((item, index) => {
+        if (ficha.raca) {
 
-                          if (
-                              campos[index]
-                          ) {
+            const racaEl =
+                document.getElementById("raca");
 
-                              campos[index].value =
-                                  item.valor;
+            if (racaEl) {
 
-                          }
+                racaEl.value = ficha.raca;
 
-                      });
+                carregarRaca();
 
-              }
+            }
 
-              // =========================
-              // GRAUS
-              // =========================
+        }
 
-              if (ficha.grausPoderes) {
+        // =========================
+        // RECRIAR PODERES
+        // =========================
 
-                  ficha.grausPoderes
-                      .forEach(grau => {
+        setTimeout(() => {
 
-                          const el =
-                              document.getElementById(
-                                  grau.id
-                              );
+            if (Array.isArray(ficha.poderesSelecionados)) {
 
-                          if (el) {
+                ficha.poderesSelecionados
+                    .forEach(p => {
 
-                              el.value =
-                                  grau.valor;
+                        document
+                            .querySelectorAll(".poder-checkbox")
+                            .forEach(cb => {
 
-                          }
+                                if (cb.value === p.poder) {
 
-                      });
+                                    cb.checked = p.marcado;
 
-              }
+                                }
 
-              // =========================
-              // DADOS
-              // =========================
+                            });
 
-              if (ficha.dadosPoderes) {
+                    });
 
-                  ficha.dadosPoderes
-                      .forEach(dado => {
+            }
 
-                          const el =
-                              document.getElementById(
-                                  dado.id
-                              );
+            atualizarPainelClasseRaca();
 
-                          if (el) {
+            setTimeout(() => {
 
-                              el.value =
-                                  dado.valor;
+                if (Array.isArray(ficha.camposPoderes)) {
 
-                          }
+                    const campos =
+                        document.querySelectorAll(".campo-poder");
 
-                      });
+                    ficha.camposPoderes
+                        .forEach((item, index) => {
 
-              }
+                            if (campos[index]) {
 
-              atualizarNivel();
+                                campos[index].value = item.valor;
 
-          }, 200);
+                            }
 
-      }, 200);
+                        });
 
-      showAlert(
-          "Ficha carregada com sucesso!",
-          "success"
-      );
+                }
 
-  }
+                if (Array.isArray(ficha.grausPoderes)) {
 
-  catch (error) {
+                    ficha.grausPoderes
+                        .forEach(grau => {
 
-      console.error(
-          "Erro ao carregar ficha:",
-          error
-      );
+                            const el =
+                                document.getElementById(grau.id);
 
-      showAlert(
-          "Erro ao carregar ficha: "
-          + error.message,
-          "error"
-      );
+                            if (el) el.value = grau.valor;
 
-  }
+                        });
+
+                }
+
+                if (Array.isArray(ficha.dadosPoderes)) {
+
+                    ficha.dadosPoderes
+                        .forEach(dado => {
+
+                            const el =
+                                document.getElementById(dado.id);
+
+                            if (el) el.value = dado.valor;
+
+                        });
+
+                }
+
+                atualizarNivel();
+
+            }, 200);
+
+        }, 200);
+
+        showAlert(
+            "Ficha carregada com sucesso!",
+            "success"
+        );
+
+    } catch (error) {
+
+        console.error("Erro ao carregar ficha:", error);
+
+        showAlert(
+            "Erro ao carregar ficha: " + error.message,
+            "error"
+        );
+
+    }
 }
 
 function resetarFicha() {
