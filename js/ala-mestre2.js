@@ -9,7 +9,9 @@ import {
     collection,
     getDocs,
     deleteDoc,
-    doc
+    doc,
+    query,
+    where
 } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
 import {
@@ -19,7 +21,6 @@ import {
 let usuarioLogado = null;
 
 onAuthStateChanged(auth, user => {
-
     if (!user) {
         alert("Você precisa estar logado.");
         window.location.href = "index.html";
@@ -27,19 +28,18 @@ onAuthStateChanged(auth, user => {
     }
 
     usuarioLogado = user;
-
     carregarFichasMestre();
-
 });
 
 async function carregarFichasMestre() {
-
     const lista = document.getElementById("listaFichas");
     const total = document.getElementById("totalFichas");
-    const status = document.getElementById("statusMestre");
+    const status =
+        document.getElementById("statusMestre") ||
+        document.getElementById("loadingState");
 
     if (!lista) {
-        console.error("Elemento #listaFichas não encontrado.");
+        console.error("Não achei o elemento #listaFichas no HTML.");
         return;
     }
 
@@ -51,18 +51,14 @@ async function carregarFichasMestre() {
     }
 
     try {
-
         if (!isFirebaseInitialized()) {
-
-            const firebase = getFirebaseInstances();
-
-            if (!firebase.auth || !firebase.db) {
-                throw new Error("Firebase não inicializado.");
-            }
-
+            getFirebaseInstances();
         }
 
-        const snap = await getDocs(
+        let fichas = [];
+
+        // CAMINHO NOVO: usuarios/{uid}/personagens
+        const snapNovo = await getDocs(
             collection(
                 db,
                 "usuarios",
@@ -71,15 +67,28 @@ async function carregarFichasMestre() {
             )
         );
 
-        const fichas = [];
-
-        snap.forEach(docSnap => {
-
+        snapNovo.forEach(docSnap => {
             fichas.push({
                 id: docSnap.id,
+                origem: "novo",
                 ...docSnap.data()
             });
+        });
 
+        // CAMINHO ANTIGO: fichas where uid == usuario
+        const qAntigo = query(
+            collection(db, "fichas"),
+            where("uid", "==", usuarioLogado.uid)
+        );
+
+        const snapAntigo = await getDocs(qAntigo);
+
+        snapAntigo.forEach(docSnap => {
+            fichas.push({
+                id: docSnap.id,
+                origem: "antigo",
+                ...docSnap.data()
+            });
         });
 
         fichas.sort((a, b) =>
@@ -91,11 +100,9 @@ async function carregarFichasMestre() {
         }
 
         if (fichas.length === 0) {
-
             if (status) {
-                status.innerHTML = "Nenhuma ficha encontrada.";
+                status.innerHTML = "Nenhuma ficha encontrada no Firebase.";
             }
-
             return;
         }
 
@@ -108,147 +115,84 @@ async function carregarFichasMestre() {
         });
 
     } catch (erro) {
-
         console.error("Erro ao carregar fichas:", erro);
 
         if (status) {
             status.innerHTML =
                 "Erro ao carregar fichas: " + erro.message;
         }
-
     }
-
 }
 
 function criarCardFicha(ficha) {
-
     const card = document.createElement("div");
-
     card.className = "bloco-rpg card-ficha-mestre";
 
     card.innerHTML = `
-        <h2 class="section-title">
-            ${escapar(ficha.nome || "Sem Nome")}
-        </h2>
+        <h2 class="section-title">${ficha.nome || "Sem Nome"}</h2>
 
         <div class="ficha-linha">
             <span class="ficha-label">Raça</span>
-            <strong>${escapar(ficha.raca || "-")}</strong>
+            <strong>${ficha.raca || "-"}</strong>
         </div>
 
         <div class="ficha-linha">
             <span class="ficha-label">Classe</span>
-            <strong>${escapar(ficha.classe || "-")}</strong>
+            <strong>${ficha.classe || "-"}</strong>
         </div>
 
         <div class="ficha-linha">
             <span class="ficha-label">Nível</span>
-            <strong>${escapar(ficha.nivel || "1")}</strong>
+            <strong>${ficha.nivel || "1"}</strong>
         </div>
 
         <div class="ficha-linha">
             <span class="ficha-label">Vida</span>
-            <strong>${escapar(ficha.vida || "0")}</strong>
+            <strong>${ficha.vida || "0"}</strong>
         </div>
 
         <div class="ficha-linha">
             <span class="ficha-label">Energia</span>
-            <strong>${escapar(ficha.energia || "0")}</strong>
-        </div>
-
-        <div class="ficha-linha">
-            <span class="ficha-label">XP</span>
-            <strong>${escapar(ficha.xp || "0")}</strong>
+            <strong>${ficha.energia || "0"}</strong>
         </div>
 
         <div class="acoes-ficha">
-            <button
-                class="btn-rpg"
-                onclick="abrirFicha('${ficha.id}')">
+            <button class="btn-rpg" onclick="abrirFicha('${ficha.id}')">
                 Abrir
             </button>
 
-            <button
-                class="btn-rpg"
-                onclick="excluirFicha('${ficha.id}', '${escaparAspas(ficha.nome || "Sem Nome")}')">
+            <button class="btn-rpg" onclick="excluirFicha('${ficha.id}', '${ficha.origem}')">
                 Excluir
             </button>
         </div>
     `;
 
     return card;
-
 }
 
 window.abrirFicha = function(id) {
-
     window.location.href =
         "Ficha.html?personagemId=" + encodeURIComponent(id);
-
 };
 
-window.excluirFicha = async function(id, nome) {
+window.excluirFicha = async function(id, origem) {
+    if (!confirm("Deseja excluir esta ficha?")) return;
 
-    const confirmar = confirm(
-        `Deseja excluir a ficha "${nome}"?`
-    );
-
-    if (!confirmar) return;
-
-    try {
-
+    if (origem === "novo") {
         await deleteDoc(
-            doc(
-                db,
-                "usuarios",
-                usuarioLogado.uid,
-                "personagens",
-                id
-            )
+            doc(db, "usuarios", usuarioLogado.uid, "personagens", id)
         );
-
-        alert("Ficha excluída com sucesso.");
-
-        carregarFichasMestre();
-
-    } catch (erro) {
-
-        console.error("Erro ao excluir:", erro);
-
-        alert("Erro ao excluir ficha: " + erro.message);
-
+    } else {
+        await deleteDoc(
+            doc(db, "fichas", id)
+        );
     }
 
+    carregarFichasMestre();
 };
 
-window.carregarFichasMestre =
-    carregarFichasMestre;
-
-window.refreshFichas =
-    carregarFichasMestre;
-
+window.carregarFichasMestre = carregarFichasMestre;
+window.refreshFichas = carregarFichasMestre;
 window.logout = function() {
-
     window.location.href = "index.html";
-
 };
-
-function escapar(valor) {
-
-    return String(valor ?? "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-
-}
-
-function escaparAspas(valor) {
-
-    return String(valor ?? "")
-        .replaceAll("\\", "\\\\")
-        .replaceAll("'", "\\'")
-        .replaceAll('"', "&quot;");
-
-}
