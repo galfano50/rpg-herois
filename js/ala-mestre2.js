@@ -1,444 +1,217 @@
-//=====================================================
-//              ALA DO MESTRE
-//=====================================================
+// js/ala-mestre.js
 
 import {
     auth,
     db,
     isFirebaseInitialized,
     getFirebaseInstances
-}
-from "./firebase-config.js";
+} from "./firebase-config.js";
 
-import{
-
+import {
     collection,
+    query,
+    where,
     getDocs,
     deleteDoc,
     doc
+} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
-}
-from
-"https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
-
-import{
-
+import {
     onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 
-}
-from
-"https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+let usuarioAtual = null;
+let todasAsFichas = [];
+let fichasFiltradas = [];
 
+// ===============================
+// AUTENTICAÇÃO
+// ===============================
 
+onAuthStateChanged(auth, async (user) => {
 
-//=====================================================
-//              VARIÁVEIS GLOBAIS
-//=====================================================
+    if (!user) {
+        alert("Você precisa estar logado para acessar a Ala do Mestre.");
+        window.location.href = "index.html";
+        return;
+    }
 
-let usuarioAtual=null;
+    usuarioAtual = user;
 
-let todasFichas=[];
+    await carregarFichas();
 
-let fichasExibidas=[];
+});
 
+// ===============================
+// CARREGAR FICHAS
+// ===============================
 
+async function carregarFichas() {
 
-//=====================================================
-//              ALERTA
-//=====================================================
+    mostrarLoading(true);
+    mostrarVazio(false);
 
-function alerta(msg,cor="#4b7f52"){
+    todasAsFichas = [];
+    fichasFiltradas = [];
 
-    const div=document.createElement("div");
+    try {
 
-    div.className="alerta-rpg";
+        if (!isFirebaseInitialized()) {
+            const firebase = getFirebaseInstances();
 
-    div.innerHTML=msg;
-
-    div.style.background=cor;
-
-    document.body.appendChild(div);
-
-    setTimeout(()=>{
-
-        div.style.opacity="0";
-
-        setTimeout(()=>{
-
-            div.remove();
-
-        },500);
-
-    },2500);
-
-}
-
-
-
-//=====================================================
-//              LOADING
-//=====================================================
-
-function loading(valor){
-
-    const el=document.getElementById("loadingState");
-
-    if(!el) return;
-
-    el.style.display=
-
-        valor
-
-        ?"block"
-
-        :"none";
-
-}
-
-
-
-//=====================================================
-//              ESTADO VAZIO
-//=====================================================
-
-function vazio(valor){
-
-    const el=document.getElementById("emptyState");
-
-    if(!el) return;
-
-    el.style.display=
-
-        valor
-
-        ?"block"
-
-        :"none";
-
-}
-
-
-
-//=====================================================
-//          TOTAL DE PERSONAGENS
-//=====================================================
-
-function atualizarTotal(){
-
-    const total=
-
-        document.getElementById("totalFichas");
-
-    if(total)
-
-        total.textContent=fichasExibidas.length;
-
-}
-
-
-
-//=====================================================
-//          DATA DA ÚLTIMA ATUALIZAÇÃO
-//=====================================================
-
-function atualizarData(){
-
-    const campo=
-
-        document.getElementById(
-
-            "ultimaAtualizacao"
-
-        );
-
-    if(!campo) return;
-
-    campo.textContent=
-
-        new Date()
-
-        .toLocaleString(
-
-            "pt-BR"
-
-        );
-
-}
-
-
-
-//=====================================================
-//          CARREGAR FICHAS FIREBASE
-//=====================================================
-
-async function listarFichas(){
-
-    loading(true);
-
-    vazio(false);
-
-    todasFichas=[];
-
-    fichasExibidas=[];
-
-    try{
-
-        if(!isFirebaseInitialized()){
-
-            getFirebaseInstances();
-
+            if (!firebase.auth || !firebase.db) {
+                mostrarAlerta("Erro ao iniciar Firebase.", "error");
+                mostrarLoading(false);
+                return;
+            }
         }
 
-        const consulta=
+        const q = query(
+            collection(db, "fichas"),
+            where("uid", "==", usuarioAtual.uid)
+        );
 
-            await getDocs(
+        const snap = await getDocs(q);
 
-                collection(
+        snap.forEach(documento => {
 
-                    db,
-
-                    "fichas"
-
-                )
-
-            );
-
-        consulta.forEach(doc=>{
-
-            const dados=
-
-                doc.data();
-
-            if(
-
-                dados.uid===
-
-                usuarioAtual.uid
-
-            ){
-
-                todasFichas.push({
-
-                    id:doc.id,
-
-                    ...dados
-
-                });
-
-            }
+            todasAsFichas.push({
+                id: documento.id,
+                ...documento.data()
+            });
 
         });
 
-        todasFichas.sort(
+        ordenarArray(todasAsFichas, "data");
 
-            (a,b)=>
+        fichasFiltradas = [...todasAsFichas];
 
-            new Date(
+        desenharFichas();
 
-                b.dataSalvamento
+    } catch (erro) {
 
-            )-
+        console.error("Erro ao carregar fichas:", erro);
+        mostrarAlerta("Erro ao carregar fichas.", "error");
 
-            new Date(
+    } finally {
 
-                a.dataSalvamento
-
-            )
-
-        );
-
-        fichasExibidas=[
-
-            ...todasFichas
-
-        ];
-
-        loading(false);
-
-        if(
-
-            fichasExibidas.length===0
-
-        ){
-
-            vazio(true);
-
-            atualizarTotal();
-
-            return;
-
-        }
-
-        desenharCards();
-
-    }
-
-    catch(erro){
-
-        console.error(erro);
-
-        loading(false);
-
-        vazio(true);
-
-        alerta(
-
-            "Erro ao carregar fichas",
-
-            "#8b3030"
-
-        );
+        mostrarLoading(false);
 
     }
 
 }
 
-//=====================================================
-//          DESENHAR TODOS OS CARDS
-//=====================================================
+// ===============================
+// DESENHAR FICHAS
+// ===============================
 
-function desenharCards(){
+function desenharFichas() {
 
-    const lista =
-        document.getElementById("listaFichas");
+    const lista = document.getElementById("listaFichas");
 
-    if(!lista) return;
+    if (!lista) return;
 
     lista.innerHTML = "";
 
-    fichasExibidas.forEach(ficha=>{
+    atualizarTotal();
+    atualizarData();
 
-        lista.appendChild(
+    if (fichasFiltradas.length === 0) {
+        mostrarVazio(true);
+        return;
+    }
 
-            criarCard(ficha)
+    mostrarVazio(false);
 
-        );
+    fichasFiltradas.forEach(ficha => {
+
+        const card = criarCardFicha(ficha);
+        lista.appendChild(card);
 
     });
 
-    atualizarTotal();
-
-    atualizarData();
-
 }
 
+// ===============================
+// CARD DA FICHA
+// ===============================
 
+function criarCardFicha(ficha) {
 
-//=====================================================
-//          CRIAR CARD
-//=====================================================
-
-function criarCard(ficha){
-
-    const card =
-        document.createElement("div");
-
+    const card = document.createElement("article");
     card.className = "card-personagem";
 
-    const poderes =
-        ficha.poderesSelecionados
-        ? ficha.poderesSelecionados.length
-        : 0;
-
-    const mochila =
-        contarPrefixo(ficha,"mochila_");
-
-    const pericias =
-        contarPrefixo(ficha,"pericia_");
-
-    const arsenal =
-        contarPrefixo(ficha,"arma");
+    const poderes = contarPoderes(ficha);
+    const pericias = contarPericias(ficha);
+    const mochila = contarMochila(ficha);
+    const arsenal = contarArsenal(ficha);
 
     card.innerHTML = `
-
         <div class="titulo-card">
-
-            ${ficha.nome || "Sem Nome"}
-
+            ${escapar(ficha.nome || "Sem Nome")}
         </div>
 
         <div class="subtitulo-card">
-
-            ${ficha.raca || "-"}
-
+            ${escapar(ficha.raca || "Raça indefinida")}
             •
-
-            ${ficha.classe || "-"}
-
+            ${escapar(ficha.classe || "Classe indefinida")}
         </div>
 
         <div class="linha-card">
-
-            <span>Nível</span>
-
-            <strong>${ficha.nivel || 1}</strong>
-
+            <span>⭐ Nível</span>
+            <strong>${escapar(ficha.nivel || "1")}</strong>
         </div>
 
         <div class="linha-card">
-
-            <span>Vida</span>
-
-            <strong>${ficha.vida || 0}</strong>
-
+            <span>❤ Vida</span>
+            <strong>${escapar(ficha.vida || "0")}</strong>
         </div>
 
         <div class="linha-card">
-
-            <span>Energia</span>
-
-            <strong>${ficha.energia || 0}</strong>
-
+            <span>🔷 Energia</span>
+            <strong>${escapar(ficha.energia || "0")}</strong>
         </div>
 
         <div class="linha-card">
+            <span>🏆 XP</span>
+            <strong>${escapar(ficha.xp || "0")}</strong>
+        </div>
 
-            <span>XP</span>
+        <div class="linha-card">
+            <span>🛡 IP Cinético</span>
+            <strong>${escapar(ficha.indice_protecao || "0")}</strong>
+        </div>
 
-            <strong>${ficha.xp || 0}</strong>
-
+        <div class="linha-card">
+            <span>🛡 IP Balístico</span>
+            <strong>${escapar(ficha.indice_protecao2 || "0")}</strong>
         </div>
 
         <hr>
 
         <div class="linha-card">
-
-            <span>Poderes</span>
-
+            <span>✨ Poderes</span>
             <strong>${poderes}</strong>
-
         </div>
 
         <div class="linha-card">
-
-            <span>Perícias</span>
-
+            <span>✦ Perícias</span>
             <strong>${pericias}</strong>
-
         </div>
 
         <div class="linha-card">
-
-            <span>Mochila</span>
-
+            <span>🎒 Mochila</span>
             <strong>${mochila}</strong>
-
         </div>
 
         <div class="linha-card">
-
-            <span>Arsenal</span>
-
+            <span>⚔ Arsenal</span>
             <strong>${arsenal}</strong>
-
         </div>
-
-        <hr>
 
         <div class="linha-card pequena">
-
+            Última atualização:
             ${formatarData(ficha.dataSalvamento)}
-
         </div>
 
         <div class="acoes-card">
@@ -446,903 +219,417 @@ function criarCard(ficha){
             <button
                 class="botao-card"
                 onclick="abrirFicha('${ficha.id}')">
-
                 Abrir
-
             </button>
 
             <button
                 class="botao-card"
                 onclick="mostrarResumo('${ficha.id}')">
-
                 Resumo
-
             </button>
 
             <button
                 class="botao-card perigo"
-                onclick="deletarFicha('${ficha.id}')">
-
+                onclick="deletarFicha('${ficha.id}', '${escaparAspas(ficha.nome || "Sem Nome")}')">
                 Excluir
-
             </button>
 
         </div>
-
     `;
 
     return card;
 
 }
 
+// ===============================
+// FILTRAR
+// ===============================
 
+window.filtrarFichas = function () {
 
-//=====================================================
-//          CONTAR CAMPOS
-//=====================================================
+    const pesquisa = document
+        .getElementById("pesquisaFicha")
+        ?.value
+        .toLowerCase()
+        .trim() || "";
 
-function contarPrefixo(obj,prefixo){
+    const classe = document
+        .getElementById("filtroClasse")
+        ?.value || "";
 
-    let total = 0;
+    const raca = document
+        .getElementById("filtroRaca")
+        ?.value || "";
 
-    Object.keys(obj).forEach(chave=>{
+    fichasFiltradas = todasAsFichas.filter(ficha => {
 
-        if(
+        const nomeOk =
+            (ficha.nome || "")
+            .toLowerCase()
+            .includes(pesquisa);
 
-            chave.startsWith(prefixo)
+        const classeOk =
+            !classe || ficha.classe === classe;
 
-            &&
+        const racaOk =
+            !raca || ficha.raca === raca;
 
-            obj[chave]
-
-            &&
-
-            obj[chave]!=""
-
-        ){
-
-            total++;
-
-        }
+        return nomeOk && classeOk && racaOk;
 
     });
 
-    return total;
+    const ordenarPor =
+        document.getElementById("ordenarPor")?.value || "data";
 
-}
+    ordenarArray(fichasFiltradas, ordenarPor);
 
+    desenharFichas();
 
+};
 
-//=====================================================
-//          DATA FORMATADA
-//=====================================================
+// ===============================
+// ORDENAR
+// ===============================
 
-function formatarData(data){
+window.ordenarFichas = function () {
 
-    if(!data) return "";
+    const tipo =
+        document.getElementById("ordenarPor")?.value || "data";
 
-    return new Date(data)
+    ordenarArray(fichasFiltradas, tipo);
 
-        .toLocaleDateString(
+    desenharFichas();
 
-            "pt-BR",
+};
 
-            {
+function ordenarArray(array, tipo) {
 
-                day:"2-digit",
+    if (tipo === "nome") {
 
-                month:"2-digit",
-
-                year:"numeric",
-
-                hour:"2-digit",
-
-                minute:"2-digit"
-
-            }
-
+        array.sort((a, b) =>
+            (a.nome || "").localeCompare(b.nome || "")
         );
 
-}
+    } else if (tipo === "nivel") {
 
+        array.sort((a, b) =>
+            Number(b.nivel || 0) - Number(a.nivel || 0)
+        );
 
+    } else if (tipo === "classe") {
 
-//=====================================================
-//          PESQUISAR PERSONAGEM
-//=====================================================
+        array.sort((a, b) =>
+            (a.classe || "").localeCompare(b.classe || "")
+        );
 
-window.pesquisarFicha = function(){
+    } else if (tipo === "raca") {
 
-    const texto =
+        array.sort((a, b) =>
+            (a.raca || "").localeCompare(b.raca || "")
+        );
 
-        document
+    } else {
 
-        .getElementById(
-
-            "pesquisa"
-
-        )
-
-        ?.value
-
-        .toLowerCase()
-
-        ||"";
-
-    fichasExibidas =
-
-        todasFichas.filter(f=>{
-
-            return (
-
-                (f.nome||"")
-
-                .toLowerCase()
-
-                .includes(texto)
-
-            );
-
-        });
-
-    desenharCards();
-
-}
-
-
-
-//=====================================================
-//          ORDENAR
-//=====================================================
-
-window.ordenarFichas=function(tipo){
-
-    switch(tipo){
-
-        case "nome":
-
-            fichasExibidas.sort(
-
-                (a,b)=>
-
-                (a.nome||"")
-
-                .localeCompare(
-
-                    b.nome||""
-
-                )
-
-            );
-
-        break;
-
-        case "nivel":
-
-            fichasExibidas.sort(
-
-                (a,b)=>
-
-                Number(
-
-                    b.nivel||0
-
-                )
-
-                -
-
-                Number(
-
-                    a.nivel||0
-
-                )
-
-            );
-
-        break;
-
-        default:
-
-            fichasExibidas.sort(
-
-                (a,b)=>
-
-                new Date(
-
-                    b.dataSalvamento
-
-                )
-
-                -
-
-                new Date(
-
-                    a.dataSalvamento
-
-                )
-
-            );
+        array.sort((a, b) =>
+            Number(b.timestamp || 0) - Number(a.timestamp || 0)
+        );
 
     }
 
-    desenharCards();
-
 }
 
-//=====================================================
-//              RESUMO DA FICHA
-//=====================================================
+// ===============================
+// RESUMO
+// ===============================
 
-window.mostrarResumo=function(id){
+window.mostrarResumo = function (id) {
 
-    const ficha=
+    const ficha =
+        todasAsFichas.find(item => item.id === id);
 
-        todasFichas.find(
+    if (!ficha) return;
 
-            f=>f.id===id
+    const modal =
+        document.getElementById("modalResumo");
 
-        );
+    const conteudo =
+        document.getElementById("conteudoResumo");
 
-    if(!ficha) return;
+    if (!modal || !conteudo) return;
 
-    let html=`
+    conteudo.innerHTML = montarResumo(ficha);
 
-        <div class="resumo-ficha">
+    modal.style.display = "flex";
 
+};
+
+window.fecharResumo = function () {
+
+    const modal =
+        document.getElementById("modalResumo");
+
+    if (modal) {
+        modal.style.display = "none";
+    }
+
+};
+
+function montarResumo(ficha) {
+
+    return `
         <div class="titulo-resumo">
-
-            ${ficha.nome||"Sem Nome"}
-
+            ${escapar(ficha.nome || "Sem Nome")}
         </div>
 
         <div class="subtitulo-resumo">
-
-            ${ficha.raca||"-"} •
-            ${ficha.classe||"-"}
-
+            ${escapar(ficha.raca || "-")}
+            •
+            ${escapar(ficha.classe || "-")}
         </div>
 
+        ${secaoStatus(ficha)}
+
+        ${secaoAtributos(ficha)}
+
+        ${secaoPoderes(ficha)}
+
+        ${secaoPericias(ficha)}
+
+        ${secaoMochila(ficha)}
+
+        ${secaoArsenal(ficha)}
+
+        ${secaoTexto("Aprimoramentos", [
+            ficha.aprimoramento1,
+            ficha.aprimoramento2
+        ])}
+
+        ${secaoCaracteristicas(ficha)}
+
+        ${secaoTexto("Golpes / Técnicas", [
+            ficha.historia
+        ])}
     `;
 
+}
 
+function secaoStatus(ficha) {
 
-//=====================================================
-//              ATRIBUTOS
-//=====================================================
-
-    html+=`
-
-        <div class="secao-resumo">
-
-            <h3>Atributos</h3>
-
-            <div class="grid-resumo">
-
-    `;
-
-    [
-
-        "forca",
-
-        "constituicao",
-
-        "destreza",
-
-        "agilidade",
-
-        "inteligencia",
-
-        "percepcao",
-
-        "vontade",
-
-        "carisma"
-
-    ].forEach(att=>{
-
-        html+=`
-
-            <div>
-
-                <strong>
-
-                ${capitalizar(att)}
-
-                </strong>
-
-                <span>
-
-                ${ficha[att]||0}
-
-                </span>
-
-            </div>
-
-        `;
-
-    });
-
-    html+=`
-
-            </div>
-
-        </div>
-
-    `;
-
-
-//=====================================================
-//              STATUS
-//=====================================================
-
-    html+=`
-
-        <div class="secao-resumo">
-
+    return `
+        <section class="secao-resumo">
             <h3>Status</h3>
 
             <div class="grid-resumo">
-
-                <div>
-
-                    Vida
-
-                    <span>${ficha.vida||0}</span>
-
-                </div>
-
-                <div>
-
-                    Energia
-
-                    <span>${ficha.energia||0}</span>
-
-                </div>
-
-                <div>
-
-                    XP
-
-                    <span>${ficha.xp||0}</span>
-
-                </div>
-
-                <div>
-
-                    Nível
-
-                    <span>${ficha.nivel||1}</span>
-
-                </div>
-
+                ${linhaResumo("Nível", ficha.nivel || 1)}
+                ${linhaResumo("Vida", ficha.vida || 0)}
+                ${linhaResumo("Energia", ficha.energia || 0)}
+                ${linhaResumo("XP", ficha.xp || 0)}
+                ${linhaResumo("IP Cinético", ficha.indice_protecao || 0)}
+                ${linhaResumo("IP Balístico", ficha.indice_protecao2 || 0)}
+                ${linhaResumo("Heróicos", ficha.p_heroi || 0)}
+                ${linhaResumo("Vilanescos", ficha.p_vilao || 0)}
             </div>
-
-        </div>
-
+        </section>
     `;
 
+}
 
-//=====================================================
-//              PODERES
-//=====================================================
+function secaoAtributos(ficha) {
 
-    html+=`
+    const atributos = [
+        ["Força", ficha.forca],
+        ["Constituição", ficha.constituicao],
+        ["Destreza", ficha.destreza],
+        ["Agilidade", ficha.agilidade],
+        ["Inteligência", ficha.inteligencia],
+        ["Percepção", ficha.percepcao],
+        ["Vontade", ficha.vontade],
+        ["Carisma", ficha.carisma]
+    ];
 
-        <div class="secao-resumo">
+    return `
+        <section class="secao-resumo">
+            <h3>Atributos</h3>
 
-        <h3>Poderes</h3>
-
+            <div class="grid-resumo">
+                ${atributos
+                    .map(([nome, valor]) => linhaResumo(nome, valor || 0))
+                    .join("")}
+            </div>
+        </section>
     `;
 
-    if(ficha.poderesSelecionados){
+}
 
-        ficha.poderesSelecionados.forEach(p=>{
+function secaoPoderes(ficha) {
 
-            if(p.marcado){
+    let html = "";
 
-                html+=`
+    if (Array.isArray(ficha.poderesSelecionados)) {
 
-                    <div>
+        const marcados =
+            ficha.poderesSelecionados.filter(p => p.marcado);
 
-                    ⚔ ${p.poder}
-
-                    </div>
-
-                `;
-
-            }
-
-        });
+        html = marcados
+            .map(p => `<p>✦ ${escapar(p.poder)}</p>`)
+            .join("");
 
     }
 
-    html+=`
+    if (!html) {
+        html = "<p>Nenhum poder registrado.</p>";
+    }
 
-        </div>
-
+    return `
+        <section class="secao-resumo">
+            <h3>Poderes</h3>
+            ${html}
+        </section>
     `;
 
+}
 
-//=====================================================
-//              PERÍCIAS
-//=====================================================
+function secaoPericias(ficha) {
 
-    html+=`
+    let html = "";
 
-        <div class="secao-resumo">
+    if (Array.isArray(ficha.pericias)) {
 
-        <h3>Perícias</h3>
-
-    `;
-
-    Object.keys(ficha).forEach(chave=>{
-
-        if(
-
-            chave.startsWith(
-
-                "pericia_"
-
-            )
-
-            &&
-
-            ficha[chave]
-
-        ){
-
-            html+=`
-
-                <div>
-
-                ✔ ${ficha[chave]}
-
-                </div>
-
-            `;
-
-        }
-
-    });
-
-    html+=`
-
-        </div>
-
-    `;
-
-
-//=====================================================
-//              MOCHILA
-//=====================================================
-
-    html+=`
-
-        <div class="secao-resumo">
-
-        <h3>Mochila</h3>
-
-    `;
-
-    Object.keys(ficha).forEach(chave=>{
-
-        if(
-
-            chave.startsWith(
-
-                "mochila_"
-
-            )
-
-            &&
-
-            ficha[chave]
-
-        ){
-
-            html+=`
-
-                <div>
-
-                🎒 ${ficha[chave]}
-
-                </div>
-
-            `;
-
-        }
-
-    });
-
-    html+=`
-
-        </div>
-
-    `;
-
-
-//=====================================================
-//              ARSENAL
-//=====================================================
-
-    html+=`
-
-        <div class="secao-resumo">
-
-        <h3>Arsenal</h3>
-
-    `;
-
-    [
-
-        "primaria",
-
-        "secundaria",
-
-        "item1",
-
-        "item2",
-
-        "item3",
-
-        "item4",
-
-        "item5"
-
-    ].forEach(item=>{
-
-        if(ficha[item]){
-
-            html+=`
-
-                <div>
-
-                ⚔ ${ficha[item]}
-
-                </div>
-
-            `;
-
-        }
-
-    });
-
-    html+=`
-
-        </div>
-
-    `;
-
-
-//=====================================================
-//              APRIMORAMENTOS
-//=====================================================
-
-    html+=`
-
-        <div class="secao-resumo">
-
-        <h3>Aprimoramentos</h3>
-
-    `;
-
-    [
-
-        "aprimoramento1",
-
-        "aprimoramento2"
-
-    ].forEach(item=>{
-
-        if(ficha[item]){
-
-            html+=`
-
+        html = ficha.pericias
+            .filter(p => p.nome || p.pontos)
+            .map(p => `
                 <p>
-
-                ${ficha[item]}
-
+                    ✦ ${escapar(p.nome || "Perícia")}
+                    ${p.pontos ? ` — ${escapar(p.pontos)}` : ""}
                 </p>
+            `)
+            .join("");
 
-            `;
+    }
 
-        }
+    if (!html) {
+        html = "<p>Nenhuma perícia registrada.</p>";
+    }
 
-    });
-
-    html+=`
-
-        </div>
-
+    return `
+        <section class="secao-resumo">
+            <h3>Perícias</h3>
+            ${html}
+        </section>
     `;
 
+}
 
-//=====================================================
-//              PERSONALIDADE
-//=====================================================
+function secaoMochila(ficha) {
 
-    html+=`
+    let itens = [];
 
-        <div class="secao-resumo">
+    if (Array.isArray(ficha.mochila)) {
 
+        itens = ficha.mochila
+            .map(item => item.nome || item)
+            .filter(Boolean);
+
+    }
+
+    for (let i = 1; i <= 20; i++) {
+        if (ficha[`mochila${i}`]) itens.push(ficha[`mochila${i}`]);
+        if (ficha[`mochila_${i}`]) itens.push(ficha[`mochila_${i}`]);
+    }
+
+    const html = itens.length
+        ? itens.map(item => `<p>🎒 ${escapar(item)}</p>`).join("")
+        : "<p>Mochila vazia.</p>";
+
+    return `
+        <section class="secao-resumo">
+            <h3>Mochila</h3>
+            ${html}
+        </section>
+    `;
+
+}
+
+function secaoArsenal(ficha) {
+
+    const itens = [
+        ["Arma Primária", ficha.primaria],
+        ["Arma Secundária", ficha.secundaria],
+        ["Armadura", ficha.armadura],
+        ["Item 1", ficha.item1],
+        ["Item 2", ficha.item2],
+        ["Item 3", ficha.item3],
+        ["Item 4", ficha.item4],
+        ["Item 5", ficha.item5]
+    ].filter(([, valor]) => valor);
+
+    const html = itens.length
+        ? itens
+            .map(([nome, valor]) =>
+                `<p><strong>${escapar(nome)}:</strong> ${escapar(valor)}</p>`
+            )
+            .join("")
+        : "<p>Nenhum equipamento registrado.</p>";
+
+    return `
+        <section class="secao-resumo">
+            <h3>Arsenal e Equipamentos</h3>
+            ${html}
+        </section>
+    `;
+
+}
+
+function secaoTexto(titulo, textos) {
+
+    const html = textos
+        .filter(Boolean)
+        .map(texto => `<p>${escapar(texto)}</p>`)
+        .join("");
+
+    return `
+        <section class="secao-resumo">
+            <h3>${escapar(titulo)}</h3>
+            ${html || "<p>Nada registrado.</p>"}
+        </section>
+    `;
+
+}
+
+function secaoCaracteristicas(ficha) {
+
+    return `
+        <section class="secao-resumo">
             <h3>Características</h3>
 
             <p>
-
-            <strong>Positivo:</strong>
-
-            ${ficha.positivo||"-"}
-
+                <strong>Positivo:</strong>
+                ${escapar(ficha.positivo || "-")}
             </p>
 
             <p>
-
-            <strong>Negativo:</strong>
-
-            ${ficha.negativo||"-"}
-
+                <strong>Negativo:</strong>
+                ${escapar(ficha.negativo || "-")}
             </p>
-
-        </div>
-
+        </section>
     `;
 
+}
 
-//=====================================================
-//              HISTÓRIA
-//=====================================================
+function linhaResumo(nome, valor) {
 
-    html+=`
-
-        <div class="secao-resumo">
-
-            <h3>História</h3>
-
-            <p>
-
-            ${ficha.historia||""}
-
-            </p>
-
+    return `
+        <div>
+            <strong>${escapar(nome)}</strong>
+            <span>${escapar(valor)}</span>
         </div>
-
     `;
 
-    html+=`
-
-        <button
-
-            class="botao-fechar"
-
-            onclick="fecharResumo()">
-
-            Fechar
-
-        </button>
-
-        </div>
-
-    `;
-
-    const modal=
-
-        document.getElementById(
-
-            "modalResumo"
-
-        );
-
-    modal.innerHTML=html;
-
-    modal.style.display="flex";
-
 }
 
-
-
-//=====================================================
-//              FECHAR RESUMO
-//=====================================================
-
-window.fecharResumo=function(){
-
-    document
-
-        .getElementById(
-
-            "modalResumo"
-
-        )
-
-        .style.display="none";
-
-}
-
-
-
-//=====================================================
-//              CAPITALIZAR
-//=====================================================
-
-function capitalizar(txt){
-
-    return txt.charAt(0)
-
-        .toUpperCase()
-
-        +
-
-        txt.slice(1);
-
-}
-
-// ========================================
-// ABRIR FICHA
-// ========================================
-
-window.abrirFicha = function (personagemId) {
-
-    window.location.href =
-        `Ficha.html?personagemId=${encodeURIComponent(personagemId)}`;
-
-};
-
-
-// ========================================
-// EXCLUIR FICHA
-// ========================================
-
-window.excluirFicha = async function (personagemId, nome) {
-
-    if (
-        !confirm(
-            `Excluir a ficha "${nome}"?\n\nEssa ação não poderá ser desfeita.`
-        )
-    ) return;
-
-    try {
-
-        await deleteDoc(
-            doc(db, "fichas", personagemId)
-        );
-
-        mostrarMensagem(
-            "Ficha excluída com sucesso!",
-            "success"
-        );
-
-        listarFichas();
-
-    }
-
-    catch (erro) {
-
-        console.error(erro);
-
-        mostrarMensagem(
-            "Erro ao excluir ficha.",
-            "error"
-        );
-
-    }
-
-};
-
-
-// ========================================
-// ATUALIZAR LISTA
-// ========================================
-
-window.refreshFichas = function () {
-
-    listarFichas();
-
-};
-
-
-// ========================================
-// LOGOUT
-// ========================================
-
-window.logout = async function () {
-
-    try {
-
-        const modulo =
-            await import("./auth.js");
-
-        await modulo.logout();
-
-    }
-
-    catch {
-
-        window.location.href = "index.html";
-
-    }
-
-};
-
-
-// ========================================
-// MENSAGEM FLUTUANTE
-// ========================================
-
-function mostrarMensagem(texto, tipo = "success") {
-
-    const div =
-        document.createElement("div");
-
-    div.className =
-        `mensagem-flutuante ${tipo}`;
-
-    div.innerHTML = texto;
-
-    document.body.appendChild(div);
-
-    setTimeout(() => {
-
-        div.classList.add("mostrar");
-
-    }, 50);
-
-    setTimeout(() => {
-
-        div.classList.remove("mostrar");
-
-        setTimeout(() => {
-
-            div.remove();
-
-        }, 400);
-
-    }, 2500);
-
-}
-
-
-// ========================================
-// AUTENTICAÇÃO
-// ========================================
-
-onAuthStateChanged(auth, async (user) => {
-
-    if (!user) {
-
-        window.location.href = "index.html";
-
-        return;
-
-    }
-
-    usuarioAtual = user;
-
-    await listarFichas();
-
-});
-
-
-// ========================================
-// INICIALIZAÇÃO
-// ========================================
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    const botaoAtualizar =
-        document.getElementById("btnAtualizar");
-
-    if (botaoAtualizar) {
-
-        botaoAtualizar.onclick =
-            refreshFichas;
-
-    }
-
-});
-
-//====================================================
-// ABRIR FICHA
-//====================================================
+// ===============================
+// ABRIR / EXCLUIR / ATUALIZAR
+// ===============================
 
 window.abrirFicha = function (id) {
 
@@ -1351,159 +638,222 @@ window.abrirFicha = function (id) {
 
 };
 
+window.deletarFicha = async function (id, nome) {
 
-//====================================================
-// DUPLICAR FICHA
-//====================================================
+    const confirmar = confirm(
+        `Tem certeza que deseja excluir a ficha "${nome}"?\n\nEssa ação não pode ser desfeita.`
+    );
 
-window.duplicarFicha = async function (id) {
+    if (!confirmar) return;
 
     try {
 
-        const snap =
-            await getDoc(doc(db,"fichas",id));
-
-        if(!snap.exists()){
-
-            alert("Ficha não encontrada.");
-            return;
-
-        }
-
-        const dados = snap.data();
-
-        delete dados.dataSalvamento;
-
-        dados.nome =
-            (dados.nome || "Personagem")
-            + " (Cópia)";
-
-        dados.timestamp =
-            Date.now();
-
-        dados.dataSalvamento =
-            new Date().toISOString();
-
-        const novoId =
-            crypto.randomUUID();
-
-        await setDoc(
-
-            doc(db,"fichas",novoId),
-
-            dados
-
-        );
-
-        listarFichas(currentUser);
-
-    }
-
-    catch(e){
-
-        console.error(e);
-
-        alert("Erro ao duplicar ficha.");
-
-    }
-
-};
-
-
-//====================================================
-// DELETAR FICHA
-//====================================================
-
-window.deletarFicha = async function(id){
-
-    if(
-
-        !confirm(
-            "Excluir esta ficha permanentemente?"
-        )
-
-    ) return;
-
-    try{
-
         await deleteDoc(
-
-            doc(db,"fichas",id)
-
+            doc(db, "fichas", id)
         );
 
-        listarFichas(currentUser);
+        mostrarAlerta("Ficha excluída com sucesso!", "success");
 
-    }
+        await carregarFichas();
 
-    catch(e){
+    } catch (erro) {
 
-        console.error(e);
-
-        alert("Erro ao excluir.");
+        console.error("Erro ao excluir ficha:", erro);
+        mostrarAlerta("Erro ao excluir ficha.", "error");
 
     }
 
 };
 
+window.refreshFichas = async function () {
 
-//====================================================
-// ATUALIZAR LISTA
-//====================================================
-
-window.refreshFichas = function(){
-
-    listarFichas(currentUser);
+    await carregarFichas();
 
 };
 
+window.logout = async function () {
 
-//====================================================
-// LOGOUT
-//====================================================
-
-window.logout = async function(){
-
-    try{
+    try {
 
         const authModule =
             await import("./auth.js");
 
         await authModule.logout();
 
-    }
+    } catch (erro) {
 
-    catch{
-
-        location.href="index.html";
+        console.error("Erro ao sair:", erro);
+        window.location.href = "index.html";
 
     }
 
 };
 
+// ===============================
+// CONTADORES
+// ===============================
 
-//====================================================
-// LOGIN
-//====================================================
+function contarPoderes(ficha) {
 
-onAuthStateChanged(
+    if (!Array.isArray(ficha.poderesSelecionados)) return 0;
 
-    auth,
+    return ficha.poderesSelecionados
+        .filter(p => p.marcado)
+        .length;
 
-    user=>{
+}
 
-        if(!user){
+function contarPericias(ficha) {
 
-            location.href="index.html";
-
-            return;
-
-        }
-
-        currentUser=user;
-
-        listarFichas(user);
-
+    if (Array.isArray(ficha.pericias)) {
+        return ficha.pericias
+            .filter(p => p.nome || p.pontos)
+            .length;
     }
 
-);
+    return 0;
+
+}
+
+function contarMochila(ficha) {
+
+    if (Array.isArray(ficha.mochila)) {
+        return ficha.mochila
+            .filter(item => item.nome || item)
+            .length;
+    }
+
+    let total = 0;
+
+    for (let i = 1; i <= 20; i++) {
+        if (ficha[`mochila${i}`]) total++;
+        if (ficha[`mochila_${i}`]) total++;
+    }
+
+    return total;
+
+}
+
+function contarArsenal(ficha) {
+
+    const campos = [
+        "primaria",
+        "secundaria",
+        "armadura",
+        "item1",
+        "item2",
+        "item3",
+        "item4",
+        "item5"
+    ];
+
+    return campos.filter(campo => ficha[campo]).length;
+
+}
+
+// ===============================
+// ESTADOS / ALERTAS
+// ===============================
+
+function mostrarLoading(valor) {
+
+    const loading = document.getElementById("loadingState");
+
+    if (loading) {
+        loading.style.display = valor ? "block" : "none";
+    }
+
+}
+
+function mostrarVazio(valor) {
+
+    const vazio = document.getElementById("emptyState");
+
+    if (vazio) {
+        vazio.style.display = valor ? "block" : "none";
+    }
+
+}
+
+function atualizarTotal() {
+
+    const total = document.getElementById("totalFichas");
+
+    if (total) {
+        total.textContent = fichasFiltradas.length;
+    }
+
+}
+
+function atualizarData() {
+
+    const data = document.getElementById("ultimaAtualizacao");
+
+    if (data) {
+        data.textContent = new Date().toLocaleString("pt-BR");
+    }
+
+}
+
+function mostrarAlerta(mensagem, tipo = "info") {
+
+    const alerta = document.createElement("div");
+
+    alerta.className = `alerta-rpg ${tipo}`;
+    alerta.textContent = mensagem;
+
+    document.body.appendChild(alerta);
+
+    setTimeout(() => {
+        alerta.classList.add("sumir");
+
+        setTimeout(() => {
+            alerta.remove();
+        }, 500);
+
+    }, 3000);
+
+}
+
+// ===============================
+// SEGURANÇA / FORMATAÇÃO
+// ===============================
+
+function formatarData(data) {
+
+    if (!data) return "--";
+
+    try {
+
+        return new Date(data).toLocaleString("pt-BR", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit"
+        });
+
+    } catch {
+        return "--";
+    }
+
+}
+
+function escapar(valor) {
+
+    return String(valor ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+}
+
+function escaparAspas(valor) {
+
+    return String(valor ?? "")
+        .replaceAll("'", "\\'")
+        .replaceAll('"', "&quot;");
+
+}

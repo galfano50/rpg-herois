@@ -1,26 +1,52 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ala do Mestre - RPG</title>
-    <script type="module" src="js/firebase-config2.js"></script>
+    <title>Ala do Mestre</title>
+    <link rel="stylesheet" href="css/alamestre.css">
     <script type="module" src="js/ala-mestre2.js"></script>
+    <script type="module" src="js/firebase-config.js"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pirata+One&family=IM+Fell+English+SC&display=swap');
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
         body{
 
-            margin:0;
-            padding:25px;
+            background:#b8aca0;
 
-            background:#bda98a;
-
-            font-family:"IM Fell English SC",serif;
+            font-family:'IM Fell English SC',serif;
 
             color:#4a2f16;
 
+            padding:20px;
+
         }
 
-        .topo-mestre{
+
+        /*=========================================
+                    CONTAINER
+        =========================================*/
+
+        .mestre-container{
+
+            max-width:1800px;
+
+            margin:auto;
+
+        }
+
+
+        /*=========================================
+                        TOPO
+        =========================================*/
+
+        .mestre-topo{
 
             display:flex;
 
@@ -32,260 +58,280 @@
 
             flex-wrap:wrap;
 
-            background:#cec6c0;
-
-            border:4px solid #7b5a38;
-
-            border-radius:15px;
-
             padding:20px;
 
-            margin-bottom:25px;
+            background:#d8d0ca;
 
-            box-shadow:0 0 15px rgba(0,0,0,.25);
-
-        }
-
-        .titulo-topo{
-
-            font-family:"Pirata One",cursive;
-
-            font-size:42px;
-
-            color:#5b3a1a;
-
-            letter-spacing:2px;
-
-        }
-
-        .acoes-topo{
-
-            display:flex;
-
-            gap:10px;
-
-            flex-wrap:wrap;
-
-        }
-
-        .acoes-topo button{
-
-            background:#7b5a38;
-
-            color:white;
-
-            border:none;
-
-            padding:10px 20px;
-
-            border-radius:8px;
-
-            cursor:pointer;
-
-            font-size:17px;
-
-            transition:.25s;
-
-        }
-
-        .acoes-topo button:hover{
-
-            background:#5b3a1a;
-
-        }
-
-        .painel-superior{
-
-            display:flex;
-
-            gap:20px;
-
-            margin-bottom:20px;
-
-            flex-wrap:wrap;
-
-        }
-
-        .estatistica{
-
-            flex:1;
-
-            min-width:220px;
-
-            background:#cec6c0;
-
-            border:3px solid #7b5a38;
+            border:3px solid #8a6a47;
 
             border-radius:12px;
 
-            padding:20px;
-
-            text-align:center;
-
-        }
-
-        .estatistica span{
-
-            display:block;
-
-            font-size:18px;
-
-        }
-
-        .estatistica strong{
-
-            display:block;
-
-            margin-top:10px;
-
-            font-size:34px;
-
-            color:#6b4b2c;
-
-        }
-
-        .barra-pesquisa{
-
-            display:flex;
-
-            gap:15px;
-
             margin-bottom:20px;
 
-            flex-wrap:wrap;
+        }
+
+        .mestre-topo h1{
+
+            font-family:'Pirata One',cursive;
+
+            font-size:40px;
+
+            color:#5b3a1a;
 
         }
 
-        .barra-pesquisa input,
-        .barra-pesquisa select{
+        .mestre-topo p{
 
-            flex:1;
+            margin-top:6px;
 
-            padding:12px;
-
-            border:2px solid #7b5a38;
-
-            border-radius:8px;
-
-            background:#f4efe9;
-
-            font-size:18px;
-
-            font-family:"IM Fell English SC",serif;
+            color:#6d4a29;
 
         }
 
-        .filtros{
+
+        /*=========================================
+                    BOTÕES
+        =========================================*/
+
+        .mestre-acoes{
 
             display:flex;
-
-            flex-wrap:wrap;
 
             gap:10px;
 
-            margin-bottom:30px;
+            flex-wrap:wrap;
 
         }
 
-        .filtros button{
-
-            background:#7b5a38;
-
-            color:white;
+        .mestre-acoes button{
 
             border:none;
+
+            cursor:pointer;
 
             padding:10px 18px;
 
             border-radius:8px;
 
-            cursor:pointer;
+            background:#6b4b2c;
 
-            transition:.2s;
+            color:white;
 
-        }
+            font-size:15px;
 
-        .filtros button:hover{
-
-            background:#5b3a1a;
+            transition:.25s;
 
         }
 
-        grade-fichas{
+        .mestre-acoes button:hover{
+
+            background:#52351b;
+
+        }
+
+
+        /*=========================================
+                    RESUMO
+        =========================================*/
+
+        .mestre-resumo{
 
             display:grid;
 
-            grid-template-columns:repeat(auto-fit,minmax(360px,1fr));
+            grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 
-            gap:25px;
+            gap:15px;
 
-        }
-
-        .card-ficha{
-
-            background:#cec6c0;
-
-            border:4px solid #7b5a38;
-
-            border-radius:15px;
-
-            padding:20px;
-
-            box-shadow:0 0 15px rgba(0,0,0,.18);
+            margin-bottom:20px;
 
         }
 
-        .card-ficha h2{
+        .resumo-card{
 
-            font-family:"Pirata One";
+            background:#d8d0ca;
+
+            border:2px solid #8a6a47;
+
+            border-radius:10px;
+
+            padding:15px;
 
             text-align:center;
 
-            color:#5b3a1a;
+        }
 
-            font-size:34px;
+        .resumo-card span{
 
-            margin-bottom:15px;
+            display:block;
+
+            font-size:15px;
 
         }
 
-        .info-linha{
+        .resumo-card strong{
+
+            display:block;
+
+            margin-top:8px;
+
+            font-size:28px;
+
+            color:#5b3a1a;
+
+        }
+
+
+        /*=========================================
+                    FILTROS
+        =========================================*/
+
+        .mestre-filtros{
+
+            display:grid;
+
+            grid-template-columns:2fr 1fr 1fr 1fr;
+
+            gap:12px;
+
+            margin-bottom:25px;
+
+        }
+
+        .mestre-filtros input,
+        .mestre-filtros select{
+
+            height:42px;
+
+            border:2px solid #8a6a47;
+
+            border-radius:8px;
+
+            background:#f8f5f1;
+
+            padding:0 10px;
+
+            font-family:'IM Fell English SC';
+
+        }
+
+
+        /*=========================================
+                    CARDS
+        =========================================*/
+
+        .grade-fichas{
+
+            display:grid;
+
+            grid-template-columns:
+                repeat(auto-fill,minmax(360px,1fr));
+
+            gap:18px;
+
+        }
+
+
+        /*=========================================
+                    PERSONAGEM
+        =========================================*/
+
+        .card-personagem{
+
+            background:#ddd5cf;
+
+            border:2px solid #8a6a47;
+
+            border-radius:12px;
+
+            padding:18px;
+
+            transition:.25s;
+
+        }
+
+        .card-personagem:hover{
+
+            transform:translateY(-4px);
+
+            box-shadow:0 8px 18px rgba(0,0,0,.20);
+
+        }
+
+
+        .titulo-card{
+
+            font-family:'Pirata One';
+
+            font-size:30px;
+
+            color:#5b3a1a;
+
+            text-align:center;
+
+        }
+
+        .subtitulo-card{
+
+            text-align:center;
+
+            margin-bottom:15px;
+
+            color:#7b5632;
+
+        }
+
+
+        .linha-card{
 
             display:flex;
 
             justify-content:space-between;
 
-            border-bottom:1px dashed #8a6a48;
+            align-items:center;
 
             padding:6px 0;
 
-            font-size:18px;
+            border-bottom:1px dotted #8a6a47;
 
         }
 
-        .info-linha strong{
+        .linha-card strong{
 
             color:#5b3a1a;
 
         }
 
-        .botoes-card{
 
-            display:flex;
+        .pequena{
 
-            gap:10px;
+            justify-content:center;
 
-            margin-top:20px;
+            font-size:13px;
 
-            flex-wrap:wrap;
+            border:none;
+
+            margin-top:8px;
 
         }
 
-        .botoes-card button{
+
+        /*=========================================
+                    BOTÕES DOS CARDS
+        =========================================*/
+
+        .acoes-card{
+
+            display:flex;
+
+            gap:8px;
+
+            margin-top:18px;
+
+        }
+
+        .botao-card{
 
             flex:1;
-
-            padding:10px;
 
             border:none;
 
@@ -293,83 +339,44 @@
 
             cursor:pointer;
 
-            font-size:17px;
-
-            transition:.25s;
-
-        }
-
-        .btn-abrir{
-
-            background:#6b8e23;
+            background:#6b4b2c;
 
             color:white;
 
-        }
+            padding:8px;
 
-        .btn-resumo{
-
-            background:#3b6ea5;
-
-            color:white;
+            transition:.2s;
 
         }
 
-        .btn-excluir{
+        .botao-card:hover{
 
-            background:#9d2f2f;
-
-            color:white;
+            background:#52351b;
 
         }
 
-        .btn-abrir:hover{
+        .perigo{
 
-            background:#55711b;
-
-        }
-
-        .btn-resumo:hover{
-
-            background:#305986;
+            background:#8f2d2d;
 
         }
 
-        .btn-excluir:hover{
+        .perigo:hover{
 
-            background:#7f2525;
-
-        }
-
-        .estado{
-
-            text-align:center;
-
-            padding:40px;
-
-            font-size:24px;
-
-            background:#cec6c0;
-
-            border:3px dashed #7b5a38;
-
-            border-radius:12px;
-
-            margin-bottom:25px;
+            background:#6d1d1d;
 
         }
 
-        .janela-resumo{
+
+        /*=========================================
+                    MODAL
+        =========================================*/
+
+        .modal-resumo{
 
             position:fixed;
 
-            top:0;
-
-            left:0;
-
-            width:100%;
-
-            height:100%;
+            inset:0;
 
             background:rgba(0,0,0,.65);
 
@@ -379,39 +386,42 @@
 
             align-items:center;
 
-            z-index:9999;
+            padding:30px;
+
+            z-index:999;
 
         }
 
-        .conteudo-resumo{
+        .modal-conteudo{
 
-            background:#cec6c0;
+            background:#d8d0ca;
 
-            width:90%;
+            border:3px solid #8a6a47;
 
-            max-width:1000px;
+            border-radius:12px;
 
-            max-height:90%;
+            width:100%;
+
+            max-width:1200px;
+
+            max-height:90vh;
 
             overflow:auto;
 
-            border:5px solid #7b5a38;
-
-            border-radius:15px;
-
-            padding:30px;
+            padding:25px;
 
             position:relative;
 
         }
 
-        .fecharResumo{
+
+        .fechar-modal{
 
             position:absolute;
 
-            top:15px;
+            top:12px;
 
-            right:15px;
+            right:12px;
 
             width:40px;
 
@@ -421,47 +431,133 @@
 
             border-radius:50%;
 
-            background:#9d2f2f;
+            cursor:pointer;
+
+            background:#8f2d2d;
 
             color:white;
 
-            cursor:pointer;
+        }
 
-            font-size:18px;
+
+        /*=========================================
+                    RESUMO
+        =========================================*/
+
+        .titulo-resumo{
+
+            font-family:'Pirata One';
+
+            text-align:center;
+
+            font-size:40px;
+
+            color:#5b3a1a;
+
+            margin-bottom:5px;
 
         }
 
-        @media(max-width:800px){
+        .subtitulo-resumo{
 
-            .topo-mestre{
+            text-align:center;
 
-                flex-direction:column;
+            margin-bottom:20px;
+
+        }
+
+        .secao-resumo{
+
+            background:#ece7e2;
+
+            border:2px solid #8a6a47;
+
+            border-radius:8px;
+
+            padding:15px;
+
+            margin-bottom:18px;
+
+        }
+
+        .secao-resumo h3{
+
+            font-family:'Pirata One';
+
+            color:#5b3a1a;
+
+            margin-bottom:10px;
+
+        }
+
+        .grid-resumo{
+
+            display:grid;
+
+            grid-template-columns:
+                repeat(auto-fit,minmax(180px,1fr));
+
+            gap:8px;
+
+        }
+
+        .grid-resumo div{
+
+            display:flex;
+
+            justify-content:space-between;
+
+            padding:5px;
+
+            border-bottom:1px dotted #8a6a47;
+
+        }
+
+
+        /*=========================================
+                    ESTADOS
+        =========================================*/
+
+        .estado-mestre{
+
+            text-align:center;
+
+            padding:40px;
+
+            background:#ddd5cf;
+
+            border:2px dashed #8a6a47;
+
+            border-radius:10px;
+
+            margin-bottom:20px;
+
+        }
+
+
+        /*=========================================
+                    RESPONSIVO
+        =========================================*/
+
+        @media(max-width:1000px){
+
+            .mestre-filtros{
+
+                grid-template-columns:1fr;
 
             }
 
-            .titulo-topo{
+            .mestre-topo{
+
+                flex-direction:column;
 
                 text-align:center;
 
-                font-size:34px;
-
             }
 
-            .acoes-topo{
-
-                justify-content:center;
-
-            }
-
-            .barra-pesquisa{
+            .acoes-card{
 
                 flex-direction:column;
-
-            }
-
-            .grade-fichas{
-
-                grid-template-columns:1fr;
 
             }
 
@@ -469,153 +565,160 @@
     </style>
 </head>
 <body>
-    <header class="topo-mestre">
-        <div class="titulo-topo">
+    <div class="mestre-container">
 
-            ⚔ Ala do Mestre ⚔
+        <header class="mestre-topo">
 
-        </div>
+            <div>
 
-        <div class="acoes-topo">
+                <h1>⚜ Ala do Mestre</h1>
 
-            <button onclick="window.location='home.html'">
-                🏠 Início
-            </button>
+                <p>Biblioteca de personagens salvos</p>
 
-            <button onclick="window.location='Ficha.html'">
-                📜 Nova Ficha
-            </button>
+            </div>
 
-            <button onclick="refreshFichas()">
-                🔄 Atualizar
-            </button>
+            <div class="mestre-acoes">
 
-            <button onclick="logout()">
-                🚪 Sair
-            </button>
+                <button onclick="window.location.href='home.html'">
+                    🏠 Início
+                </button>
 
-        </div>
-    </header>
+                <button onclick="window.location.href='Ficha.html'">
+                    📜 Nova Ficha
+                </button>
 
-    <section class="painel-superior">
+                <button onclick="refreshFichas()">
+                    🔄 Atualizar
+                </button>
 
-        <div class="estatistica">
+                <button onclick="logout()">
+                    🚪 Sair
+                </button>
 
-            <span>Total de Personagens</span>
+            </div>
 
-            <strong id="totalFichas">0</strong>
+        </header>
 
-        </div>
 
-        <div class="estatistica">
+        <section class="mestre-resumo">
 
-            <span>Última Atualização</span>
+            <div class="resumo-card">
 
-            <strong id="ultimaAtualizacao">--</strong>
+                <span>Total de Fichas</span>
 
-        </div>
+                <strong id="totalFichas">0</strong>
 
-    </section>
+            </div>
 
-    <section class="barra-pesquisa">
+            <div class="resumo-card">
 
-        <input
-            type="text"
-            id="pesquisa"
-            placeholder="Pesquisar personagem..."
-            onkeyup="filtrarFichas()">
+                <span>Última Atualização</span>
 
-        <select id="ordenacao" onchange="ordenarFichas()">
+                <strong id="ultimaAtualizacao">--</strong>
 
-            <option value="data">
-                Mais recentes
-            </option>
+            </div>
 
-            <option value="nome">
-                Nome (A-Z)
-            </option>
+        </section>
 
-            <option value="nivel">
-                Nível
-            </option>
 
-            <option value="classe">
-                Classe
-            </option>
+        <section class="mestre-filtros">
 
-            <option value="raca">
-                Raça
-            </option>
+            <input
+                type="text"
+                id="pesquisaFicha"
+                placeholder="Pesquisar por nome..."
+                oninput="filtrarFichas()">
 
-        </select>
+            <select
+                id="filtroClasse"
+                onchange="filtrarFichas()">
 
-    </section>
+                <option value="">Todas as Classes</option>
+                <option value="Mutante">Mutante</option>
+                <option value="Tecnológico">Tecnológico</option>
+                <option value="Científico">Científico</option>
+                <option value="Místico">Místico</option>
+                <option value="Cósmico">Cósmico</option>
+                <option value="Lutador">Lutador</option>
 
-    <section class="filtros">
+            </select>
 
-        <button onclick="filtrarClasse('')">
-            Todas
-        </button>
+            <select
+                id="filtroRaca"
+                onchange="filtrarFichas()">
 
-        <button onclick="filtrarClasse('Mutante')">
-            Mutantes
-        </button>
+                <option value="">Todas as Raças</option>
+                <option value="Humano">Humano</option>
+                <option value="Atlântis">Atlântis</option>
+                <option value="Amazonas">Amazonas</option>
+                <option value="Dracônicos">Dracônicos</option>
+                <option value="Vampiros">Vampiros</option>
+                <option value="Lobisomem">Lobisomem</option>
+                <option value="Marciano">Marciano</option>
+                <option value="Tetlamando">Tetlamando</option>
 
-        <button onclick="filtrarClasse('Tecnológico')">
-            Tecnológicos
-        </button>
+            </select>
 
-        <button onclick="filtrarClasse('Científico')">
-            Científicos
-        </button>
+            <select
+                id="ordenarPor"
+                onchange="ordenarFichas()">
 
-        <button onclick="filtrarClasse('Místico')">
-            Místicos
-        </button>
+                <option value="data">Mais Recentes</option>
+                <option value="nome">Nome</option>
+                <option value="nivel">Nível</option>
+                <option value="classe">Classe</option>
+                <option value="raca">Raça</option>
 
-    </section>
+            </select>
 
-    <div
-        id="loadingState"
-        class="estado">
+        </section>
 
-        Carregando fichas...
+
+        <section
+            id="loadingState"
+            class="estado-mestre">
+
+            Carregando fichas...
+
+        </section>
+
+
+        <section
+            id="emptyState"
+            class="estado-mestre"
+            style="display:none;">
+
+            Nenhuma ficha encontrada.
+
+        </section>
+
+
+        <section
+            id="listaFichas"
+            class="grade-fichas">
+
+            <!-- Cards gerados pelo JS -->
+
+        </section>
 
     </div>
 
     <div
-        id="emptyState"
-        class="estado"
+        id="modalResumo"
+        class="modal-resumo"
         style="display:none;">
 
-        Nenhuma ficha encontrada.
-
-    </div>
-
-    <section
-        id="listaFichas"
-        class="grade-fichas">
-
-    </section>
-
-    <div
-        id="janelaResumo"
-        class="janela-resumo"
-        style="display:none;">
-
-        <div class="conteudo-resumo">
+        <div class="modal-conteudo">
 
             <button
-                class="fecharResumo"
+                class="fechar-modal"
                 onclick="fecharResumo()">
 
                 ✖
 
             </button>
 
-            <div id="conteudoResumo">
-
-            </div>
+            <div id="conteudoResumo"></div>
 
         </div>
 
