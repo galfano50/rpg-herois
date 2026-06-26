@@ -100,48 +100,6 @@ async function salvarFichaFirebase() {
         }
 
         // =========================
-        // PERÍCIAS
-        // =========================
-
-        ficha.pericias = [];
-
-        document
-            .querySelectorAll("#skillsTableBody .pericia-item")
-            .forEach(item => {
-
-                const nome =
-                    item.querySelector(".pericia-nome")?.value || "";
-
-                const valor =
-                    item.querySelector(".pericia-valor")?.value || "";
-
-                ficha.pericias.push({
-                    nome,
-                    valor
-                });
-
-            });
-
-        // =========================
-        // MOCHILA
-        // =========================
-
-        ficha.mochila = [];
-
-        document
-            .querySelectorAll("#backpackTableBody .item-mochila")
-            .forEach(item => {
-
-                const nome =
-                    item.querySelector("input")?.value || "";
-
-                ficha.mochila.push({
-                    nome
-                });
-
-            });
-
-        // =========================
         // PODERES MARCADOS
         // =========================
 
@@ -231,6 +189,54 @@ async function salvarFichaFirebase() {
             saveBtn.disabled = true;
 
         }
+
+        // =========================
+        // PERÍCIAS
+        // =========================
+
+        ficha.pericias = [];
+
+        document
+            .querySelectorAll("#skillsTableBody .pericia-item")
+            .forEach(item => {
+
+                const nome =
+                    item.querySelector(".pericia-nome")?.value
+                    || item.querySelector("input[type='text']")?.value
+                    || "";
+
+                const valor =
+                    item.querySelector(".pericia-valor")?.value
+                    || item.querySelector("input[type='number']")?.value
+                    || "";
+
+                ficha.pericias.push({
+                    nome,
+                    valor
+                });
+
+            });
+
+        console.log("Perícias salvas:", ficha.pericias);
+
+
+        // =========================
+        // MOCHILA
+        // =========================
+
+        ficha.mochila = [];
+
+        document
+            .querySelectorAll("#backpackTableBody input, #backpackTableBody textarea")
+            .forEach(item => {
+
+                ficha.mochila.push({
+                    nome: item.value || ""
+                });
+
+            });
+
+        console.log("Mochila salva:", ficha.mochila);
 
         // =========================
         // SALVAR FIRESTORE
