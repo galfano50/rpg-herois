@@ -492,27 +492,32 @@
       desc: "Fortalece o organismo do personagem, aumentando sua resistência física, vitalidade e capacidade de suportar ferimentos, doenças e esforço extremo. NP determina a eficiência do poder; Multiplicador aumenta a Constituição; Pvs representam Pontos de Vida adicionais concedidos pelo poder."
     },
 
-    "controle-poderes": {
+    "controle-de-poderes": {
       titulo: "Controle de Poderes",
       desc: "Permite interferir temporariamente no funcionamento dos poderes de outro personagem. Dependendo do resultado do teste, o usuário pode enfraquecer, alterar, interromper ou redirecionar habilidades sobrenaturais do alvo. NP determina a força da interferência; Influência representa o domínio exercido; Alcance define a distância máxima para utilização."
     },
 
-    "controle-trevas": {
+    "controle-de-trevas": {
       titulo: "Controle de Trevas",
       desc: "Permite criar, moldar e controlar sombras ou energia sombria para atacar, defender, prender inimigos ou obscurecer áreas. As trevas podem assumir diferentes formas conforme a criatividade do usuário. NP determina a potência do controle; Dano 2 representa o dano causado; Alcance define a distância de manipulação; Raio determina a área afetada."
     },
 
-    "controle-energia": {
+    "controle-de-fogo": {
+      titulo: "Controle de Fogo",
+      desc: "Permite criar, moldar e controlar o Fogo para atacar. O NP determina a potência do controle; Dano 2 representa o dano causado; Alcance define a distância de manipulação; Raio determina a área afetada."
+    },
+
+    "controle-de-energia": {
       titulo: "Controle de Energia",
       desc: "Permite manipular diferentes formas de energia já existentes, como elétrica, térmica, luminosa, cinética, radioativa, mágica ou cósmica. O usuário pode redirecionar, concentrar, dispersar ou alterar essas energias conforme sua natureza. NP determina a eficiência do controle; Alcance indica a distância máxima de manipulação; Raio representa a área afetada."
     },
 
-    "controle-elemental": {
+    "controle-de-elemental": {
       titulo: "Controle Elemental",
       desc: "Permite controlar um elemento específico escolhido durante a aquisição do poder, como fogo, água, terra, ar, gelo, areia, fumaça ou outro aprovado pelo GM. O usuário manipula apenas elementos já existentes no ambiente, moldando sua forma, direção e intensidade. NP determina a potência do controle; Alcance define a distância máxima de manipulação; Raio representa a área afetada."
     },
 
-    "conversao-energia": {
+    "conversao-de-energia": {
       titulo: "Conversão de Energia",
       desc: "Permite absorver um tipo de energia e convertê-la em outro, como calor em eletricidade, eletricidade em luz ou energia cinética em força. A conversão pode servir tanto para defesa quanto para alimentar outros poderes do personagem. NP determina a eficiência da conversão; Absorção representa a quantidade máxima de energia convertida."
     },
@@ -652,7 +657,7 @@
       desc: "Permite controlar a gravidade em uma área ou sobre alvos específicos. O usuário pode aumentar ou reduzir o peso de objetos, prender inimigos ao solo, lançar criaturas ao ar ou alterar trajetórias de movimento. O NP determina a intensidade da manipulação; Alcance define a distância máxima; Raio representa a área afetada; Carga determina o peso máximo manipulado."
     },
 
-    "anulacao-energia": {
+    "anulacao-de-energia": {
       titulo: "Anulação de Energia",
       desc: "Permite neutralizar, dissipar ou absorver diferentes formas de energia antes que produzam seus efeitos. Pode ser utilizada contra ataques energéticos, campos de força, magias, rajadas e outros fenômenos semelhantes. O NP determina a eficiência da anulação; Absorção representa a quantidade máxima de energia anulada; Alcance define a distância de utilização."
     },
@@ -1385,6 +1390,226 @@
     "visao-ultravioleta": {
       titulo: "Visão Ultravioleta",
       desc: "Permite perceber frequências luminosas invisíveis ao olho humano, revelando rastros químicos, fluorescências, marcas ocultas e outros fenômenos emitidos no espectro ultravioleta. O NP determina a qualidade da percepção."
+    },
+
+    "geracao-de-eletricidade": {
+      titulo: "Geração de Eletricidade",
+      desc: "Permite produzir eletricidade pelo próprio corpo ou por uma fonte vinculada ao personagem, liberando descargas, arcos elétricos ou rajadas energéticas. O NP determina a potência da geração; Dano 2 representa o dano elétrico; Alcance define a distância máxima do ataque."
+    },
+
+    "geracao-de-frio": {
+      titulo: "Geração de Frio",
+      desc: "Permite gerar frio intenso, congelando superfícies, reduzindo temperatura ambiente ou causando dano direto por congelamento. O NP determina a intensidade do frio; Dano 2 representa o dano causado; Alcance define a distância máxima."
+    },
+
+    "geracao-de-radioatividade": {
+      titulo: "Geração de Radioatividade",
+      desc: "Permite emitir radiação nociva capaz de afetar criaturas, objetos ou uma área ao redor. Pode causar dano direto, contaminação ou efeitos especiais definidos pelo GM. O NP determina a intensidade; Dano 2 representa o dano radioativo; Alcance define a distância máxima; Raio indica a área afetada."
+    },
+
+    "intangibilidade": {
+      titulo: "Intangibilidade",
+      desc: "Permite tornar o corpo parcial ou totalmente intangível, atravessando matéria sólida e evitando ataques físicos comuns. O NP determina a estabilidade do estado intangível; Duração indica quanto tempo o efeito permanece ativo."
+    },
+
+    "invisibilidade": {
+      titulo: "Invisibilidade",
+      desc: "Torna o personagem invisível à visão comum, dificultando sua localização e ataques diretos contra ele. Sons, cheiro, calor e rastros ainda podem denunciá-lo. O NP determina a eficiência da invisibilidade; Duração indica quanto tempo ela permanece ativa."
+    },
+
+    "carisma": {
+      titulo: "Carisma",
+      desc: "Aumenta magnetismo pessoal, presença, capacidade de liderança, sedução, intimidação e persuasão. O NP determina a intensidade do poder; Multiplicador aumenta o Carisma do personagem."
+    },
+
+    "disfarce-camaleao": {
+      titulo: "Disfarce Camaleão",
+      desc: "Permite alterar aparência externa, cores, padrões da pele ou detalhes superficiais para se misturar ao ambiente ou imitar outra identidade. O NP determina a qualidade do disfarce; Duração indica quanto tempo a alteração permanece."
+    },
+
+    "diminuicao-de-tamanho": {
+      titulo: "Diminuição de Tamanho",
+      desc: "Permite reduzir o tamanho físico do personagem, facilitando infiltração, fuga, esconderijos e acesso a locais estreitos. O NP determina o limite da redução; Duração indica quanto tempo o novo tamanho permanece."
+    },
+
+    "clarividencia": {
+      titulo: "Clarividência",
+      desc: "Permite enxergar acontecimentos, locais ou pessoas à distância por percepção sobrenatural. Quanto maior o NP, mais clara e precisa é a visão obtida; Alcance define a distância máxima da percepção."
+    },
+
+    "habilidade-de-gnomo": {
+      titulo: "Habilidade de Gnomo",
+      desc: "Concede habilidades associadas a gnomos ou seres feéricos, como esperteza sobrenatural, truques, resistência mística, domínio de pequenos encantamentos ou aptidão artesanal incomum. O NP determina a eficiência; Multiplicador aumenta os atributos ou capacidades associadas."
+    },
+
+    "vontade-de-ferro": {
+      titulo: "Vontade de Ferro",
+      desc: "Fortalece a mente contra medo, controle mental, possessão, hipnose, tortura psicológica e influência sobrenatural. O NP determina a resistência mental; Influência representa a força defensiva contra efeitos mentais ou espirituais."
+    },
+
+    "bencao": {
+      titulo: "Bênção",
+      desc: "Concede uma graça sobrenatural que fortalece aliados, melhora atributos, protege contra males ou aumenta a chance de sucesso em ações importantes. O NP determina a potência da bênção; Multiplicador representa o bônus concedido; Alvos define quantos beneficiados; Duração indica quanto tempo permanece."
+    },
+
+    "maldicao": {
+      titulo: "Maldição",
+      desc: "Impõe um efeito sobrenatural prejudicial sobre um alvo, causando azar, fraqueza, medo, dor, perda de eficiência ou outras penalidades definidas pelo GM. O NP determina a força da maldição; Influência representa a dificuldade para resistir; Alcance define a distância; Duração indica quanto tempo permanece."
+    },
+
+    "aprisionamento-espiritual": {
+      titulo: "Aprisionamento Espiritual",
+      desc: "Permite prender a alma, espírito ou essência sobrenatural de uma criatura, impedindo sua fuga, manifestação ou retorno ao corpo. O NP determina a força do aprisionamento; Influência representa a resistência espiritual; Duração indica quanto tempo a prisão permanece."
+    },
+
+    "viagem-astral": {
+      titulo: "Viagem Astral",
+      desc: "Permite projetar a consciência ou espírito para fora do corpo físico, viajando pelo plano astral ou observando locais distantes. O corpo permanece vulnerável durante o efeito. O NP determina a estabilidade da projeção; Alcance define até onde o espírito pode ir; Duração indica quanto tempo a viagem permanece."
+    },
+
+    "protecao": {
+      titulo: "Proteção",
+      desc: "Cria uma defesa mística, espiritual ou energética ao redor do usuário ou de um alvo, reduzindo danos e efeitos hostis. O NP determina a potência defensiva; IP representa a proteção concedida; Duração indica quanto tempo permanece ativa."
+    },
+
+    "pacto-sobrenatural": {
+      titulo: "Pacto Sobrenatural",
+      desc: "Estabelece um vínculo com uma entidade, força ou poder oculto, concedendo capacidades temporárias em troca de condições, preço ou obrigação definidos pelo GM. O NP determina a força do pacto; Multiplicador representa o benefício concedido; Duração indica quanto tempo permanece."
+    },
+
+    "aura-sagrada": {
+      titulo: "Aura Sagrada",
+      desc: "Emite uma aura de energia divina ou purificadora capaz de proteger aliados, afastar criaturas profanas e enfraquecer forças malignas. O NP determina a potência da aura; Raio define a área afetada; Influência representa sua força espiritual."
+    },
+
+    "aura-maldita": {
+      titulo: "Aura Maldita",
+      desc: "Emite uma aura sombria que enfraquece, assusta ou corrompe criaturas próximas. Pode afetar coragem, sorte, vitalidade ou resistência espiritual conforme decisão do GM. O NP determina a potência; Raio define a área; Influência representa a força da maldição."
+    },
+
+    "chama-espiritual": {
+      titulo: "Chama Espiritual",
+      desc: "Cria fogo místico capaz de atingir corpo, alma ou energia espiritual do alvo. Pode queimar criaturas sobrenaturais mesmo quando chamas comuns seriam inúteis. O NP determina a intensidade; Dano 2 representa o dano espiritual; Alcance define a distância."
+    },
+
+    "correntes-etereas": {
+      titulo: "Correntes Etéreas",
+      desc: "Invoca correntes espirituais ou mágicas capazes de prender, puxar, restringir ou ancorar criaturas físicas e sobrenaturais. O NP determina a resistência das correntes; Alcance define a distância; Alvos indica quantas criaturas podem ser presas."
+    },
+
+    "julgamento": {
+      titulo: "Julgamento",
+      desc: "Invoca uma punição sobrenatural contra um alvo, geralmente ligada à culpa, pecado, corrupção ou oposição à força invocada. O NP determina a potência; Dano 2 representa o dano causado; Influência pode afetar a mente, alma ou resistência do alvo."
+    },
+
+    "banimento": {
+      titulo: "Banimento",
+      desc: "Expulsa criaturas invocadas, espíritos, demônios, mortos-vivos ou seres extraplanares de uma área ou plano. O NP determina a força do banimento; Influência representa a dificuldade para resistir; Alcance define a distância máxima."
+    },
+
+    "selamento-mistico": {
+      titulo: "Selamento Místico",
+      desc: "Cria um selo arcano capaz de prender poderes, bloquear passagens, impedir manifestações sobrenaturais ou limitar uma criatura. O NP determina a força do selo; Influência representa sua capacidade de contenção; Duração indica quanto tempo permanece."
+    },
+
+    "invocacao": {
+      titulo: "Invocação",
+      desc: "Permite chamar criaturas, entidades, espíritos, servos mágicos ou forças sobrenaturais para auxiliar o usuário. O NP determina a potência da invocação; Alvos indica quantas entidades podem ser chamadas; Duração define quanto tempo permanecem."
+    },
+
+    "escudo-sagrado": {
+      titulo: "Escudo Sagrado",
+      desc: "Cria um escudo de energia divina, luminosa ou purificadora que protege contra ataques físicos, mágicos ou profanos. O NP determina sua potência; IP representa a proteção concedida; Duração indica quanto tempo permanece."
+    },
+
+    "escudo-profano": {
+      titulo: "Escudo Profano",
+      desc: "Cria um escudo de energia sombria, demoníaca ou amaldiçoada capaz de absorver dano e resistir a ataques espirituais. O NP determina sua potência; IP representa a proteção concedida; Duração indica quanto tempo permanece."
+    },
+
+    "leitura-da-alma": {
+      titulo: "Leitura da Alma",
+      desc: "Permite perceber a essência espiritual de uma criatura, revelando emoções profundas, intenções, corrupção, bênçãos, maldições ou marcas sobrenaturais. O NP determina a precisão; Alcance define a distância; Influência representa a profundidade da leitura."
+    },
+
+    "manipulacao-espiritual": {
+      titulo: "Manipulação Espiritual",
+      desc: "Permite afetar espíritos, almas e energias espirituais, podendo fortalecer, ferir, afastar, prender ou alterar manifestações espirituais. O NP determina a potência; Influência representa o controle exercido; Alcance define a distância."
+    },
+
+    "necromancia": {
+      titulo: "Necromancia",
+      desc: "Permite manipular energia da morte, cadáveres, espíritos ou mortos-vivos. Pode erguer servos, falar com mortos, drenar vitalidade ou comandar criaturas necromânticas. O NP determina a potência; Alvos define quantas criaturas podem ser afetadas; Duração indica quanto tempo permanecem."
+    },
+
+    "prisao-dimensional": {
+      titulo: "Prisão Dimensional",
+      desc: "Cria uma cela, bolso ou barreira dimensional capaz de aprisionar um alvo fora do espaço comum. O NP determina a força da prisão; Alcance define a distância de ativação; Duração indica quanto tempo permanece."
+    },
+
+    "marca-arcana": {
+      titulo: "Marca Arcana",
+      desc: "Inscreve uma marca mágica em um alvo, objeto ou local, podendo rastrear, amaldiçoar, proteger, ativar efeitos futuros ou servir como vínculo sobrenatural. O NP determina a potência; Influência representa o efeito aplicado; Duração indica quanto tempo a marca permanece."
+    },
+
+    "telecinese-mistica": {
+      titulo: "Telecinese Mística",
+      desc: "Move objetos ou criaturas através de força mágica, espiritual ou arcana, em vez de força mental comum. O NP determina a potência; Carga representa o peso máximo manipulado; Alcance define a distância."
+    },
+
+    "telepatia-mistica": {
+      titulo: "Telepatia Mística",
+      desc: "Permite comunicação mental ou leitura de pensamentos por meios mágicos, espirituais ou arcanos. Pode atravessar barreiras comuns dependendo do NP. Influência representa a profundidade da conexão; Alcance define a distância; Alvos indica quantas mentes podem ser conectadas."
+    },
+
+    "invisibilidade-mistica": {
+      titulo: "Invisibilidade Mística",
+      desc: "Oculta o usuário por meios mágicos, tornando-o invisível ou difícil de perceber por sentidos comuns. Criaturas com percepção sobrenatural podem tentar resistir conforme o GM. O NP determina a eficiência; Duração indica quanto tempo permanece."
+    },
+
+    "passagem-fantasma": {
+      titulo: "Passagem Fantasma",
+      desc: "Permite atravessar paredes, portas, grades ou barreiras físicas assumindo um estado espectral temporário. O NP determina a estabilidade da passagem; Duração indica quanto tempo o corpo permanece fantasmagórico."
+    },
+
+    "possessao-espiritual": {
+      titulo: "Possessão Espiritual",
+      desc: "Permite projetar a própria consciência ou espírito para tentar assumir o controle do corpo de outra criatura. O alvo pode resistir conforme sua força mental ou espiritual. O NP determina a potência; Possessão representa o domínio exercido; Duração define quanto tempo permanece."
+    },
+
+    "milagre": {
+      titulo: "Milagre",
+      desc: "Invoca uma intervenção sobrenatural rara e poderosa, capaz de curar, proteger, purificar, restaurar ou alterar uma situação extrema. O efeito exato deve ser aprovado pelo GM. O NP determina a potência; Influência e Alvos definem o alcance da intervenção."
+    },
+
+    "profecia": {
+      titulo: "Profecia",
+      desc: "Permite receber mensagens, presságios ou revelações sobre acontecimentos importantes. As informações podem vir em símbolos, sonhos ou visões enigmáticas. O NP determina a clareza e relevância da profecia."
+    },
+
+    "visao-do-destino": {
+      titulo: "Visão do Destino",
+      desc: "Permite perceber possíveis caminhos futuros ligados a uma pessoa, local ou evento. Diferente da precognição comum, revela tendências, consequências e pontos de ruptura do destino. O NP determina a precisão da visão."
+    },
+
+    "manipulacao-de-karma": {
+      titulo: "Manipulação de Karma",
+      desc: "Permite alterar temporariamente sorte, azar, consequências ou retorno espiritual das ações de um alvo. Pode favorecer aliados ou punir inimigos conforme decisão do GM. O NP determina a potência; Influência representa o controle exercido; Duração indica quanto tempo permanece."
+    },
+
+    "controle-de-runas": {
+      titulo: "Controle de Runas",
+      desc: "Permite criar, ativar ou manipular runas mágicas com efeitos variados, como proteção, ataque, aprisionamento, rastreamento ou encantamento. O NP determina a complexidade; Alcance define a distância; Raio representa a área afetada."
+    },
+
+    "encantamento": {
+      titulo: "Encantamento",
+      desc: "Permite imbuir objetos, armas, locais ou criaturas com efeitos mágicos temporários. Pode fortalecer, proteger, amaldiçoar ou conceder propriedades especiais. O NP determina a força do encantamento; Influência define o efeito aplicado; Duração indica quanto tempo permanece."
+    },
+
+    "dissipacao-magica": {
+      titulo: "Dissipação Mágica",
+      desc: "Permite desfazer, enfraquecer ou cancelar magias, encantamentos, maldições, invocações e efeitos sobrenaturais ativos. O NP determina a eficiência da dissipação; Alcance define a distância; Raio indica a área afetada."
     }
 
   };
