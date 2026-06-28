@@ -1070,6 +1070,7 @@
                 bonus: [
                     "Força (NP, Forca)",
                     "Constituição (NP, Constituicao)",
+                    "Evolução Espontânea: Uma vez por sessão, após uma luta intensa ou uso excessivo de seus poderes, ganhe +1d4 pontos no poder."
                 ]
             },
 
@@ -1077,7 +1078,8 @@
                 nome: "Tecnológico",
                 bonus: [
                     "Armadura Corporal Artificial (NP, IP, Material)",
-                    "Sortear Material"
+                    "Detectar Fraqueza (NP, Alcance x2m)",
+                    "Sortear Material (IP)"
                 ]
             },
 
@@ -1085,17 +1087,18 @@
                 nome: "Científico",
                 bonus: [
                     "Inteligência (NP, Inteligencia)",
-                    "Defesa Mental (NP +Inteligência)"
+                    "Defesa Mental (NP)",
+                    "Pode somar a Inteligência ao NP dos poderes Científicos"
                 ]
             },
 
             Místico: {
                 nome: "Místico",
                 bonus: [
+                    "Vontade (NP, Vontade)",
                     "Perícia: Teoria da Magia",
                     "+2 Magias Básicas",
-                    "Pode enxergar o Plano Mágico",
-                    "Pode evoluir poderes até Ômega sem transição"
+                    "Pode enxergar o Plano Mágico"
                 ]
             },
 
@@ -1103,14 +1106,15 @@
                 nome: "Cósmico",
                 bonus: [
                     "Adaptação Corporal (NP, Duração x10min, IP)",
-                    "Voo (NP, Carga, Velocidade)"
+                    "Voo (NP, Carga, Velocidade)",
+                    "Corpo Cósmico: O personagem ignora efeitos ambientais naturais (vácuo, frio extremo, pressão, falta de oxigênio e calor espacial), sobrevivendo nesses ambientes enquanto permanecer consciente. Efeito válido 1x por mesa"
                 ]
             },
 
             Lutador: {
                 nome: "Lutador",
                 bonus: [
-                    "+2 Perícias de Luta",
+                    "+6 Perícias",
                     "+1D6 em todos os testes de Perícia",
                     "+1D10 por nível caso NÃO possua poderes"
                 ]
@@ -1150,7 +1154,7 @@
       
         const poderesPorClasse = {
             "Cósmico": [
-                "Disparo de Energia (NP, Dano 1, Alcance x6m)",
+                "Disparo de Energia - Status: Queimado (NP, Dano 1, Alcance x6m)",
                 "Adaptação Corpórea (NP, IP, Duração x10min)",
                 "Agilidade (NP, Agilidade)",
                 "Armadura Corpórea (NP, IP)",
@@ -1163,16 +1167,16 @@
                 "Conhecimento de Encarnações (NP)",
                 "Constituição (NP, Constituicao)",
                 "Controle de Poderes (NP, Influência, Alcance x2m)",
-                "Controle de Trevas (NP, Alcance x2m, Raio x4m², Dano 2)",
-                "Controle de Energia (NP, Alcance x2m, Raio x4m²)",
-                "Controle Elemental (NP, Alcance x2m, Raio x4m²)",
-                "Conversão de Energia (NP, Absorção)",
-                "Corpo Energético (NP, IP, Absorção)",
+                "Controle de Trevas - Status: Enfraquecido (NP, Alcance x2m, Raio x4m², Dano 2)",
+                "Controle de Energia - Status: Queimado (NP, Alcance x2m, Raio x4m²)",
+                "Controle Elemental - Status: Elementais (NP, Alcance x2m, Raio x4m²)",
+                "Conversão de Energia - Status: Elementais (NP, Absorção)",
+                "Corpo Energético - Status: Queimado (NP, IP, Absorção)",
                 "Corrida (NP, Corrida, Alvos)",
                 "Crescimento (NP, Multiplicador, Carga, IP)",
-                "Criação Elemental (NP, Alcance x2m, Alvos)",
+                "Criação Elemental - Status: Elementais (NP, Alcance x2m, Alvos, Dano 2)",
                 "Detectar Magia (NP, Alcance x2m)",
-                "Dark Force (NP, Dano 2, Alcance x2m, Raio x4m²)",
+                "Dark Force - Status: Suprimido (NP, Dano 2, Alcance x2m, Raio x4m²)",
                 "Destreza (NP, Destreza)",
                 "Detectar Energia (NP, Alcance x2m)",
                 "Detectar Poder (NP, Alcance x2m)",
@@ -1194,25 +1198,25 @@
                 "Voo (NP, Voo, Carga)",
                 "Manipulação Gravitacional (NP, Alcance x4m, Raio x8m², Carga)",
                 "Anulação de Energia (NP, Absorção, Alcance x2m)",
-                "Estrela Viva (NP, IP, Dano 1, Dano 2, Duração x2min)"                
+                "Estrela Viva - Status: Queimado, Irradiado, Derretido (NP, IP, Dano 1, Dano 2, Duração x2min)"                
             ],
 
             "Tecnológico": [
                 "Armadura Corpórea Artificial (NP, IP)",
                 "Armadura Corpórea (NP, IP)",
-                "Ataques Sonoros (NP, Dano 1, Alcance x2m, Raio x4m²)",
+                "Ataques Sonoros - Status: Fraturado  (NP, Dano 1, Alcance x2m, Raio x4m²)",
                 "Campo de Força (NP, IP, Raio x4m²)",
-                "Cientista Louco (NP+Inteligência)",
+                "Cientista Louco (NP)",
                 "Comunicação com Cibernéticos (NP, Alcance x2m, Alvos)",
-                "Criação de Armamentos (NP, Duração x2min)",
-                "Criação de Mísseis (NP, Dano 1, Alcance x2m)",
+                "Criação de Armamentos - Status: Queimado (NP, Duração x2min, Dano2)",
+                "Criação de Mísseis - Status: Queimado (NP, Dano 2, Dano 1, Alcance x2m)",
                 "Criação Mecânica (NP, Duração x2min, Alvos)",
-                "Detectar Fraqueza (NP +Inteligência, Alcance x2m)",
+                "Detectar Fraqueza (NP, Alcance x2m)",
                 "Detectar Poder (NP, Alcance x2m)",
                 "Disco Voador (NP, Voo, Carga)",
                 "Foguete (NP, Voo, Carga)",
                 "Radar (NP, Alcance x2m)",
-                "Raio Laser (NP, Dano 1, Alcance x2m)",
+                "Raio Laser - Status: Queimado (NP, Dano 1, Dano2, Alcance x2m)",
                 "Visão 360º (NP)",
                 "Visão Raio-X (NP, Alcance x2m)",
                 "Visão Microscópica (NP)",
@@ -1234,59 +1238,59 @@
                 "Agilidade (NP, Multiplicador)",
                 "Força (NP, Forca)",
                 "Alongamento Corpóreo (NP, Membros, Alcance x2m)",
-                "Alterações de Sentidos (NP, Alcance x2m)",
-                "Alterações de Sonhos (NP, Influência, Alcance x2m)",
-                "Alucinações (NP, Influência, Raio x4m²)",
+                "Alterações de Sentidos - Status: Alucinado (NP, Alcance x2m)",
+                "Alterações de Sonhos - Status: Sonolento (NP, Influência, Alcance x2m)",
+                "Alucinações - Status: Alucinado (NP, Influência, Raio x4m²)",
                 "Armadura Corpórea (NP, IP)",
-                "Armas Naturais (NP, Dano 1)",
+                "Armas Naturais - Status: Sangramento (NP, Dano 1)",
                 "Ataques Sonoros (NP, Dano 1, Alcance x2m, Raio x4m²)",
                 "Atrito (NP, Dano 1, Alcance x2m)",
-                "Bio Vampirismo (NP , Absorção, Alcance x2m, Duração x2min)",
+                "Bio Vampirismo - Status: Enfraquecido (NP , Absorção, Alcance x2m, Duração x2min)",
                 "Bolha (NP, IP, Raio x4m²)",
                 "Cabelos Vivos (NP, Membros, Alcance x2m)",
                 "Campo de Força (NP, IP, Raio x4m²)",
                 "Cauda (NP, Forca, Dano 1)",
                 "Coloração (NP, Duração x2min)",
-                "Combustão (NP, Dano 2, Alcance x2m)",
+                "Combustão - Status: Queimado (NP, Dano 2, Alcance x2m)",
                 "Comunicação com Animais (NP, Alcance x2m, Alvos)",
                 "Constituição (NP, Constituicao)",
-                "Controle de Eletricidade (NP, Dano 2, Alcance x6m, Raio x12m²)",
-                "Controle de Fogo (NP, Dano 2, Alcance x4m, Raio x8m²)",
-                "Controle de Luz (NP, Alcance x6m, Raio x12m²)",
+                "Controle de Eletricidade - Status: Eletrocutado, Atordoado (NP, Dano 2, Alcance x6m, Raio x12m²)",
+                "Controle de Fogo - Status: Queimado (NP, Dano 2, Alcance x4m, Raio x8m²)",
+                "Controle de Luz - Status: Queimado (NP, Alcance x6m, Raio x12m²)",
                 "Controle de Gravidade (NP, Alcance x10m, Raio x20m², Carga)",
                 "Controle de Magnetismo (NP, Alcance x8m, Raio x16m², Carga)",
                 "Controle de Máquinas (NP, Influência, Alcance x2m)",
                 "Controle de Ondas de Rádio (NP, Alcance x2m)",
                 "Controle de Plantas (NP, Alcance x2m, Alvos)",
-                "Controle de Radiação (NP, Dano 2, Alcance x10m, Raio x20m²)",
+                "Controle de Radiação - Status: Irradiado (NP, Dano 2, Alcance x10m, Raio x20m²)",
                 "Controle de Som (NP, Alcance x2m, Raio x4m²)",
                 "Controle de Clima (NP, Alcance x2m, Raio x4m², Duração x2min)",
-                "Controle Hipnótico (NP, Influência, Alcance x2m)",
-                "Controle Vocal (NP, Influência, Alcance x2m)",
+                "Controle Hipnótico - Status: Hipnotizado (NP, Influência, Alcance x2m)",
+                "Controle Vocal - Status: Hipnotizado (NP, Influência, Alcance x2m)",
                 "Conversão de Energia (NP, Absorção)",
-                "Conversão Elementar (NP, Duração x2min)",
+                "Conversão Elementar - Status: Elementais (NP, Duração x2min)",
                 "Conversão Molecular (NP, Duração x2min)",
-                "Corpo Energético (NP, IP, Absorção)",
+                "Corpo Energético - Status: Queimado (NP, IP, Absorção)",
                 "Corrida (NP, Corrida, carga)",
                 "Crescimento (NP, Multiplicador, Carga, IP)",
-                "Criação Elemental (NP, Alcance x2m, Alvos)",
+                "Criação Elemental - Status: Elementais (NP, Alcance x2m, Alvos)",
                 "Cristalização (NP, IP)",
                 "Cura em Outras Pessoas (NP, Alcance x2m, Alvos)",
                 "Defesa Mental (NP, IP)",
-                "Desintegração (NP, Dano 2, Alcance x2m)",
-                "Dreno Mental (NP, Influência, Alcance x2m)",
+                "Desintegração - Status: Derretido, Enfraquecido (NP, Dano 2, Alcance x2m)",
+                "Dreno Mental - Status: Hipnotizado (NP, Influência, Alcance x2m)",
                 "Duplicação de Poderes (NP, Duração x2min)",
-                "Duplicação Ilusória (NP, Alvos, Duração x2min)",
+                "Duplicação Ilusória - Status: Alucinado (NP, Alvos, Duração x2min)",
                 "Duplicação Mental (NP, Alvos, Duração x2min)",
                 "Empatia (NP, Influência, Alcance x2m)",
                 "Escalar Paredes (NP, carga, Velocidade)",
                 "Escavações (NP, Corrida)",
-                "Feromônios (NP, Influência, Raio x4m²)",
-                "Geração de Eletricidade (NP, Dano 2, Alcance x2m)",
-                "Geração de Fogo (NP, Dano 2, Alcance x2m)",
-                "Geração de Frio (NP, Dano 2, Alcance x2m)",
-                "Geração de Radioatividade (NP, Dano 2, Alcance x2m)",
-                "Ilusões (NP, Influência, Raio x4m²)",
+                "Feromônios - Status: Apaixonado (NP, Influência, Raio x4m²)",
+                "Geração de Eletricidade - Status: Eletrocutado (NP, Dano 2, Alcance x2m)",
+                "Geração de Fogo - Status: Queimado (NP, Dano 2, Alcance x2m)",
+                "Geração de Frio - Status: Congelado, Hipotermia (NP, Dano 2, Alcance x2m)",
+                "Geração de Radioatividade - Status: Irradiado (NP, Dano 2, Alcance x2m)",
+                "Ilusões - Status: Alucinado (NP, Influência, Raio x4m²)",
                 "Intangibilidade (NP, Duração x2min)",
                 "Invisibilidade (NP, Duração x2min)",
                 "Levitação (NP, Voo, Carga)",
@@ -1301,15 +1305,15 @@
                 "Teleportação (NP, Alcance x20m, Alvos)",
                 "Transformação Corpórea (NP, Multiplicador, Duração x2min)",
                 "Transformação em Animais (NP, Duração x2min)",
-                "Vampirismo de Poderes (NP, Absorção, Alcance x2m)",
-                "Vampirismo Energético (NP, Absorção, Alcance x2m)",
+                "Vampirismo de Poderes - Status: Enfraquecido, Suprimido (NP, Absorção, Alcance x2m)",
+                "Vampirismo Energético - Status: Enfraquecido (NP, Absorção, Alcance x2m)",
                 "Voo (NP, Voo, Carga)"
             ],
 
             "Místico": [
                 "Absorção de Energia (NP, Absorção, Alcance x2m)",
-                "Alterações de Sonhos (NP, Influência, Alcance x2m)",
-                "Alucinações (NP, Influência, Raio x4m²)",
+                "Alterações de Sonhos - Status: Sonolento (NP, Influência, Alcance x2m)",
+                "Alucinações - Status: Alucinado (NP, Influência, Raio x4m²)",
                 "Animação de Imagens (NP, Alvos, Raio x4m²)",
                 "Animação de Objetos (NP, Carga, Alcance x2m, Alvos)",
                 "Barreira Astral (NP, IP, Raio x4m²)",
@@ -1317,7 +1321,7 @@
                 "Aura Maldita (NP, Raio x4m², Influência)",
                 "Aura Sagrada (NP, Raio x4m², Influência)",
                 "Banimento (NP, Influência, Alcance x20m)",
-                "Bênção (NP, Multiplicador, Alvos, Duração x2min)",
+                "Bênção - Status: Motivado (NP, Multiplicador, Alvos, Duração x2min)",
                 "Campo Antimagia (NP, Raio x4m², Duração x2min)",
                 "Campo de Marah (NP, Influência, Raio x4m²)",
                 "Chama Espiritual (NP, Dano 2, Alcance x2m)",
@@ -1344,7 +1348,7 @@
                 "Invocação (NP, Alvos, Duração x10min)",
                 "Julgamento (NP, Dano 2, Influência)",
                 "Leitura da Alma (NP, Alcance x2m, Influência)",
-                "Maldição (NP, Influência, Alcance x2m, Duração x20min)",
+                "Maldição - Status: Amaldiçoado (NP, Influência, Alcance x2m, Duração x20min)",
                 "Manipulação de Karma (NP, Influência, Duração x20min)",
                 "Manipulação Espiritual (NP, Influência, Alcance x2m)",
                 "Marca Arcana (NP, Influência, Duração x20min)",
@@ -1365,19 +1369,19 @@
 
             "Científico": [
                 "Absorção de Energia (NP, Absorção, Alcance x2m)",
-                "Alterações de Sonhos (NP, Influência, Alcance x2m)",
-                "Alucinações (NP, Influência, Raio x4m²)",
+                "Alterações de Sonhos - Status: Sonolento (NP, Influência, Alcance x2m)",
+                "Alucinações - Status: Alucinado (NP, Influência, Raio x4m²)",
                 "Animação de Imagens (NP, Alvos, Raio x4m²)",
                 "Animação de Objetos (NP, Carga, Alcance x2m, Alvos)",
                 "Agilidade (NP, Multiplicador)",
                 "Alongamento Corpóreo (NP, Membros, Alcance x4m)",
-                "Alterações de Sentidos (NP, Alcance x2m)",
+                "Alterações de Sentidos - Status: Alucinado (NP, Alcance x2m)",
                 "Armadura Corpórea (NP, IP)",
                 "Armas Naturais (NP, Dano 1)",
                 "Ataques Sonoros (NP, Dano 1, Alcance x2m, Raio x4m²)",
                 "Atrito (NP, Dano 1, Alcance x2m)",
                 "Berserker (NP, Multiplicador, Pvs, Duração x2min)",
-                "Bio Vampirismo (NP, Absorção, Alcance x2m, Duração x2min)",
+                "Bio Vampirismo - Status: Enfraquecido (NP, Absorção, Alcance x2m, Duração x2min)",
                 "Bolha (NP, IP, Raio x4m²)",
                 "Cabelos Vivos (NP, Membros, Alcance x2m)",
                 "Campo de Força (NP, IP, Raio x4m²)",
@@ -1385,44 +1389,44 @@
                 "Cauda (NP, Forca, Dano 1)",
                 "Cientista Louco (NP)",
                 "Coloração (NP, Duração x2min)",
-                "Combustão (NP, Dano 2, Alcance x2m)",
+                "Combustão - Status: Queimado (NP, Dano 2, Alcance x2m)",
                 "Comunicação com Cibernéticos (NP, Alcance x10m, Alvos)",
                 "Constituição (NP, Constituicao)",
-                "Controle de Eletricidade (NP, Dano 2, Alcance x6m, Raio x12m²)",
-                "Controle de Fogo (NP, Dano 2, Alcance x4m, Raio x8m²)",
+                "Controle de Eletricidade - Status: Eletrocutado (NP, Dano 2, Alcance x6m, Raio x12m²)",
+                "Controle de Fogo - Status: Queimado (NP, Dano 2, Alcance x4m, Raio x8m²)",
                 "Controle de Luz (NP, Alcance x6m, Raio x12m²)",
                 "Controle de Gravidade (NP, Alcance x10m, Raio x20m², Carga)",
                 "Controle de Magnetismo (NP , Alcance x8m, Raio x16m², Carga)",
                 "Controle de Máquinas (NP, Influência, Alcance x2m)",
                 "Controle de Ondas de Rádio (NP, Alcance x2m)",
                 "Controle de Plantas (NP, Alcance x2m, Alvos)",
-                "Controle de Radiação (NP, Dano 2, Alcance x10m, Raio x20m²)",
+                "Controle de Radiação - Status: Irradiado (NP, Dano 2, Alcance x10m, Raio x20m²)",
                 "Controle de Som (NP, Alcance x2m, Raio x4m²)",
                 "Controle de Clima (NP, Alcance x2m, Raio x4m², Duração x2min)",
-                "Controle Hipnótico (NP, Influência, Alcance x2m)",
+                "Controle Hipnótico - Status: Hipnotizado (NP, Influência, Alcance x2m)",
                 "Controle Vocal (NP, Influência, Alcance x2m)",
                 "Conversão de Energia (NP, Absorção)",
                 "Conversão Elementar (NP, Duração x2min)",
                 "Conversão Molecular (NP, Duração x2min)",
-                "Corpo Energético (NP, IP, Absorção)",
+                "Corpo Energético - Status: Queimado (NP, IP, Absorção)",
                 "Corrida (NP, Corrida, carga)",
                 "Crescimento (NP, Multiplicador, Carga, IP)",
                 "Criação de Armamentos (NP, Duração x6min, Dano2)",
                 "Criação de Mísseis (NP, Dano 2, Alcance x8m)",
-                "Criação Elemental (NP, Alcance x2m, Alvos)",
+                "Criação Elemental - Status: Elementais (NP, Alcance x2m, Alvos)",
                 "Criação Molecular (NP, Alcance x2m, Carga)",
                 "Cristalização (NP, IP)",
                 "Cura em Outras Pessoas (NP, Alcance x2m, Alvos)",
-                "Desintegração (NP, Dano 2, Alcance x2m)",
+                "Desintegração - Status: Derretido (NP, Dano 2, Alcance x2m)",
                 "Destreza (NP, Multiplicador)",
                 "Detectar Fraqueza (NP, Alcance x2m)",
                 "Detectar Poder (NP, Alcance x2m)",
                 "Diminuição de Tamanho (NP, Duração x2min)",
                 "Disco Voador (NP, Voo, Carga)",
                 "Disfarce Camaleão (NP, Duração x2min)",
-                "Disruptura Molecular (NP, Dano 2, Alcance x2m)",
+                "Disruptura Molecular - Status: Derretido, Sangramento, Fraturado (NP, Dano 2, Alcance x2m)",
                 "Duplicação de Poderes (NP, Duração x2min)",
-                "Duplicação Ilusória (NP, Alvos, Duração x2min)",
+                "Duplicação Ilusória - Status: Alucinado (NP, Alvos, Duração x2min)",
                 "Duplicação Mental (NP, Alvos, Duração x2min)",
                 "Empatia (NP, Influência, Alcance x2m)",
                 "Energia Cinética (NP, Dano 1, Multiplicador)",
@@ -1432,20 +1436,20 @@
                 "Feromônios (NP, Influência, Raio x4m²)",
                 "Foguete (NP, Voo, Carga)",
                 "Força (NP, Forca)",
-                "Furação (NP, Dano 1, Raio x4m²)",
+                "Furação - Status: Fraturado (NP, Dano 1, Raio x4m²)",
                 "Fusão (NP, Duração x2min)",
                 "Geoforça (NP, Dano 1, Carga)",
-                "Geração de Eletricidade (NP, Dano 2, Alcance x2m)",
-                "Geração de Fogo (NP, Dano 2, Alcance x2m)",
-                "Geração de Frio (NP, Dano 2, Alcance x2m)",
-                "Geração de Radioatividade (NP, Dano 2, Alcance x2m)",
-                "Golpe Cinético (NP, Dano 1, Alcance x2m)",
+                "Geração de Eletricidade - Status: Elotrocutado, atordoado (NP, Dano 2, Alcance x2m)",
+                "Geração de Fogo - Status: Queimado (NP, Dano 2, Alcance x2m)",
+                "Geração de Frio - Status: Congelado, Hipotermia (NP, Dano 2, Alcance x2m)",
+                "Geração de Radioatividade - Status: Irradiado (NP, Dano 2, Alcance x2m)",
+                "Golpe Cinético - Status: Fraturado (NP, Dano 1, Alcance x2m)",
                 "Habilidades Animais (NP, Multiplicador)",
                 "Habilidades Botânicas (NP, Multiplicador)",
                 "Habilidades Químicas (NP, Multiplicador)",
                 "Hipervelocidade (NP, Corrida, Ações)",
                 "Imitação (NP, Duração x2min)",
-                "Indutor de Sono (NP, Influência, Alcance x2m)",
+                "Indutor de Sono - Status: Sonolento (NP, Influência, Alcance x2m)",
                 "Infravisão (NP, Alcance x2m)",
                 "Intangibilidade (NP, Duração x2min)",
                 "Inteligência (NP, Multiplicador)",
@@ -1454,8 +1458,8 @@
                 "Invisibilidade Mental (NP, Influência)",
                 "Liberdade de Movimento (NP)",
                 "Manipulação de Massa (NP, Carga)",
-                "Manipulação de Frio (NP, Dano 2, Alcance x2m)",
-                "Manipulação Neural (NP, Influência, Alcance x2m)",
+                "Manipulação de Frio - Status: Hipotermia (NP, Dano 2, Alcance x2m)",
+                "Manipulação Neural - Status: Atordoado, Sonolento, Confuso (NP, Influência, Alcance x2m)",
                 "Molas (NP, Corrida, Saltos)",
                 "Moldar Matéria (NP, Alcance x2m, Carga)",
                 "Mudança de Idade (NP, Duração x2min)",
@@ -1466,7 +1470,7 @@
                 "Percepção (NP, Multiplicador)",
                 "Plasticidade (NP, Duração x2min)",
                 "Portal (NP, Alcance x20m, Alvos)",
-                "Pragas (NP, Alvos, Duração x2min)",
+                "Pragas - Status: Doente (NP, Alvos, Duração x2min)",
                 "Rajada Mental (NP, Dano 2, Alcance x2m)",
                 "Rastreamento (NP, Alcance x2m)",
                 "Reformulação Corporal (NP, Duração x2min)",
@@ -1579,10 +1583,11 @@
                 poderes: [
                     "Força (Np, Forca)",
                     "Constituição (Np, Constituicao)",
-                    "Sentidos Aprimorados (Np, Alcance x2m)",
+                    "Nado (Np, Velocidade, Carga)",
                     "Respirar Embaixo D'água (Np, Duração x24hrs)",
                     "Controle de Anfíbios (Np, Influência, Alcance x10m)",
-                    "Controle de Água (Np, Alcance x10, Raio x20m²)"
+                    "Controle de Água (Np, Alcance x10, Raio x20m²)",
+                    "Penalidade (Leve ou Alta) e Desvantagem em lugares sem humidade no ar."
                 ]
             },
 
@@ -1592,9 +1597,8 @@
                     "Força (Np, Forca)",
                     "Constituição (Np, Constituicao)",
                     "Sentidos Aprimorados (Np, Alcance x10m)",
-                    "Resistência à Magia (Np, IP)",
-                    "Destreza (Np, Destreza)",
-                    "Agilidade (Np, Agilidade)"
+                    "Agilidade (Np, Agilidade)",
+                    "Lealdade para como os Deuses, não podendo ferir seu código de honra."
                 ]
             },
 
@@ -1604,10 +1608,9 @@
                     "Força (Np, Forca)",
                     "Constituição (Np, Constituicao)",
                     "Voo - Asas (Np, Velocidade, Carga)",
-                    "Gerar Fogo - Boca (Np, Dano2, Alcance x2m, Raio x4m²)",
-                    "Invulnerabilidade (Np, IP)",
+                    "Gerar Fogo - Boca - Status: Queimado (Np, Dano 2, Alcance x2m, Raio x4m²)",
                     "Armas Naturais - Presas (Np, Dano 2)",
-                    "Resistência à Magia (Np, IP)"
+                    "Aparência Bizzara (Penalidade Alta em testes de Carisma); Inteligência limitada (Penalidade alta em testes de Inteligência)."
                 ]
             },
 
@@ -1618,11 +1621,11 @@
                     "Constituição (Np, Constituicao)",
                     "Corrida (Np, Velocidade, Carga)",
                     "Destreza (Np, Destreza)",
-                    "Hipnose (Np, Influência, Alcance x2m, Duração x4 min)",
+                    "Hipnose - Status: Confuso (Np, Influência, Alcance x2m, Duração x4 min)",
                     "Sentidos Apurados (Np, Alcance x10m)",
-                    "Regeneração (Np, Pvs)",
                     "Penalidade: Crítico Máximo ao Sol",
                     "Penalidade: Queimadura de 3º Grau ao Sol",
+                    "Aversão à luz do Sol: Quando um Vampiro enxerga um raio de luz solar, um pânico sem igual o abala, obrigando a parar tudo o que faz e fugir.",
                     "Vantagem Territorial: Noite"
                 ]
             },
@@ -1630,15 +1633,11 @@
             "Lobisomem": {
                 classe: "Místico",
                 poderes: [
-                    "Força (Np, Forca)",
-                    "Constituição (Np, Constituicao)",
-                    "Agilidade (Np, Att)",
-                    "Sentidos Aguçados (Np, Alcance x10m)",
-                    "Corrida (Np, Velocidade, Carga)",
-                    "Cura em Si (Np, Pvs)",
-                    "Armas Naturais - Presas (Np, Dano 2)",
-                    "Penalidade: Vulnerabilidade à Prata",
-                    "Vantagem Territorial: Lua Cheia"
+                    "Berserker Especial (NP, Bônus, Duração x12 hrs)", 
+                    "Bônus do Berserker: Força; Constituição; Corrida; Sentidos Aguçados; Cura em si",
+                    "Condição: Não sendo um Alfa, pode se transformar apenas na Lua Cheia.",
+                    "Penalidades: Alta contra Prata, sendo fatal se atingido em algum órgão vital.",
+		            "Vantagem Territorial: Lua Cheia (Apenas para Alfas)."
                 ]
             },
 
@@ -1649,8 +1648,8 @@
                     "Força (Np, Forca)",
                     "Constituição (Np, Constituicao)",
                     "Intangibilidade (Np, duração x4 min)",
-                    "Regeneração (Np, Pvs)",
-                    "Adaptação Corpórea (Np, Duração x24 hrs, IP)"
+                    "Adaptação Corpórea (Np, Duração x24 hrs, IP)",
+                    "Penalidade: Recebe dano Crítico de Fogo."
                 ]
             },
 
@@ -1661,7 +1660,8 @@
                     "Constituição (Np, Constituicao)",
                     "Destreza (Np, Destreza)",
                     "Percepção (Np, Percepção)",
-                    "Múltiplos Membros (+2 braços +2 olhos)"
+                    "Múltiplos Membros (+2 braços +2 olhos)",
+                    "Penalidade: Alta para qualquer Teste mental (não físico, exceto percepção)."
                 ]
             }
         };            

@@ -211,7 +211,365 @@
       Erro crítico: Aplica-se quando, na rolagem do maior dado, rolar o dado mínimo, sendo aplicado uma penalidade ou erro total da jogada (A Critério do GM).
     </p>
 
-    <h2>8º - Gastos e Recuperação</h2>
+    <h2>8º - Tipos de Status</h2>
+      <h3>Físicos</h3>
+      <p>
+        <strong>🩸 Fraturado:</strong> Um ou mais ossos foram quebrados ou sofreram uma fissura grave, comprometendo os movimentos da região atingida.
+      </p>
+      <ul>
+        <p><strong>Efeitos:</strong></p>
+        <li>Recebe Penalidade Leve em testes físicos envolvendo o membro afetado.</li>
+        <li>Sempre que utilizar o membro fraturado para atacar ou realizar esforço intenso, sofre Dano: 1d10 adicional.</li>
+      </ul>
+
+      <p>
+        <strong>🩸 Sangramento:</strong> Ferimentos abertos provocam perda contínua de sangue.
+      </p>
+      <ul>
+        <p><strong>Efeitos:</strong></p>
+        <li>Sofre Dano:1d6 no início de cada turno, durante 2 turnos.</li>
+        <li>Receber novamente Sangramento aumenta sua duração em +2 turnos.</li>
+        <li>Não recupera Pontos de Vida naturalmente enquanto estiver sangrando.</li>
+      </ul>
+
+      <p>
+        <strong>🩸 Caído:</strong> O personagem foi derrubado ao solo e perde mobilidade momentaneamente.
+      </p>
+      <ul>
+        <p><strong>Efeitos:</strong></p>
+        <li>Seu deslocamento fica limitado a rastejar.</li>
+        <li>Não pode utilizar Corrida, Saltos ou Voo.</li>
+        <li>Levantar-se consome toda sua movimentação do turno, terminando sua ação/vez.</li>
+        <li>Ataques corpo a corpo contra ele recebem crítico.</li>
+      </ul>
+
+      <p>
+        <strong>🩸 Imobilizado:</strong> O personagem está preso, agarrado ou impedido de se mover.
+      </p>
+      <ul>
+        <p><strong>Efeitos:</strong></p>
+        <li>Seu deslocamento é reduzido a 0.</li>
+        <li>Pode atacar apenas se o ataque não exigir movimentação.</li>
+        <li>Pode utilizar poderes que não dependam de deslocamento ou gestos, conforme decisão do GM.</li>
+        <li>Não pode realizar Esquivas.</li>
+      </ul>
+
+      <p>
+        <strong>🩸 Petrificado:</strong> O corpo do personagem é transformado em pedra ou outra substância sólida semelhante.
+      </p>
+      <ul>
+        <p><strong>Efeitos:</strong></p>
+        <li>Não pode agir, falar, usar poderes (salvo exceções) ou se mover.</li>
+        <li>Não recupera Pontos de Vida nem Energia.</li>
+        <li>Recebe apenas metade do Dano 1.</li>
+        <li>Recebe Dano 2 normalmente.</li>
+      </ul>
+
+      <p>
+        <strong>🩸 Derretido:</strong> O corpo ou a proteção do personagem sofre fusão por calor extremo, magma, plasma ou substâncias semelhantes.
+      </p>
+      <ul>
+        <p><strong>Efeitos:</strong></p>
+        <li>Reduz o IP em NP por turno.</li>
+        <li>Armaduras e equipamentos deixam de fornecer proteção.</li>
+        <li>Não pode receber bônus temporários de IP enquanto durar o efeito.</li>
+        <li>Se também estiver Queimado, ambos os efeitos permanecem ativos.</li>
+      </ul>  
+
+      <h3>Mentais</h3>
+      <p>
+        <strong>🧠 Alucinado:</strong> A mente do personagem é tomada por ilusões, fazendo-o enxergar, ouvir ou sentir coisas que não existem.
+      </p>
+      <ul>
+        <p><strong>Efeitos:</strong></p>
+        <li>O GM controla parcialmente suas ações enquanto durar o efeito.</li>
+        <li>Pode atacar aliados, objetos ou inimigos inexistentes.</li>
+        <li>Recebe Penalidade Leve em testes de Percepção e Concentração.</li>
+        <li>Não consegue distinguir automaticamente realidade de ilusão.</li>
+        <li>Dura 2 Turnos ou até o tempo de duração da técnica.</li>
+      </ul>
+
+      <p>
+        <strong>🧠 Amedrontado:</strong> O personagem é dominado pelo medo diante de uma criatura, objeto ou situação específica.
+      </p>
+      <ul>
+        <p><strong>Efeitos:</strong></p>
+        <li>Não pode realizar ataques contra a fonte do medo enquanto puder vê-la.</li>
+        <li>Recebe Penalidade Leve em testes de Coragem, Vontade e Concentração.</li>
+        <li>Caso seja obrigado a se aproximar da fonte do medo, deve passar em um teste de Vontade.</li>
+      </ul>
+
+      <p>
+        <strong>🧠 Apaixonado:</strong> O personagem sente forte afeição, admiração ou paixão por outra criatura.
+      </p>
+      <ul>
+        <p><strong>Efeitos:</strong></p>
+        <li>Não pode atacar voluntariamente a criatura responsável pelo efeito.</li>
+        <li>Recebe Penalidade Leve em testes para resistir à Influência dessa criatura.</li>
+        <li>Tende a proteger ou favorecer o alvo da paixão.</li>
+      </ul>
+
+      <p>
+        <strong>🧠 Atordoado:</strong> O personagem sofre um forte impacto físico ou mental, perdendo momentaneamente sua capacidade de reação.
+      </p>
+      <ul>
+        <p><strong>Efeitos:</strong></p>
+        <li>Perde sua ação principal no turno.</li>
+        <li>Não pode realizar Esquivas e nem ativar poderes.</li>
+        <li>Recebe Penaliade Alta em todos os testes até o início do próximo turno.</li>
+        <li>Duração de 1 Turno.</li>
+      </ul>
+
+      <p>
+        <strong>🧠 Enfeitiçado:</strong> O personagem encontra-se sob influência mágica ou sobrenatural exercida por outra criatura.
+      </p>
+      <ul>
+        <p><strong>Efeitos:</strong></p>
+        <li>Não pode atacar voluntariamente quem aplicou o efeito.</li>
+        <li>Recebe Leve ou Alta em testes para resistir às ordens ou manipulações do controlador.</li>
+        <li>Interações sociais realizadas pelo controlador recebem Vantagem.</li>
+        <li>O efeito dura até a condição terminar.</li>
+      </ul>
+
+      <p>
+        <strong>🧠 Enfurecido:</strong> O personagem perde parcialmente o controle emocional, focando toda sua atenção em destruir o alvo de sua raiva.
+      </p>
+      <ul>
+        <p><strong>Efeitos:</strong></p>
+        <li>É obrigado a atacar a fonte da fúria sempre que possível.</li>
+        <li>Recebe Vantagem e Crítico em ataques corpo a corpo contra o alvo da Fúria.</li>
+        <li>Não pode utilizar poderes ou técnicas que exijam concentração.</li>
+        <li>Caso a fonte da fúria desapareça, pode atacar a criatura mais próxima.</li>
+      </ul>
+
+      <p>
+        <strong>🧠 Motivado:</strong> O personagem encontra forças além de seus próprios limites através de coragem, determinação ou inspiração.
+      </p>
+      <ul>
+        <p><strong>Efeitos:</strong></p>
+        <li>Recebe Vantagem em Força e Constituição.</li>
+        <li>Recebe Vantagem em testes de Vontade.</li>
+        <li>Ignora os efeitos de Amedrontado enquanto durar a condição.</li>
+        <li>2 Turnos ou enquanto durar a condição.</li>
+      </ul>
+
+      <p>
+        <strong>🧠 Sonolento:</strong> O personagem luta para permanecer acordado, tendo seus reflexos e concentração reduzidos.
+      </p>
+      <ul>
+        <p><strong>Efeitos:</strong></p>
+        <li>Recebe Penalidade Alta em testes de Defesa e Percepção.</li>
+        <li>Pode realizar apenas uma Ação e uma Movimentação por turno.</li>
+        <li>Caso permaneça parado por um turno completo, deve realizar um teste de Constituição ou ficará Inconsciente.</li>
+        <li>1 Turno ou enquanto durar a condição.</li>
+      </ul>
+
+      <p>
+        <strong>🧠 Confuso:</strong> O personagem perde sua orientação e raciocínio lógico, tendo dificuldade para decidir suas ações.
+      </p>
+      <ul>
+        <p><strong>Efeitos:</strong></p>
+        <li>O GM pode determinar aleatoriamente parte de suas ações.</li>
+        <li>Recebe Penalidade Leve em todos os testes mentais.</li>
+        <li>Pode utilizar o poder ou atacar o alvo errado.</li>
+        <li>1 Turno ou enquanto durar a condição.</li>
+      </ul>
+
+      <p>
+        <strong>🧠 Hipnotizado:</strong> O personagem encontra-se sob sugestão mental intensa, tornando-se altamente suscetível às ordens recebidas.
+      </p>
+      <ul>
+        <p><strong>Efeitos:</strong></p>
+        <li>Segue comandos simples do controlador.</li>
+        <li>Recebe Penalidade Leve em testes de Vontade contra novas ordens.</li>
+        <li>Ordens que coloquem sua vida em risco permitem um novo teste para quebrar o efeito.</li>
+        <li>1 Turno ou enquanto durar a condição.</li>
+      </ul>
+
+      <h3>Elementais</h3>
+      <p>
+        <strong>🔥 Queimado:</strong> O personagem está envolto em chamas ou calor intenso, sofrendo danos contínuos enquanto o fogo não for apagado.
+      </p>
+      <ul>
+        <p><strong>Efeitos:</strong></p>
+        <li>Sofre Dano 2 no início de cada turno: +1D10.</li>
+        <li>Recebe Penalidade leve em testes de Concentração.</li>
+        <li>Materiais inflamáveis que estiver carregando podem incendiar, conforme decisão do GM.</li>
+        <li>2 Turnos ou enquanto durar a condição.</li>
+      </ul>
+
+      <p>
+        <strong>❄️ Congelado:</strong> O corpo do personagem é envolvido por gelo, impedindo seus movimentos.
+      </p>
+      <ul>
+        <p><strong>Efeitos:</strong></p>
+        <li>Não pode se mover nem realizar ataques físicos.</li>
+        <li>Recebe Dano 2 adicional caso seja atingido por ataques de impacto: +1D10.</li>
+        <li>Ao ser libertado do gelo, fica sob Hipotermia.</li>
+        <li>Enquanto durar a condição.</li>
+      </ul>
+
+      <p>
+        <strong>⚡ Eletrocutado:</strong> O personagem é atingido por intensa descarga elétrica que interfere em seus movimentos e concentração.
+      </p>
+      <ul>
+        <p><strong>Efeitos:</strong></p>
+        <li>Sofre Dano 2 imediatamente.</li>
+        <li>Recebe Penalidade Leve em todos os testes de Concentração.</li>
+        <li>Poderes que exijam concentração podem falhar, conforme decisão do GM.</li>
+        <li>Caso o dano seja elevado, o GM pode aplicar Atordoado.</li>
+        <li>1 Turno ou enquanto durar a condição.</li>
+      </ul>
+
+      <p>
+        <strong>☠️ Envenenado:</strong> Uma substância tóxica compromete lentamente o organismo do personagem.
+      </p>
+      <ul>
+        <p><strong>Efeitos:</strong></p>
+        <li>Sofre Dano 2 no início de cada turno.</li>
+        <li>Recebe Penalidade Leve ou Alta em testes físicos.</li>
+        <li>Não recupera Pontos de Vida naturalmente enquanto permanecer envenenado.</li>
+        <li>Enquanto durar a condição.</li>
+      </ul>
+
+      <p>
+        <strong>☢️ Irradiado:</strong> O personagem foi exposto a radiação nociva, afetando seu organismo de forma contínua.
+      </p>
+      <ul>
+        <p><strong>Efeitos:</strong></p>
+        <li>Sofre Dano 2 no início de cada turno.</li>
+        <li>Recebe Penalidade Alta em Constituição e Recuperação.</li>
+        <li>Poderes de Regeneração recuperam apenas metade dos Pontos de Vida.</li>
+        <li>Enquanto durar a condição.</li>
+      </ul>
+
+      <p>
+        <strong>🧪 Corroído:</strong> O corpo ou equipamentos estão sendo destruídos por ácido ou substâncias corrosivas.
+      </p>
+      <ul>
+        <p><strong>Efeitos:</strong></p>
+        <li>Sofre Dano 1 no início de cada turno.</li>
+        <li>Reduz o IP em NP enquanto durar a condição.</li>
+        <li>Armaduras e equipamentos podem ser destruídos, conforme decisão do GM.</li>
+        <li>2 Turnos ou enquanto durar a condição.</li>
+      </ul>
+
+      <p>
+        <strong>🌪️ Sufocado:</strong> O personagem não consegue respirar adequadamente devido à fumaça, água, vácuo ou outro efeito semelhante.
+      </p>
+      <ul>
+        <p><strong>Efeitos:</strong></p>
+        <li>Recebe Penalidade Leve em todos os testes físicos.</li>
+        <li>Perde 5 pontos de Energia por turno.</li>
+        <li>Ao chegar a 0 Energia, fica Inconsciente.</li>
+        <li>1 Turno ou enquanto durar a condição.</li>
+      </ul>
+
+      <p>
+        <strong>🥶 Hipotermia:</strong> A temperatura corporal caiu drasticamente, comprometendo suas funções físicas.
+      </p>
+      <ul>
+        <p><strong>Efeitos:</strong></p>
+        <li>Recebe Penalidade Alta em Agilidade, Constituição e Destreza.</li>
+        <li>Pode realizar apenas uma ação por turno.</li>
+        <li>Caso permaneça sob Hipotermia por vários turnos, pode ficar Inconsciente, conforme decisão do GM.</li>
+        <li>Dura até cuidados médicos ou se aquecer de forma adequada.</li>
+      </ul>
+
+      <p>
+        <strong>💧 Desidratado:</strong> O organismo sofre pela falta extrema de líquidos.
+      </p>
+      <ul>
+        <p><strong>Efeitos:</strong></p>
+        <li>Movimento reduzido pela metade.</li>
+        <li>Recebe Penalidade em todos os testes físicos.</li>
+        <li>Recupera apenas metade da Energia normalmente.</li>
+        <li>Duração: Até ingerir no mínimo 1L de água</li>
+      </ul>
+      
+      <h3>Especiais</h3>
+      <p>
+        <strong>✨ Exausto:</strong> O personagem ultrapassou seus limites físicos, mentais ou energéticos.
+      </p>
+      <ul>
+        <p><strong>Efeitos:</strong></p>
+        <li>Perde 5 pontos de Energia no início de cada turno.</li>
+        <li>Recebe Penalidade Leve em testes físicos.</li>
+        <li>Não pode recuperar Energia naturalmente enquanto estiver Exausto.</li>
+        <li>Ao chegar a 0 Energia, fica Inconsciente.</li>
+        <li>6 Turnos.</li>
+      </ul>
+
+      <p>
+        <strong>✨ Inconsciente:</strong> O personagem perdeu completamente a consciência.
+      </p>
+      <ul>
+        <p><strong>Efeitos:</strong></p>
+        <li>Não pode agir, falar, defender-se ou se mover.</li>
+        <li>Solta qualquer objeto que estiver segurando.</li>
+        <li>Fica automaticamente Caído.</li>
+        <li>Ataques recebidos nessa condição podem causar consequências graves, conforme decisão do GM.</li>
+      </ul>
+
+      <p>
+        <strong>✨ Suprimido:</strong> O personagem teve seus poderes bloqueados por uma força externa.
+      </p>
+      <ul>
+        <p><strong>Efeitos:</strong></p>
+        <li>Não pode ativar poderes enquanto estiver Suprimido.</li>
+        <li>Poderes ativos são interrompidos imediatamente.</li>
+        <li>Bônus vindos de poderes ficam desativados temporariamente.</li>
+        <li>Habilidades físicas naturais e perícias comuns continuam funcionando normalmente.</li>
+        <li>Enquanto durar a condição.</li>
+      </ul>
+
+      <p>
+        <strong>✨ Amaldiçoado:</strong> O personagem foi afetado por uma maldição sobrenatural.
+      </p>
+      <ul>
+        <p><strong>Efeitos:</strong></p>
+        <li>Recebe -NP em testes definidos pela natureza da maldição.</li>
+        <li>Pode sofrer efeitos adicionais como azar, fraqueza, dor, medo ou perda de energia.</li>
+        <li>A maldição não desaparece naturalmente, salvo decisão do GM.</li>
+        <li>Pode exigir Exorcismo, Dissipação Mágica, Milagre ou ritual específico para ser removida.</li>
+      </ul>
+
+      <p>
+        <strong>✨ Enfraquecido:</strong> O personagem perdeu parte de sua força física, energia vital ou capacidade de combate.
+      </p>
+      <ul>
+        <p><strong>Efeitos:</strong></p>
+        <li>Recebe Penalidade Leve, Alta ou Máxima em Força, Constituição, Destreza e Agilidade.</li>
+        <li>Dano 1 causado pelo personagem é reduzido -1D20.</li>
+        <li>Não pode realizar esforço físico extremo.</li>
+        <li>Se também estiver Exausto, os efeitos permanecem juntos.</li>
+        <li>1 Turno ou enquanto durar a condição.</li>
+      </ul>
+
+      <p>
+        <strong>✨ Doente:</strong> O organismo do personagem está debilitado por infecção, enfermidade ou contaminação.
+      </p>
+      <ul>
+        <p><strong>Efeitos:</strong></p>
+        <li>Recebe Penalidade Leve ou Alta em Constituição e Recuperação.</li>
+        <li>Recupera apenas metade dos Pontos de Vida.</li>
+        <li>Não pode remover Exausto por descanso comum enquanto estiver Doente.</li>
+        <li>Pode evoluir para Enfraquecido, conforme decisão do GM.</li>
+        <li>Enquanto durar a condição.</li>
+      </ul>
+
+      <p>
+        <strong>✨ Bêbado:</strong> O personagem está embriagado ou intoxicado por substâncias que alteram seus reflexos e julgamento.
+      </p>
+      <ul>
+        <p><strong>Efeitos:</strong></p>
+        <li>Recebe Penalidade Leve em Destreza, Agilidade e Percepção.</li>
+        <li>Recebe Vantagem em testes contra medo, dor ou intimidação, conforme decisão do GM.</li>
+        <li>Pode agir de forma impulsiva ou inadequada.</li>
+        <li>O efeito termina com tempo, tratamento simples ou decisão do GM.</li>
+      </ul>
+
+    <h2>9º - Gastos e Recuperação</h2>
     <p>Gasto de energia por grau de poder e tabela de recuperação:</p>
     <table>
       <tr><th>Caso</th><th>Recuperação</th><th>Tempo ou Meio</th></tr>
@@ -225,7 +583,7 @@
       <tr><td>Comida sofisticada</td><td>15 PE + Perícia</td><td>---</td></tr>
     </table>
 
-    <h2>9º - Vedações</h2>
+    <h2>10º - Vedações</h2>
     <p>
         Para garantir um melhor balanceamento do jogo e adequação à escala de poder, fica vedada, por meio dos Aprimoramentos, a união de mais de <strong>dois poderes</strong> e mais de <strong>dois atributos</strong> da ficha em uma mesma combinação.
     </p>
@@ -245,7 +603,7 @@
         Qualquer tentativa de adicionar um terceiro poder à combinação é <strong>vedada</strong>, sendo permitido, nesse caso, apenas somar mais <strong>um atributo</strong> da ficha.
     </p>
 
-    <h2>10º - Magia</h2>
+    <h2>11º - Magia</h2>
     <p>Dividido entre <strong>Mago</strong> (poder inato) e <strong>Feiticeiro</strong> (usa objetos). Conceitos de Focus e Forma (Entender, Controlar, Criar).</p>
     <p>
     Este se divide em duas categorias:
@@ -277,7 +635,7 @@
         Existe um vasto leque de possibilidades com a combinação desses aprimoramentos.
     </p>
 
-    <h2>11º - Heroísmo e Corrupção</h2>
+    <h2>12º - Heroísmo e Corrupção</h2>
     <p> 
       O mundo observa suas ações. 
     </p>
