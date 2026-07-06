@@ -4,7 +4,211 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nível e Perícias</title>
-  <link rel="stylesheet" href="css/style.css">
+  <style>
+
+    :root{
+        --bg:#0f1117;
+        --card:#1b1f27;
+        --card2:#242a35;
+        --gold:#cfa64a;
+        --gold-light:#f7d77b;
+        --border:#3c4657;
+        --text:#ececec;
+    }
+
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+    }
+
+    body{
+
+        background:linear-gradient(180deg,#0b0d12,#171b24);
+
+        color:var(--text);
+
+        font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+
+        padding:35px;
+
+    }
+
+    main{
+
+        max-width:1200px;
+
+        margin:auto;
+
+    }
+
+    section{
+
+        background:rgba(25,30,40,.92);
+
+        border:2px solid var(--gold);
+
+        border-radius:15px;
+
+        padding:30px;
+
+        box-shadow:
+            0 0 30px rgba(0,0,0,.45);
+
+    }
+
+    h1{
+
+        text-align:center;
+
+        color:var(--gold-light);
+
+        margin-bottom:35px;
+
+        font-size:2.6rem;
+
+        text-shadow:0 0 15px rgba(255,210,90,.25);
+
+    }
+
+    h2{
+
+        margin-top:30px;
+
+        margin-bottom:20px;
+
+        color:var(--gold-light);
+
+        border-left:6px solid var(--gold);
+
+        padding-left:15px;
+
+        font-size:1.6rem;
+
+    }
+
+    table{
+
+        width:100%;
+
+        border-collapse:collapse;
+
+        margin-bottom:45px;
+
+        overflow:hidden;
+
+        border-radius:12px;
+
+        background:var(--card);
+
+        box-shadow:0 0 15px rgba(0,0,0,.35);
+
+    }
+
+    thead{
+
+        background:linear-gradient(
+            90deg,
+            #7a5b18,
+            var(--gold),
+            #7a5b18
+        );
+
+    }
+
+    th{
+
+        padding:14px;
+
+        color:#111;
+
+        font-weight:bold;
+
+        text-align:center;
+
+        font-size:15px;
+
+    }
+
+    td{
+
+        padding:12px;
+
+        border-bottom:1px solid var(--border);
+
+        text-align:center;
+
+    }
+
+    tbody tr:nth-child(odd){
+
+        background:var(--card);
+
+    }
+
+    tbody tr:nth-child(even){
+
+        background:var(--card2);
+
+    }
+
+    tbody tr{
+
+        transition:.2s;
+
+    }
+
+    tbody tr:hover{
+
+        background:#343f50;
+
+        transform:scale(1.003);
+
+    }
+
+    tbody td:first-child{
+
+        font-weight:bold;
+
+        color:var(--gold-light);
+
+    }
+
+    @media(max-width:900px){
+
+        body{
+
+            padding:15px;
+
+        }
+
+        section{
+
+            padding:15px;
+
+        }
+
+        table{
+
+            font-size:13px;
+
+            display:block;
+
+            overflow-x:auto;
+
+            white-space:nowrap;
+
+        }
+
+        h2{
+
+            font-size:1.3rem;
+
+        }
+
+    }
+
+  </style>
 </head>
 <body>
   <main>
@@ -19,56 +223,56 @@
           </tr>
         </thead>
         <tbody>
-          <tr><td>1</td><td>Inicial</td><td>1 Hp; 1 P.E; 1 Att</td></tr>
-          <tr><td>2</td><td>5</td><td>1 Hp; 1 P.E; 1 Att</td></tr>
-          <tr><td>3</td><td>10</td><td>1 Hp; 1 P.E; 1 Att; 1 Pt Poder</td></tr>
-          <tr><td>4</td><td>20</td><td>1 Hp; 1 P.E; 1 Att</td></tr>
-          <tr><td>5</td><td>40</td><td>1 Hp; 1 P.E; 1 Att; 1 Pt Perícia</td></tr>
-          <tr><td>6</td><td>80</td><td>1 Hp; 1 P.E; 1 Att</td></tr>
-          <tr><td>7</td><td>160</td><td>1 Hp; 1 P.E; 1 Att; Nova Perícia</td></tr>
-          <tr><td>8</td><td>320</td><td>1 Hp; 1 P.E; 1 Att</td></tr>
-          <tr><td>9</td><td>640</td><td>1 Hp; 1 P.E; 1 Att; 1 Pt Poder</td></tr>
-          <tr><td>10</td><td>1280</td><td>1 Hp; 1 P.E; 1 Att; 1 Aprimora.</td></tr>
-          <tr><td>11</td><td>1500</td><td>2 Hp; 1 P.E; 1 Att</td></tr>
-          <tr><td>12</td><td>2000</td><td>2 Hp; 1 P.E; 1 Att</td></tr>
-          <tr><td>13</td><td>2500</td><td>2 Hp; 1 P.E; 1 Att; 2 Pts Poder</td></tr>
-          <tr><td>14</td><td>3000</td><td>2 Hp; 1 P.E; 1 Att</td></tr>
-          <tr><td>15</td><td>3500</td><td>2 Hp; 1 P.E; 1 Att; 2 Pts Perícia</td></tr>
-          <tr><td>16</td><td>4000</td><td>2 Hp; 1 P.E; 1 Att</td></tr>
-          <tr><td>17</td><td>4500</td><td>2 Hp; 1 P.E; 1 Att; Nova Perícia</td></tr>
-          <tr><td>18</td><td>5000</td><td>2 Hp; 1 P.E; 1 Att; 2 Pts Poder</td></tr>
-          <tr><td>19</td><td>5500</td><td>2 Hp; 1 P.E; 1 Att</td></tr>
-          <tr><td>20</td><td>6000</td><td>2 Hp; 1 P.E; 1 Att; 1 Golpe</td></tr>
-          <tr><td>21</td><td>6500</td><td>2 Hp; 1 P.E; 1 Att</td></tr>
-          <tr><td>22</td><td>7000</td><td>2 Hp; 1 P.E; 1 Att; 2 Pts Poder</td></tr>
-          <tr><td>23</td><td>7500</td><td>2 Hp; 1 P.E; 1 Att; 2 Pts Poder</td></tr>
-          <tr><td>24</td><td>8000</td><td>2 Hp; 1 P.E; 1 Att</td></tr>
-          <tr><td>25</td><td>9000</td><td>2 Hp; 1 P.E; 1 Att</td></tr>
-          <tr><td>26</td><td>10000</td><td>3 Hp; 2 P.E; 1 Att; Nova Raça</td></tr>
-          <tr><td>27</td><td>10000</td><td>3 Hp; 2 P.E; 1 Att</td></tr>
-          <tr><td>28</td><td>10000</td><td>3 Hp; 2 P.E; 1 Att; 5 Pts Poder</td></tr>
-          <tr><td>29</td><td>10000</td><td>3 Hp; 2 P.E; 1 Att</td></tr>
-          <tr><td>30</td><td>10000</td><td>3 Hp; 2 P.E; 1 Att; Nova Perícia</td></tr>
-          <tr><td>31</td><td>10000</td><td>3 Hp; 2 P.E; 1 Att</td></tr>
-          <tr><td>32</td><td>10000</td><td>3 Hp; 2 P.E; 1 Att; 3 Pts Perícia</td></tr>
-          <tr><td>33</td><td>10000</td><td>3 Hp; 2 P.E; 1 Att</td></tr>
-          <tr><td>34</td><td>10000</td><td>3 Hp; 2 P.E; 1 Att</td></tr>
-          <tr><td>35</td><td>10000</td><td>3 Hp; 2 P.E; 1 Att; 5 Pts Poder</td></tr>
-          <tr><td>36</td><td>10000</td><td>3 Hp; 2 P.E; 1 Att; 1 Golpe</td></tr>
-          <tr><td>37</td><td>10000</td><td>3 Hp; 2 P.E; 1 Att</td></tr>
-          <tr><td>38</td><td>10000</td><td>3 Hp; 2 P.E; 1 Att; 1 Aprimora.</td></tr>
-          <tr><td>39</td><td>10000</td><td>3 Hp; 2 P.E; 1 Att</td></tr>
-          <tr><td>40</td><td>10000</td><td>3 Hp; 2 P.E; 1 Att; Vant. Classe</td></tr>
-          <tr><td>41</td><td>10000</td><td>3 Hp; 2 P.E; 1 Att</td></tr>
-          <tr><td>42</td><td>10000</td><td>3 Hp; 2 P.E; 1 Att</td></tr>
-          <tr><td>43</td><td>10000</td><td>3 Hp; 2 P.E; 1 Att; 5 Pts Poder</td></tr>
-          <tr><td>44</td><td>10000</td><td>3 Hp; 2 P.E; 1 Att</td></tr>
-          <tr><td>45</td><td>10000</td><td>3 Hp; 2 P.E; 1 Att</td></tr>
-          <tr><td>46</td><td>10000</td><td>3 Hp; 2 P.E; 1 Att; 5 Pts Poder</td></tr>
-          <tr><td>47</td><td>10000</td><td>3 Hp; 2 P.E; 1 Att</td></tr>
-          <tr><td>48</td><td>10000</td><td>3 Hp; 2 P.E; 1 Att</td></tr>
-          <tr><td>49</td><td>10000</td><td>3 Hp; 2 P.E; 1 Att</td></tr>
-          <tr><td>50</td><td>10000</td><td>3 Hp; 2 P.E; 1 Att; 1 Obje. Raro</td></tr>
+          <tr><td>1</td><td>Inicial</td><td>2 Hp; 1 P.E; 1 Att</td></tr>
+          <tr><td>2</td><td>5</td><td>1 Hp; 2 P.E; 1 Att</td></tr>
+          <tr><td>3</td><td>10</td><td>1 Hp; 2 P.E; 1 Att; 1 Pt Poder</td></tr>
+          <tr><td>4</td><td>20</td><td>1 Hp; 2 P.E; 1 Att</td></tr>
+          <tr><td>5</td><td>40</td><td>1 Hp; 2 P.E; 1 Att; 1 Pt Perícia</td></tr>
+          <tr><td>6</td><td>80</td><td>1 Hp; 2 P.E; 1 Att</td></tr>
+          <tr><td>7</td><td>160</td><td>1 Hp; 2 P.E; 1 Att; Nova Perícia</td></tr>
+          <tr><td>8</td><td>320</td><td>1 Hp; 2 P.E; 1 Att</td></tr>
+          <tr><td>9</td><td>640</td><td>1 Hp; 2 P.E; 1 Att; 1 Pt Poder</td></tr>
+          <tr><td>10</td><td>1280</td><td>1 Hp; 2 P.E; 1 Att; 1 Aprimora.</td></tr>
+          <tr><td>11</td><td>1500</td><td>3 Hp; 2 P.E; 2 Att</td></tr>
+          <tr><td>12</td><td>2000</td><td>3 Hp; 2 P.E; 2 Att</td></tr>
+          <tr><td>13</td><td>2500</td><td>3 Hp; 2 P.E; 2 Att; 2 Pts Poder</td></tr>
+          <tr><td>14</td><td>3000</td><td>3 Hp; 2 P.E; 2 Att</td></tr>
+          <tr><td>15</td><td>3500</td><td>3 Hp; 2 P.E; 2 Att; 2 Pts Perícia</td></tr>
+          <tr><td>16</td><td>4000</td><td>3 Hp; 2 P.E; 2 Att</td></tr>
+          <tr><td>17</td><td>4500</td><td>3 Hp; 2 P.E; 2 Att; Nova Perícia</td></tr>
+          <tr><td>18</td><td>5000</td><td>3 Hp; 2 P.E; 2 Att; 2 Pts Poder</td></tr>
+          <tr><td>19</td><td>5500</td><td>3 Hp; 2 P.E; 2 Att</td></tr>
+          <tr><td>20</td><td>6000</td><td>3 Hp; 2 P.E; 2 Att; 1 Golpe</td></tr>
+          <tr><td>21</td><td>6500</td><td>3 Hp; 2 P.E; 2 Att</td></tr>
+          <tr><td>22</td><td>7000</td><td>3 Hp; 2 P.E; 2 Att; 2 Pts Poder</td></tr>
+          <tr><td>23</td><td>7500</td><td>3 Hp; 2 P.E; 2 Att; 2 Pts Poder</td></tr>
+          <tr><td>24</td><td>8000</td><td>3 Hp; 2 P.E; 2 Att</td></tr>
+          <tr><td>25</td><td>9000</td><td>3 Hp; 2 P.E; 2 Att</td></tr>
+          <tr><td>26</td><td>10000</td><td>4 Hp; 3 P.E; 2 Att; Nova Raça</td></tr>
+          <tr><td>27</td><td>10000</td><td>4 Hp; 3 P.E; 2 Att</td></tr>
+          <tr><td>28</td><td>10000</td><td>4 Hp; 3 P.E; 2 Att; 5 Pts Poder</td></tr>
+          <tr><td>29</td><td>10000</td><td>4 Hp; 3 P.E; 2 Att</td></tr>
+          <tr><td>30</td><td>10000</td><td>4 Hp; 3 P.E; 2 Att; Nova Perícia</td></tr>
+          <tr><td>31</td><td>10000</td><td>4 Hp; 3 P.E; 2 Att</td></tr>
+          <tr><td>32</td><td>10000</td><td>4 Hp; 3 P.E; 2 Att; 3 Pts Perícia</td></tr>
+          <tr><td>33</td><td>10000</td><td>4 Hp; 3 P.E; 2 Att</td></tr>
+          <tr><td>34</td><td>10000</td><td>4 Hp; 3 P.E; 2 Att</td></tr>
+          <tr><td>35</td><td>10000</td><td>4 Hp; 3 P.E; 2 Att; 5 Pts Poder</td></tr>
+          <tr><td>36</td><td>10000</td><td>4 Hp; 3 P.E; 2 Att; 1 Golpe</td></tr>
+          <tr><td>37</td><td>10000</td><td>4 Hp; 3 P.E; 2 Att</td></tr>
+          <tr><td>38</td><td>10000</td><td>4 Hp; 3 P.E; 2 Att; 1 Aprimora.</td></tr>
+          <tr><td>39</td><td>10000</td><td>4 Hp; 3 P.E; 2 Att</td></tr>
+          <tr><td>40</td><td>10000</td><td>4 Hp; 3 P.E; 2 Att; Vant. Classe</td></tr>
+          <tr><td>41</td><td>10000</td><td>4 Hp; 3 P.E; 2 Att</td></tr>
+          <tr><td>42</td><td>10000</td><td>4 Hp; 3 P.E; 2 Att</td></tr>
+          <tr><td>43</td><td>10000</td><td>4 Hp; 3 P.E; 2 Att; 5 Pts Poder</td></tr>
+          <tr><td>44</td><td>10000</td><td>4 Hp; 3 P.E; 2 Att</td></tr>
+          <tr><td>45</td><td>10000</td><td>4 Hp; 3 P.E; 2 Att</td></tr>
+          <tr><td>46</td><td>10000</td><td>4 Hp; 3 P.E; 2 Att; 5 Pts Poder</td></tr>
+          <tr><td>47</td><td>10000</td><td>4 Hp; 3 P.E; 2 Att</td></tr>
+          <tr><td>48</td><td>10000</td><td>4 Hp; 3 P.E; 2 Att</td></tr>
+          <tr><td>49</td><td>10000</td><td>4 Hp; 3 P.E; 2 Att</td></tr>
+          <tr><td>50</td><td>10000</td><td>4 Hp; 3 P.E; 2 Att; 1 Obje. Raro</td></tr>
         </tbody>
       </table>
 
