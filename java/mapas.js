@@ -1,21 +1,44 @@
-document.addEventListener("DOMContentLoaded", function() {
-  const mapaSelect = document.getElementById('mapaSelect');
-  const mapaContainer = document.getElementById('mapaContainer');
+document.addEventListener("DOMContentLoaded", function () {
 
-  mapaSelect.addEventListener('change', function() {
-    const mapa = mapaSelect.value;
-    
-    // Limpa o container antes de exibir a nova imagem
-    mapaContainer.innerHTML = '';
+    const mapaSelect = document.getElementById("mapaSelect");
+    const mapaContainer = document.getElementById("mapaContainer");
 
-    if (mapa) {
-      // Cria uma nova imagem
-      const img = document.createElement('img');
-      img.src = `imagens/${mapa}.jpg`;
-      img.alt = mapa.charAt(0).toUpperCase() + mapa.slice(1);
-      
-      // Exibe a imagem no container
-      mapaContainer.appendChild(img);
-    }
-  });
+    mapaSelect.addEventListener("change", function () {
+
+        const mapa = this.value;
+
+        // Limpa o container
+        mapaContainer.innerHTML = "";
+
+        if (!mapa) return;
+
+        // Cria a imagem
+        const img = document.createElement("img");
+
+        img.alt = this.options[this.selectedIndex].text;
+
+        // Primeiro tenta PNG
+        img.src = `imagens/${mapa}.png`;
+
+        // Se não existir PNG, tenta JPG
+        img.onerror = function () {
+
+            this.onerror = function () {
+
+                mapaContainer.innerHTML = `
+                    <p style="color:red;">
+                        Mapa não encontrado.
+                    </p>
+                `;
+
+            };
+
+            this.src = `imagens/${mapa}.jpg`;
+
+        };
+
+        mapaContainer.appendChild(img);
+
+    });
+
 });
