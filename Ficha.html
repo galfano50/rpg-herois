@@ -661,6 +661,7 @@
                         <option value="Lobisomem">Lobisomem</option>
                         <option value="Marciano">Marciano</option>
                         <option value="Tetlamando">Tetlamando</option>
+                        <option value="Aasímar">Aasímar</option>
                     </select>
             </div>
             <div class="ficha-linha">
@@ -1658,7 +1659,20 @@
                     "Múltiplos Membros (+2 braços +2 olhos)",
                     "Penalidade: Alta para qualquer Teste mental exceto percepção."
                 ]
+            },
+
+            "Aasímar": {
+                classe: "Místico",
+                poderes: [
+                    "Força (Np, Forca)",
+                    "Constituição (Np, Constituicao)",
+                    "Vôo - Asas (Np, Carga, Velocidade)",
+                    "Portais (Np, Alcance x100m)",
+                    "Campo de Marah (Np, Infulência, Raio x10m²)",
+                    "Lealdade para como os Deuses não podendo ferir seu código de honra e sempre buscar a justiça e honra."
+                ]
             }
+
         };            
 
         function carregarRaca(){
@@ -1870,20 +1884,21 @@
             ) || 1;
             if (nivel < 1) nivel = 1;
             if (nivel > 50) nivel = 50;
-            let vida = 20;
-            let energia = 10;
+            
+            document.getElementById("nivel").value = nivel;
+            
+            let vida = 30;
+            let energia = 20;
             for (let i = 2; i <= nivel; i++) {
                 if (i <= 10) {
-                    vida += 1;
-                } else if (i <= 25) {
                     vida += 2;
-                } else {
+                    energia +=1;
+                } else if (i <= 25) {
                     vida += 3;
-                }
-                if (i <= 25) {
-                    energia += 1;
+                    energia +=2;
                 } else {
-                    energia += 2;
+                    vida += 4;
+                    energia +=3;
                 }
             }
             // Atributos da ficha
@@ -1943,13 +1958,24 @@
                     document.getElementById(id)?.value
                 ) || 0;
             });
-            let pontosTotais = 40 + (nivel - 1);
+
+            let pontosTotais = 40;
+
+            for (let i = 2; i <= nivel; i++) {
+                if (i <= 10) {
+                    pontosTotais += 1;
+                } else if (i <= 25) {
+                    pontosTotais += 2;
+                } else {
+                    pontosTotais += 2;
+                }
+            }
+
             let pontosRestantes =
                 pontosTotais - pontosGastos;
-            document.getElementById("pontos")
-                .textContent =
-                "Pontos: " + pontosRestantes;
 
+            document.getElementById("pontos").textContent =
+                "Pontos: " + pontosRestantes;
         }
 
         function atualizarAtributos(){
@@ -1973,16 +1999,29 @@
                 document.getElementById("nivel").value
             ) || 1;
             // Pontos totais do nível
-            let pontosTotais =
-                40 + (nivel - 1);
-            let pontosRestantes =
-                pontosTotais - pontosGastos;
-            document.getElementById(
-                "pontos"
-            ).textContent =
-                "Pontos: " + pontosRestantes;
-            atualizarNivel();
-        }
+                if (nivel < 1) nivel = 1;
+                if (nivel > 50) nivel = 50;
+
+                let pontosTotais = 40;
+
+                for (let i = 2; i <= nivel; i++) {
+                    if (i <= 10) {
+                        pontosTotais += 1;
+                    } else if (i <= 25) {
+                        pontosTotais += 2;
+                    } else {
+                        pontosTotais += 2;
+                    }
+                }
+
+                let pontosRestantes =
+                    pontosTotais - pontosGastos;
+
+                document.getElementById("pontos").textContent =
+                    "Pontos: " + pontosRestantes;
+
+                atualizarNivel();
+            }
 
         function generateSkillsTable() {
             const area =
@@ -2013,60 +2052,48 @@
         }
 
         function generateBackpackTable() {
-                    const area =
-                        document.getElementById(
-                            "backpackTableBody"
-                        );
-                    if (!area) return;
-                    let html = "";
-                    for (let i = 1; i <= 20; i++) {
-                        html += `
-                            <div class="item-mochila">
-                                <span>🎒</span>
-                                <input
-                                    type="text"
-                                    placeholder="Item ${i}"
-                                    class="ficha-valor-texto">
-                            </div>
-                        `;
-                    }
-                    area.innerHTML = html;
-                }
+            const area =
+                document.getElementById(
+                    "backpackTableBody"
+                );
+            if (!area) return;
+            let html = "";
+            for (let i = 1; i <= 20; i++) {
+                html += `
+                    <div class="item-mochila">
+                        <span>🎒</span>
+                        <input
+                            type="text"
+                            placeholder="Item ${i}"
+                            class="ficha-valor-texto">
+                    </div>
+                `;
+            }
+            area.innerHTML = html;
+        }
 
         document.addEventListener(
             "DOMContentLoaded",
             () => {
-
-                generateSkillsTable();
-
-                generateBackpackTable();
-
-                atualizarNivel();
-
+            generateSkillsTable();
+            generateBackpackTable();
+            atualizarNivel();
                 const diceInput =
-                            document.getElementById(
-                                "diceInput"
-                            );
-
-                        if (diceInput) {
-
-                            diceInput.addEventListener(
-                                "keydown",
-                                function(event){
-
-                                    if(
-                                        event.key === "Enter"
-                                    ){
-
-                                        rollDice();
-
-                                    }
-
-                                }
-                            );
-
+                    document.getElementById(
+                        "diceInput"
+                    );
+                if (diceInput) {
+                    diceInput.addEventListener(
+                        "keydown",
+                        function(event){
+                            if(
+                                event.key === "Enter"
+                            ){
+                                rollDice();
+                            }
                         }
-
+                    );
+                }
             }
         );
 
