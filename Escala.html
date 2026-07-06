@@ -4,48 +4,162 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Escala do RPG</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #121212;
-      color: #ddd;
-      margin: 20px;
-      line-height: 1.5;
-    }
-    h1, h2 {
-      color: #f0a500;
-    }
-    p {
-      max-width: 900px;
-    }
-    table {
-      border-collapse: collapse;
-      margin-bottom: 40px;
-      width: 100%;
-      max-width: 900px;
-    }
-    table, th, td {
-      border: 1px solid #444;
-    }
-    th, td {
-      padding: 8px 12px;
-      text-align: left;
-    }
-    th {
-      background-color: #333;
-      color: #f0a500;
-    }
-    tbody tr:nth-child(even) {
-      background-color: #222;
-    }
-    tbody tr:nth-child(odd) {
-      background-color: #1a1a1a;
-    }
-    .unidade {
-      font-style: italic;
-      color: #aaa;
-    }
-  </style>
+<style>
+
+  :root{
+      --bg:#121212;
+      --card:#1b1b1b;
+      --card2:#242424;
+      --gold:#d4af37;
+      --gold2:#f6d365;
+      --text:#f2f2f2;
+      --border:#3d3d3d;
+  }
+
+  body{
+      margin:0;
+      padding:30px;
+      background:var(--bg);
+      color:var(--text);
+      font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;
+      line-height:1.7;
+  }
+
+  main{
+      max-width:1200px;
+      margin:auto;
+  }
+
+  h1{
+      text-align:center;
+      color:var(--gold2);
+      font-size:2.5rem;
+      margin-bottom:40px;
+      text-shadow:0 0 15px rgba(212,175,55,.4);
+  }
+
+  h2{
+      margin-top:45px;
+      color:var(--gold);
+      border-left:6px solid var(--gold);
+      padding-left:12px;
+      font-size:1.6rem;
+  }
+
+  h3{
+      color:var(--gold2);
+  }
+
+  p{
+      color:#ddd;
+      text-align:justify;
+  }
+
+  table{
+
+      width:100%;
+      border-collapse:collapse;
+      margin:25px 0 50px;
+      overflow:hidden;
+
+      border-radius:12px;
+
+      background:var(--card);
+
+      box-shadow:
+          0 0 15px rgba(0,0,0,.4);
+
+  }
+
+  thead{
+
+      background:linear-gradient(
+          90deg,
+          #6e5510,
+          #d4af37,
+          #6e5510
+      );
+
+  }
+
+  th{
+
+      padding:14px;
+
+      color:#111;
+
+      text-align:center;
+
+      font-size:15px;
+
+  }
+
+  td{
+
+      padding:12px;
+
+      border-bottom:1px solid var(--border);
+
+  }
+
+  tbody tr{
+
+      transition:.25s;
+
+  }
+
+  tbody tr:nth-child(even){
+
+      background:var(--card2);
+
+  }
+
+  tbody tr:hover{
+
+      background:#323232;
+
+      transform:scale(1.005);
+
+  }
+
+  .unidade{
+
+      color:#bbb;
+
+      font-style:italic;
+
+  }
+
+  .card{
+
+      background:var(--card);
+
+      border:1px solid #555;
+
+      border-left:6px solid var(--gold);
+
+      border-radius:12px;
+
+      padding:20px;
+
+      margin-bottom:30px;
+
+      box-shadow:0 5px 20px rgba(0,0,0,.35);
+
+  }
+
+  hr{
+
+      border:none;
+
+      height:1px;
+
+      background:#444;
+
+      margin:40px 0;
+
+  }
+</style>
 </head>
 <body>
 

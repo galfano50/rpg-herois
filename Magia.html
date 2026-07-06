@@ -5,27 +5,224 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lista de Magias</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #111;
-      color: #f1f1f1;
-      padding: 20px;
+
+    :root{
+
+        --bg:#0f1117;
+        --card:#1b1f27;
+        --card2:#252c38;
+
+        --gold:#cfa64a;
+        --gold-light:#f7d77b;
+
+        --border:#414b5d;
+
+        --text:#ececec;
+
+        --whiteMagic:#3edb6d;
+        --neutralMagic:#ffd84d;
+        --blackMagic:#9c4dff;
+
     }
-    h1, h2 {
-      color: #ffffff;
+
+    *{
+
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+
     }
-    .categoria {
-      margin-top: 30px;
+
+    body{
+
+        background:linear-gradient(180deg,#0b0d12,#171b24);
+
+        color:var(--text);
+
+        font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+
+        padding:35px;
+
     }
-    .magia {
-      margin: 10px 0;
-      padding: 10px;
-      border-left: 5px solid #555;
-      background-color: #222;
+
+    main{
+
+        max-width:1200px;
+
+        margin:auto;
+
     }
-    .branca { border-color: #0f0; }
-    .neutra { border-color: #ff0; }
-    .negra { border-color: #a0f; }
+
+    section{
+
+        background:rgba(25,30,40,.92);
+
+        border:2px solid var(--gold);
+
+        border-radius:15px;
+
+        padding:30px;
+
+        box-shadow:0 0 25px rgba(0,0,0,.45);
+
+    }
+
+    h1{
+
+        text-align:center;
+
+        color:var(--gold-light);
+
+        margin-bottom:35px;
+
+        font-size:2.5rem;
+
+        text-shadow:0 0 15px rgba(255,215,100,.25);
+
+    }
+
+    h2{
+
+        margin-top:35px;
+
+        margin-bottom:20px;
+
+        color:var(--gold-light);
+
+        border-left:6px solid var(--gold);
+
+        padding-left:15px;
+
+        font-size:1.6rem;
+
+    }
+
+    p{
+
+        line-height:1.7;
+
+        text-align:justify;
+
+        margin-bottom:15px;
+
+    }
+
+    .categoria{
+
+        margin-top:40px;
+
+    }
+
+    .magia{
+
+        background:var(--card);
+
+        border-left:6px solid var(--gold);
+
+        border-radius:10px;
+
+        padding:18px;
+
+        margin:15px 0;
+
+        transition:.25s;
+
+        box-shadow:0 4px 12px rgba(0,0,0,.35);
+
+    }
+
+    .magia:hover{
+
+        transform:translateY(-2px);
+
+        background:var(--card2);
+
+    }
+
+    .magia strong{
+
+        color:#ffffff;
+
+        font-size:1.05rem;
+
+    }
+
+    /* ========================= */
+    /* Magias Brancas            */
+    /* ========================= */
+
+    .branca{
+
+        border-left-color:var(--whiteMagic);
+
+    }
+
+    .branca strong{
+
+        color:var(--whiteMagic);
+
+    }
+
+    /* ========================= */
+    /* Magias Neutras            */
+    /* ========================= */
+
+    .neutra{
+
+        border-left-color:var(--neutralMagic);
+
+    }
+
+    .neutra strong{
+
+        color:var(--neutralMagic);
+
+    }
+
+    /* ========================= */
+    /* Magias Negras             */
+    /* ========================= */
+
+    .negra{
+
+        border-left-color:var(--blackMagic);
+
+    }
+
+    .negra strong{
+
+        color:var(--blackMagic);
+
+    }
+
+    @media(max-width:900px){
+
+        body{
+
+            padding:15px;
+
+        }
+
+        section{
+
+            padding:18px;
+
+        }
+
+        h1{
+
+            font-size:2rem;
+
+        }
+
+        h2{
+
+            font-size:1.3rem;
+
+        }
+
+    }
+
   </style>
 </head>
 <body>
