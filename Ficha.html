@@ -2151,7 +2151,6 @@
                     }
 
                     let somaDados = 0;
-
                     let rolagens = [];
 
                     for (
@@ -2164,17 +2163,12 @@
                             Math.floor(
                                 Math.random() * lados
                             ) + 1;
-
                         rolagens.push(valor);
-
                         somaDados += valor;
-
                     }
 
                     if (quantidade < 0) {
-
                         somaDados *= -1;
-
                     }
 
                     total += somaDados;
@@ -2184,50 +2178,75 @@
                     );
 
                 } else {
-
                     const numero =
                         parseInt(parte);
 
                     if (!isNaN(numero)) {
-
                         total += numero;
-
-                        detalhes.push(
-                            `${numero}`
-                        );
-
+                        detalhes.push(`${numero}`);
                     }
-
                 }
-
             });
 
             resultado.innerHTML = `
-                <strong>Total:</strong> ${total}
-                <br>
-                Rolagens: ${detalhes.join(" + ")}
+                <div style="
+                    position: relative;
+                    padding: 15px;
+                    border: 2px solid #d4af37;
+                    border-radius: 10px;
+                    background: #1b1b1b;
+                    color: #ffffff;
+                    max-width: 420px;
+                    box-shadow: 0 0 12px rgba(0,0,0,.5);
+                ">
+                    <button
+                        onclick="document.getElementById('result').style.display='none';"
+                        style="
+                            position: absolute;
+                            top: 8px;
+                            right: 10px;
+                            background: none;
+                            border: none;
+                            color: #ff5555;
+                            font-size: 18px;
+                            font-weight: bold;
+                            cursor: pointer;
+                        "
+                        title="Fechar">
+                        ✖
+                    </button>
+                    <h3 style="
+                        margin:0 0 10px;
+                        color:#d4af37;
+                    ">
+                        🎲 Resultado da Rolagem
+                    </h3>
+                    <p style="margin:0;">
+                        <strong>Total:</strong>
+                        <span style="
+                            color:#7CFC00;
+                            font-size:22px;
+                            font-weight:bold;
+                        ">
+                            ${total}
+                        </span>
+                    </p>
+                    <hr style="
+                        border:0;
+                        border-top:1px solid #555;
+                        margin:10px 0;
+                    ">
+                    <p style="margin:0;">
+                        <strong>Rolagens:</strong><br>
+                        ${detalhes.join(" + ")}
+                    </p>
+                </div>
             `;
 
-            resultado.style.opacity = "1";
-
             resultado.style.display = "block";
-
-            clearTimeout(window.timerResultadoDado);
-
-            window.timerResultadoDado = setTimeout(() => {
-
-                resultado.style.opacity = "0";
-
-                setTimeout(() => {
-
-                    resultado.style.display = "none";
-
-                }, 500);
-
-            }, 5000);
-
+            resultado.style.opacity = "1";
         }
 
-</script>
+    </script>
 </body>
 </html>
