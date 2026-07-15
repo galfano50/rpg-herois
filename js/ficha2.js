@@ -493,6 +493,21 @@ async function carregarFichaFirebase() {
 
             }
 
+            const lista = document.getElementById("listaPoderesClasse");
+
+            if (lista) {
+
+                const possuiPoderMarcado =
+                    ficha.poderesSelecionados.some(p => p.marcado);
+
+                if (possuiPoderMarcado) {
+
+                    lista.style.display = "none";
+
+                }
+
+            }
+
             atualizarPainelClasseRaca();
 
             setTimeout(() => {

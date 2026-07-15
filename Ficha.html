@@ -1122,37 +1122,79 @@
             }
         };
         
-        function carregarClasse() {
-            const classe = document.getElementById("classe").value;
-            const area = document.getElementById("dadosClasse");
+        function carregarClasse(mostrarListaPoderes = true) {
+
+            const classe =
+                document.getElementById("classe").value;
+
+            const area =
+                document.getElementById("dadosClasse");
+
+            const listaPoderesClasse =
+                document.getElementById("listaPoderesClasse");
+
             if (!classe) {
-                area.innerHTML = "Selecione uma classe.";
+
+                area.innerHTML =
+                    "Selecione uma classe.";
+
+                if (listaPoderesClasse) {
+
+                    listaPoderesClasse.innerHTML = "";
+                    listaPoderesClasse.style.display = "none";
+
+                }
+
                 return;
+
             }
-            const dados = classesRPG[classe];
+
+            const dados =
+                classesRPG[classe];
+
+            if (!dados) {
+
+                area.innerHTML =
+                    "Classe não encontrada.";
+
+                return;
+
+            }
+
             let html = `
                 <div class="classe-rpg">
-                
+
                     <div class="classe-nome">
                         ⚔ ${dados.nome}
                     </div>
-            `;                
+            `;
+
             dados.bonus.forEach(item => {
-            
+
                 html += `
                     <div class="classe-item">
                         • ${item}
                     </div>
-                `;                
+                `;
+
             });
+
             html += `
                 </div>
-            `;            
-            area.innerHTML = html;           
-            carregarPoderesClasse(classe);
-            atualizarPainelClasseRaca();     
+            `;
+
+            area.innerHTML = html;
+
+            // Cria ou esconde a lista de seleção dos poderes.
+            carregarPoderesClasse(
+                classe,
+                mostrarListaPoderes
+            );
+
+            atualizarPainelClasseRaca();
+
         }
-      
+            
         const poderesPorClasse = {
             "Cósmico": [
                 "Disparo de Energia - Status: Queimado (NP, Dano 1, Alcance x6m)",
@@ -1519,27 +1561,51 @@
             ]
         };
 
-        function carregarPoderesClasse(classe){
-            const lista = document.getElementById("listaPoderesClasse");
+        function carregarPoderesClasse(
+            classe,
+            mostrarLista = true
+        ) {
+
+            const lista =
+                document.getElementById("listaPoderesClasse");
+
+            if (!lista) return;
+
             lista.innerHTML = "";
-            if(!poderesPorClasse[classe]) return;
-            poderesPorClasse[classe].forEach((poder,index)=>{
-                lista.innerHTML += `
-                    <div class="poder-item-rpg">
-                        <input
-                            class="poder-checkbox"
-                            type="checkbox"
-                            id="poder_${index}"
-                            value="${poder}"
-                            onchange="atualizarPoderesSelecionados()">
-                        <label
-                            for="poder_${index}"
-                            class="poder-label-rpg">
-                            ✦ ${poder}
-                        </label>
-                    </div>
-                `;
-            });
+
+            lista.style.display =
+                mostrarLista
+                ? "block"
+                : "none";
+
+            if (!mostrarLista) return;
+
+            if (!poderesPorClasse[classe]) return;
+
+            poderesPorClasse[classe]
+                .forEach((poder, index) => {
+
+                    lista.innerHTML += `
+                        <div class="poder-item-rpg">
+
+                            <input
+                                class="poder-checkbox"
+                                type="checkbox"
+                                id="poder_${index}"
+                                value="${poder}"
+                                onchange="atualizarPoderesSelecionados()">
+
+                            <label
+                                for="poder_${index}"
+                                class="poder-label-rpg">
+                                ✦ ${poder}
+                            </label>
+
+                        </div>
+                    `;
+
+                });
+
         }
 
         let timerPoderes;
