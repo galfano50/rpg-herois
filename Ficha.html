@@ -661,6 +661,9 @@
                         <option value="Lobisomem">Lobisomem</option>
                         <option value="Marciano">Marciano</option>
                         <option value="Tetlamando">Tetlamando</option>
+                        <option value="Titã">Titã</option>
+                        <option value="Saurianos">Saurianos</option>
+                        <option value="Datasapiens">Datasapiens</option>
                         <option value="Aasímar">Aasímar</option>
                     </select>
             </div>
@@ -1134,31 +1137,24 @@
                 document.getElementById("listaPoderesClasse");
 
             if (!classe) {
-
                 area.innerHTML =
                     "Selecione uma classe.";
 
                 if (listaPoderesClasse) {
-
                     listaPoderesClasse.innerHTML = "";
                     listaPoderesClasse.style.display = "none";
-
                 }
 
                 return;
-
             }
 
             const dados =
                 classesRPG[classe];
 
             if (!dados) {
-
                 area.innerHTML =
                     "Classe não encontrada.";
-
                 return;
-
             }
 
             let html = `
@@ -1176,13 +1172,11 @@
                         • ${item}
                     </div>
                 `;
-
             });
 
             html += `
                 </div>
             `;
-
             area.innerHTML = html;
 
             // Cria ou esconde a lista de seleção dos poderes.
@@ -1192,7 +1186,6 @@
             );
 
             atualizarPainelClasseRaca();
-
         }
             
         const poderesPorClasse = {
@@ -1202,7 +1195,7 @@
                 "Agilidade (NP, Agilidade)",
                 "Armadura Corpórea (NP, IP)",
                 "Barreira Astral (NP, IP, Raio x4m²)",
-                "Berserker (NP, Multiplicador, Duração x2min)",
+                "Berserker (NP, Multiplicador, Duração x4min)",
                 "Caminho de Energia (NP, Alcance x6m, Duração x2min)",
                 "Campo Antimagia (NP, Raio x4m², Duração x2min)",
                 "Campo de Força (NP, IP, Raio x4m²)",
@@ -1584,28 +1577,22 @@
 
             poderesPorClasse[classe]
                 .forEach((poder, index) => {
-
                     lista.innerHTML += `
                         <div class="poder-item-rpg">
-
                             <input
                                 class="poder-checkbox"
                                 type="checkbox"
                                 id="poder_${index}"
                                 value="${poder}"
                                 onchange="atualizarPoderesSelecionados()">
-
                             <label
                                 for="poder_${index}"
                                 class="poder-label-rpg">
                                 ✦ ${poder}
                             </label>
-
                         </div>
                     `;
-
                 });
-
         }
 
         let timerPoderes;
@@ -1727,6 +1714,41 @@
                 ]
             },
 
+            "Titã": {
+                classe: "Cósmico",
+                poderes: [
+                    "Força (Np, Forca)",
+                    "Constituição (Np, Constituicao)",
+                    "Sentidos Cósmicos (Np)",
+                    "Absorção de Energia Cósmica (NP, Absorção, Atributos, Alcance)"
+                ]
+            },
+
+            "Saurianos": {
+                classe: "Cósmico",
+                poderes: [
+                    "Força (Np, Forca)",
+                    "Constituição (Np, Constituicao)",
+                    "Agilidade (Np, Agilidade)",
+                    "Sentidos Aguçados - Todos (Np, Alcance x10m)",
+                    "Armas Naturais (Np, Dano 1)",
+                    "Inteligência (Np, Inteligência)",
+                    "Se achar superior a qualquer outra raça. Xenofóbico e Racista."
+                ]
+            },
+
+            "Datasapiens": {
+                classe: "Místico e Tecnológico",
+                poderes: [
+                    "Força (Np, Forca)",
+                    "Armadura Artificial (Np, IP)",
+                    "Agilidade (Np, Agilidade)",
+                    "Criação de Armas (Np, Dano 2, Alcance x5m)",
+                    "Tecnomância (Np, Dano, Alcance x10m)",
+                    "Devoto a missão e à sua raça. Tem como objetivo transformar planetas a imagem de Data."
+                ]
+            },
+
             "Aasímar": {
                 classe: "Místico",
                 poderes: [
@@ -1735,10 +1757,9 @@
                     "Vôo - Asas (Np, Carga, Velocidade)",
                     "Portais (Np, Alcance x100m)",
                     "Campo de Marah (Np, Infulência, Raio x10m²)",
-                    "Lealdade para como os Deuses não podendo ferir seu código de honra e sempre buscar a justiça e honra."
+                    "Lealdade para como os Deuses não podendo ferir seu código de honra e sempre buscar a justiça, honra e defender os mais fracos."
                 ]
             }
-
         };            
 
         function carregarRaca(){
