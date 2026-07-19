@@ -1,4 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Pirata+One&family=IM+Fell+English+SC&display=swap');
+:root{
+    --fundo:#eee8df;
+    --painel:#d8d0c8;
+    --painel-claro:#f8f4ef;
+    --marrom:#5b3a1a;
+    --marrom-escuro:#3d2817;
+    --marrom-claro:#8a6a49;
+    --borda:#9b8065;
+    --dourado:#b48b42;
+    --texto:#3f2d1f;
+}
 
 *{
     margin:0;
@@ -7,157 +17,121 @@
 }
 
 body{
-    background:#15110d;
-    color:#4a2f16;
-    font-family:'IM Fell English SC', serif;
-    min-height:100vh;
+    background:var(--fundo);
+    color:var(--texto);
+    font-family:"IM Fell English SC",Georgia,serif;
+    padding:35px;
 }
-
-/* CABEÇALHO */
-
-header{
-    background:#2d1b0f;
-    border-bottom:4px solid #8b6f47;
-    padding:20px 30px;
-
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-header h1{
-    font-family:'Pirata One', cursive;
-    font-size:3rem;
-    color:#d4af37;
-    text-shadow:2px 2px 4px #000;
-}
-
-#logout-btn{
-    padding:10px 20px;
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
-
-    background:#7a1f1f;
-    color:white;
-
-    font-family:'IM Fell English SC', serif;
-    font-size:1rem;
-
-    transition:.3s;
-}
-
-#logout-btn:hover{
-    background:#a32929;
-}
-
-/* CONTEÚDO */
 
 main{
-    max-width:1200px !important;
-    margin:40px auto !important;
-    padding:35px !important;
-
-    background:#cec6c0;
-
-    border:3px solid #8b6f47;
-    border-radius:12px;
-
-    box-shadow:0 0 25px rgba(0,0,0,.4);
+    max-width:1200px;
+    margin:auto;
 }
 
-/* TÍTULOS */
-
-main h2{
-    font-family:'Pirata One', cursive;
-    color:#5b3a1a;
-    font-size:2.2rem;
-
-    margin-bottom:25px;
-    padding-bottom:10px;
-
-    border-bottom:2px solid #8b6f47;
+section{
+    background:var(--painel);
+    border:2px solid var(--borda);
+    border-radius:15px;
+    padding:30px;
+    box-shadow:0 6px 18px rgba(70,45,20,.18);
 }
 
-/* TABELA */
+h1{
+    text-align:center;
+    color:var(--marrom);
+    font-family:"Pirata One",Georgia,serif;
+    font-size:3rem;
+    margin-bottom:35px;
+    letter-spacing:1px;
+}
+
+h2{
+    margin-top:35px;
+    margin-bottom:18px;
+    padding-left:15px;
+    border-left:6px solid var(--dourado);
+    color:var(--marrom);
+    font-size:1.8rem;
+}
 
 table{
     width:100%;
     border-collapse:collapse;
+    margin-bottom:40px;
+    background:var(--painel-claro);
+    border:2px solid var(--borda);
+    border-radius:10px;
     overflow:hidden;
-
-    background:#f3ede7;
-
-    border:2px solid #8b6f47;
-    border-radius:8px;
+    box-shadow:0 4px 15px rgba(70,45,20,.15);
 }
 
 thead{
-    background:#8b6f47;
+    background:linear-gradient(180deg,#d8bc86,#b48b42);
 }
 
-thead th{
-    color:white;
-    padding:15px;
+th{
+    padding:14px;
+    color:#fff;
+    font-size:15px;
     text-align:center;
-
-    font-family:'Pirata One', cursive;
-    font-size:1.4rem;
-    letter-spacing:1px;
+    letter-spacing:.5px;
 }
 
-tbody td{
-    padding:15px;
+td{
+    padding:12px;
+    color:var(--texto);
     text-align:center;
+    border-bottom:1px solid #bca890;
+}
 
-    color:#4a2f16;
-    font-size:1.1rem;
-
-    border-bottom:1px solid #c8b8a0;
+tbody tr:nth-child(odd){
+    background:rgba(255,255,255,.18);
 }
 
 tbody tr:nth-child(even){
-    background:#e7ddd5;
+    background:rgba(255,255,255,.42);
 }
 
-tbody tr:hover{
-    background:#d9cbbf;
+tbody tr{
     transition:.2s;
 }
 
-/* PRIMEIRA COLUNA */
+tbody tr:hover{
+    background:#efe4d0;
+}
 
 tbody td:first-child{
     font-weight:bold;
-    color:#5b3a1a;
+    color:var(--marrom);
 }
 
-/* RESPONSIVO */
+strong{
+    color:var(--marrom);
+}
 
-@media (max-width:768px){
+hr{
+    border:none;
+    border-top:1px solid #bca890;
+    margin:35px 0;
+}
 
-    header{
-        flex-direction:column;
-        gap:15px;
-        text-align:center;
+@media(max-width:900px){
+    body{
+        padding:15px;
     }
-
-    header h1{
-        font-size:2.2rem;
+    section{
+        padding:15px;
     }
-
-    main{
-        margin:15px !important;
-        padding:20px !important;
+    table{
+        display:block;
+        overflow-x:auto;
+        white-space:nowrap;
+        font-size:13px;
     }
-
-    thead th{
-        font-size:1rem;
-        padding:10px;
+    h1{
+        font-size:2.3rem;
     }
-
-    tbody td{
-        font-size:.95rem;
-        padding:10px;
+    h2{
+        font-size:1.5rem;
     }
 }
