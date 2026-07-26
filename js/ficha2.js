@@ -1,12 +1,25 @@
-// Este script substitui o uso do localStorage por Firestore (Firebase)
-import { auth, db, isFirebaseInitialized, getFirebaseInstances } from './firebase-config.js';
+import { 
+    auth, 
+    db, 
+    realtimeDb, 
+    isFirebaseInitialized, 
+    getFirebaseInstances 
+} from './firebase-config.js';
+
 import {
   doc,
   setDoc,
   getDoc,
   updateDoc
 } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+
+import {
+    ref,
+    push,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
 let usuarioLogado = null;
 let personagemId = null;
@@ -785,6 +798,53 @@ function showAlert(mensagem, tipo = "info") {
 
 }
 
+async function enviarRolagemParaBatalha(rolagem) {
+
+    if (!usuarioLogado) return;
+
+    const nomePersonagem =
+        document.getElementById("nome")?.value ||
+        "Sem Nome";
+
+    await push(
+        ref(realtimeDb, "salas/sala-geral/rolagens"),
+        {
+            uid: usuarioLogado.uid,
+            nomeJogador:
+                usuarioLogado.displayName ||
+                usuarioLogado.email,
+
+            nomePersonagem,
+
+            descricao:
+                rolagem.descricao ||
+                "Rolagem livre",
+
+            formula:
+                rolagem.formula,
+
+            resultados:
+                rolagem.resultados,
+
+            detalhes:
+                rolagem.detalhes,
+
+            total:
+                rolagem.total,
+
+            critico:
+                rolagem.critico,
+
+            falhaCritica:
+                rolagem.falhaCritica,
+
+            criadoEm:
+                serverTimestamp()
+        }
+    );
+
+}
+
 // ========================================
 // FUNÇÕES GLOBAIS
 // ========================================
@@ -800,3 +860,6 @@ window.resetarFicha =
 
 window.showAlert =
     showAlert;
+
+window.enviarRolagemParaBatalha =
+    enviarRolagemParaBatalha;

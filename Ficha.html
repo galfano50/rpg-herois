@@ -606,6 +606,34 @@
             transform:translateY(-10px);
         }
 
+        .rolador-rpg {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .rolador-rpg .input-dado {
+            flex: 1 1 220px;
+            min-width: 0;
+        }
+
+        .rolador-rpg .btn-rpg {
+            flex: 0 0 auto;
+        }
+
+        @media (max-width: 600px) {
+            .rolador-rpg {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .rolador-rpg .input-dado,
+            .rolador-rpg .btn-rpg {
+                width: 100%;
+            }
+        }
+
         @media (max-width:900px){
 
             .ficha-extra{
@@ -883,12 +911,21 @@
             <h3 class="section-title">
                 🎲 Rolador de Dados
             </h3>
+
             <div class="rolador-rpg">
+                <input
+                    type="text"
+                    id="diceDescription"
+                    class="input-dado"
+                    maxlength="80"
+                    placeholder="Descrição: Teste de Força, Ataque, Percepção...">
+
                 <input
                     type="text"
                     id="diceInput"
                     class="input-dado"
                     placeholder="Ex: 1d10+2d6+5">
+
                 <button
                     type="button"
                     class="btn-rpg"
@@ -897,10 +934,11 @@
                 </button>
             </div>
 
-            <div id="result" class="resultado-dado">
+            <div
+                id="result"
+                class="resultado-dado">
                 Aguardando rolagem...
             </div>
-
         </div>
         <div class="ficha-extra">
             <div class="bloco-rpg">
@@ -2184,74 +2222,101 @@
             }
         );
 
-        function rollDice() {
-
+        async function rollDice() {
             const campo =
                 document.getElementById("diceInput");
+
+            const campoDescricao =
+                document.getElementById("diceDescription");
 
             const resultado =
                 document.getElementById("result");
 
-            if (!campo || !resultado) return;
+            if (!campo || !resultado) {
+                return;
+            }
+
+            const formulaOriginal =
+                campo.value.trim();
 
             let formula =
-                campo.value
-                .replace(/\s+/g, "")
-                .toLowerCase();
+                formulaOriginal
+                    .replace(/\s+/g, "")
+                    .toLowerCase();
 
-            if (!formula) return;
+            if (!formula) {
+                mostrarAvisoRolagem(
+                    resultado,
+                    "Digite uma fórmula, como 1d20+5."
+                );
+
+                return;
+            }
 
             let total = 0;
-
             let detalhes = [];
+            let resultadosIndividuais = [];
+            let formulaValida = false;
 
-            // Garante que sinais fiquem separados
-            formula =
-                formula.replace(/-/g, "+-");
+            // Separa valores negativos.
+            formula = formula.replace(/-/g, "+-");
 
             const partes =
-                formula.split("+").filter(p => p !== "");
+                formula
+                    .split("+")
+                    .filter(parte => parte !== "");
 
-            partes.forEach(parte => {
-
+            for (const parte of partes) {
                 if (parte.includes("d")) {
-
                     const [qtdTexto, ladosTexto] =
                         parte.split("d");
 
                     let quantidade =
                         qtdTexto === "" || qtdTexto === "+"
-                        ? 1
-                        : qtdTexto === "-"
-                        ? -1
-                        : parseInt(qtdTexto);
+                            ? 1
+                            : qtdTexto === "-"
+                                ? -1
+                                : Number.parseInt(qtdTexto, 10);
 
                     const lados =
-                        parseInt(ladosTexto);
+                        Number.parseInt(ladosTexto, 10);
 
                     if (
-                        isNaN(quantidade) ||
-                        isNaN(lados) ||
-                        lados <= 0
+                        Number.isNaN(quantidade) ||
+                        Number.isNaN(lados) ||
+                        quantidade === 0 ||
+                        lados <= 0 ||
+                        Math.abs(quantidade) > 100
                     ) {
+                        mostrarAvisoRolagem(
+                            resultado,
+                            `Parte inválida da fórmula: ${parte}`
+                        );
+
                         return;
                     }
 
+                    formulaValida = true;
+
                     let somaDados = 0;
-                    let rolagens = [];
+                    const rolagens = [];
 
                     for (
-                        let i = 0;
-                        i < Math.abs(quantidade);
-                        i++
+                        let indice = 0;
+                        indice < Math.abs(quantidade);
+                        indice += 1
                     ) {
+                        const valor =
+                            Math.floor(Math.random() * lados) + 1;
 
-                        let valor =
-                            Math.floor(
-                                Math.random() * lados
-                            ) + 1;
                         rolagens.push(valor);
                         somaDados += valor;
+
+                        resultadosIndividuais.push({
+                            dado: `d${lados}`,
+                            valor,
+                            negativo: quantidade < 0
+                        });
                     }
 
                     if (quantidade < 0) {
@@ -2263,17 +2328,49 @@
                     detalhes.push(
                         `${parte}: [${rolagens.join(", ")}]`
                     );
-
                 } else {
                     const numero =
-                        parseInt(parte);
+                        Number.parseInt(parte, 10);
 
-                    if (!isNaN(numero)) {
+                    if (!Number.isNaN(numero)) {
+                        formulaValida = true;
                         total += numero;
                         detalhes.push(`${numero}`);
+                    } else {
+                        mostrarAvisoRolagem(
+                            resultado,
+                            `Valor inválido na fórmula: ${parte}`
+                        );
+
+                        return;
                     }
                 }
-            });
+            }
+
+            if (!formulaValida) {
+                mostrarAvisoRolagem(
+                    resultado,
+                    "A fórmula informada não é válida."
+                );
+
+                return;
+            }
+
+            const descricao =
+                campoDescricao?.value.trim() ||
+                "Rolagem livre";
+
+            const resultadoD20 =
+                resultadosIndividuais.length === 1 &&
+                resultadosIndividuais[0].dado === "d20"
+                    ? resultadosIndividuais[0].valor
+                    : null;
+
+            const critico =
+                resultadoD20 === 20;
+
+            const falhaCritica =
+                resultadoD20 === 1;
 
             resultado.innerHTML = `
                 <div style="
@@ -2287,7 +2384,10 @@
                     box-shadow: 0 0 12px rgba(0,0,0,.5);
                 ">
                     <button
-                        onclick="document.getElementById('result').style.display='none';"
+                        type="button"
+                        onclick="
+                            document.getElementById('result').style.display='none';
+                        "
                         style="
                             position: absolute;
                             top: 8px;
@@ -2299,41 +2399,222 @@
                             font-weight: bold;
                             cursor: pointer;
                         "
-                        title="Fechar">
+                        title="Fechar"
+                    >
                         ✖
                     </button>
+
                     <h3 style="
-                        margin:0 0 10px;
-                        color:#d4af37;
+                        margin: 0 0 10px;
+                        color: #d4af37;
                     ">
                         🎲 Resultado da Rolagem
                     </h3>
-                    <p style="margin:0;">
+
+                    <p style="margin: 0 0 8px;">
+                        <strong>Descrição:</strong>
+                        ${escaparHtmlRolagem(descricao)}
+                    </p>
+
+                    <p style="margin: 0 0 8px;">
+                        <strong>Fórmula:</strong>
+                        ${escaparHtmlRolagem(formulaOriginal)}
+                    </p>
+
+                    <p style="margin: 0;">
                         <strong>Total:</strong>
+
                         <span style="
-                            color:#7CFC00;
-                            font-size:22px;
-                            font-weight:bold;
+                            color: #7CFC00;
+                            font-size: 22px;
+                            font-weight: bold;
                         ">
                             ${total}
                         </span>
                     </p>
+
                     <hr style="
-                        border:0;
-                        border-top:1px solid #555;
-                        margin:10px 0;
+                        border: 0;
+                        border-top: 1px solid #555;
+                        margin: 10px 0;
                     ">
-                    <p style="margin:0;">
+
+                    <p style="margin: 0;">
                         <strong>Rolagens:</strong><br>
-                        ${detalhes.join(" + ")}
+                        ${escaparHtmlRolagem(
+                            detalhes.join(" + ")
+                        )}
                     </p>
+
+                    ${
+                        critico
+                            ? `
+                                <p style="
+                                    color: #ffd700;
+                                    font-weight: bold;
+                                    margin: 10px 0 0;
+                                ">
+                                    ⭐ Acerto crítico!
+                                </p>
+                            `
+                            : ""
+                    }
+
+                    ${
+                        falhaCritica
+                            ? `
+                                <p style="
+                                    color: #ff5555;
+                                    font-weight: bold;
+                                    margin: 10px 0 0;
+                                ">
+                                    ☠ Falha crítica!
+                                </p>
+                            `
+                            : ""
+                    }
                 </div>
             `;
 
             resultado.style.display = "block";
             resultado.style.opacity = "1";
+
+            if (typeof enviarRolagemParaBatalha === "function") {
+                try {
+                    await enviarRolagemParaBatalha({
+                        descricao,
+                        formula: formulaOriginal,
+                        resultados: resultadosIndividuais,
+                        detalhes,
+                        total,
+                        critico,
+                        falhaCritica
+                    });
+                } 
+                catch (erro) {
+                    console.error(
+                        "Erro ao enviar rolagem para a batalha:",
+                        erro
+                    );
+                }
+            }
+        }
+    
+        async function enviarRolagemParaBatalha(dadosRolagem) {
+            const usuario = auth.currentUser;
+
+            if (!usuario) {
+                console.warn(
+                    "Nenhum usuário autenticado. A rolagem não foi enviada."
+                );
+
+                return;
+            }
+
+            const nomePersonagem =
+                obterNomePersonagemDaFicha();
+
+            const nomeJogador =
+                usuario.displayName ||
+                obterNomeJogadorPeloEmail(usuario.email) ||
+                "Jogador";
+
+            const rolagensRef = ref(
+                realtimeDb,
+                "salas/sala-geral/rolagens"
+            );
+
+            await push(rolagensRef, {
+                uid: usuario.uid,
+                nomeJogador,
+                nomePersonagem,
+                descricao:
+                    dadosRolagem.descricao ||
+                    "Rolagem livre",
+                formula:
+                    dadosRolagem.formula ||
+                    "",
+                resultados:
+                    dadosRolagem.resultados || [],
+                detalhes:
+                    dadosRolagem.detalhes || [],
+                total:
+                    Number(dadosRolagem.total) || 0,
+                critico:
+                    dadosRolagem.critico === true,
+                falhaCritica:
+                    dadosRolagem.falhaCritica === true,
+                criadoEm: serverTimestamp()
+            });
+
+            console.log(
+                "Rolagem enviada para a página de batalha."
+            );
         }
 
+        function obterNomePersonagemDaFicha() {
+            const idsPossiveis = [
+                "nome",
+                "nomePersonagem",
+                "nome-personagem",
+                "characterName"
+            ];
+
+            for (const id of idsPossiveis) {
+                const campo =
+                    document.getElementById(id);
+
+                const nome =
+                    campo?.value?.trim();
+
+                if (nome) {
+                    return nome;
+                }
+            }
+
+            return "Personagem sem nome";
+        }
+
+        function obterNomeJogadorPeloEmail(email) {
+            if (!email) {
+                return "Jogador";
+            }
+
+            return email
+                .split("@")[0]
+                .replace(/[._-]+/g, " ")
+                .replace(
+                    /\b\w/g,
+                    letra => letra.toUpperCase()
+                );
+        }
+
+        function escaparHtmlRolagem(valor) {
+            return String(valor ?? "")
+                .replaceAll("&", "&amp;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll('"', "&quot;")
+                .replaceAll("'", "&#039;");
+        }
+
+        function mostrarAvisoRolagem(elemento, mensagem) {
+            elemento.innerHTML = `
+                <div style="
+                    padding: 12px;
+                    border: 1px solid #ff5555;
+                    border-radius: 8px;
+                    background: #2a1515;
+                    color: #ffffff;
+                    max-width: 420px;
+                ">
+                    ⚠ ${escaparHtmlRolagem(mensagem)}
+                </div>
+            `;
+
+            elemento.style.display = "block";
+            elemento.style.opacity = "1";
+        }
     </script>
 </body>
 </html>
