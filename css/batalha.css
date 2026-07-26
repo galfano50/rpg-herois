@@ -568,6 +568,33 @@ body{
         background: rgba(181, 54, 54, 0.17);
     }
 
+    .acoes-rolagem {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .btn-excluir-rolagem {
+        width: 30px;
+        height: 30px;
+        border: 1px solid #ff5555;
+        border-radius: 6px;
+        background: rgba(255, 85, 85, 0.12);
+        color: #ff5555;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .btn-excluir-rolagem:hover {
+        background: #ff5555;
+        color: #ffffff;
+    }
+
+    .btn-excluir-rolagem:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
     @keyframes aparecerRolagem {
     from {
         opacity: 0;

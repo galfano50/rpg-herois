@@ -16,7 +16,8 @@ import {
     serverTimestamp,
     query,
     limitToLast,
-    onChildAdded
+    onChildAdded,
+    onChildRemoved
 } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
 const SALA_ID = "sala-geral";
@@ -27,6 +28,7 @@ let referenciaUsuarioOnline = null;
 let monitorOnlineIniciado = false;
 let monitorRolagensIniciado = false;
 let cancelarMonitorRolagens = null;
+let cancelarMonitorRemocaoRolagens = null;
 
 document.addEventListener(
     "DOMContentLoaded",
@@ -344,6 +346,19 @@ function observarRolagensDaMesa() {
             `;
         }
     );
+
+    cancelarMonitorRemocaoRolagens = onChildRemoved(
+        consultaRolagens,
+        snapshot => {
+            removerRolagemDoPainel(snapshot.key);
+        },
+        erro => {
+            console.error(
+                "Erro ao acompanhar exclusões de rolagens:",
+                erro
+            );  
+        }
+    );
 }
 
 function adicionarRolagemAoPainel(
@@ -431,9 +446,20 @@ function adicionarRolagemAoPainel(
                 </span>
             </div>
 
-            <time class="horario-rolagem">
-                ${escaparHtml(horario)}
-            </time>
+            <div class="acoes-rolagem">
+                <time class="horario-rolagem">
+                    ${escaparHtml(horario)}
+                </time>
+
+                <button
+                    type="button"
+                    class="btn-excluir-rolagem"
+                    title="Excluir rolagem"
+                    aria-label="Excluir rolagem"
+                >
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
         </div>
 
         <div class="nome-personagem-rolagem">
@@ -461,10 +487,92 @@ function adicionarRolagemAoPainel(
         ${criarMarcadorEspecial(rolagem)}
     `;
 
+    const botaoExcluir =
+        item.querySelector(".btn-excluir-rolagem");
+
+    if (botaoExcluir) {
+        botaoExcluir.addEventListener(
+            "click",
+            () => excluirRolagem(
+                rolagemId,
+                botaoExcluir
+            )
+        );
+    }
+
     lista.appendChild(item);
 
     limitarQuantidadeRolagens();
     rolarPainelParaFinal();
+}
+
+async function excluirRolagem(
+    rolagemId,
+    botao
+) {
+    const confirmarExclusao = confirm(
+        "Deseja realmente excluir esta rolagem?"
+    );
+
+    if (!confirmarExclusao) {
+        return;
+    }
+
+    if (botao) {
+        botao.disabled = true;
+    }
+
+    try {
+        const rolagemRef = ref(
+            realtimeDb,
+            `salas/${SALA_ID}/rolagens/${rolagemId}`
+        );
+
+        await remove(rolagemRef);
+    } catch (erro) {
+        console.error(
+            "Erro ao excluir rolagem:",
+            erro
+        );
+
+        mostrarMensagem(
+            "Não foi possível excluir a rolagem."
+        );
+
+        if (botao) {
+            botao.disabled = false;
+        }
+    }
+}
+
+function removerRolagemDoPainel(rolagemId) {
+    const lista = document.getElementById(
+        "listaRolagens"
+    );
+
+    if (!lista) {
+        return;
+    }
+
+    const item = lista.querySelector(
+        `[data-rolagem-id="${rolagemId}"]`
+    );
+
+    if (item) {
+        item.remove();
+    }
+
+    const rolagensRestantes =
+        lista.querySelectorAll(".item-rolagem");
+
+    if (rolagensRestantes.length === 0) {
+        lista.innerHTML = `
+            <div class="rolagens-vazias">
+                <i class="fas fa-dice"></i>
+                <p>Nenhuma rolagem realizada.</p>
+            </div>
+        `;
+    }
 }
 
 function criarMarcadorEspecial(rolagem) {
@@ -813,6 +921,13 @@ window.addEventListener(
             "function"
         ) {
             cancelarMonitorRolagens();
+        }
+        
+        if (
+            typeof cancelarMonitorRemocaoRolagens ===
+            "function"
+        ) {
+            cancelarMonitorRemocaoRolagens();
         }
 
         if (referenciaUsuarioOnline) {
