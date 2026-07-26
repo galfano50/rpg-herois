@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mesa de Batalha</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&family=Pirata+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="css/batalha.css">
+</head>
+<body>
+    <header class="cabecalho-batalha">
+        <div>
+            <h1>
+                <i class="fas fa-chess-board"></i>
+                    Mesa de Batalha
+            </h1>
+            <p>Arena virtual para combates e aventuras</p>
+        </div>
+        <div class="status-conexao">
+            <span id="indicadorConexao" class="indicador offline"></span>
+            <span id="textoConexao">Conectando...</span>
+        </div>
+    </header>
+    <main class="mesa-container">
+        <section class="area-principal">
+            <div class="titulo-painel">
+                <div>
+                    <h2>
+                        <i class="fas fa-map"></i>
+                            Campo de Batalha
+                    </h2>
+                    <p>O grid de combate será adicionado nesta área.</p>
+                </div>
+            </div>
+            <div id="campoBatalha" class="campo-batalha">
+                <div class="campo-vazio">
+                    <i class="fas fa-dungeon"></i>
+                    <h3>Campo de batalha</h3>
+                    <p>Em breve os personagens poderão se movimentar por este mapa.</p>
+                </div>
+            </div>
+        </section>
+        <aside class="painel-lateral">
+            <section class="painel-online">
+                <div class="titulo-painel">
+                    <div>
+                        <h2>
+                            <i class="fas fa-users"></i>
+                                Jogadores Online
+                        </h2>
+                        <p id="contadorOnline">0 jogadores conectados</p>
+                    </div>
+                    <span class="sinal-online"></span>
+                </div>
+                <div id="listaJogadoresOnline" class="lista-jogadores">
+                    <div class="carregando">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Procurando jogadores...</p>
+                    </div>
+                </div>
+            </section>
+            <section class="painel-futuro">
+                <h2>
+                    <i class="fas fa-comments"></i>
+                        Chat da Mesa
+                </h2>
+                <div class="aviso-futuro">
+                    <i class="fas fa-scroll"></i>
+                    <p>O chat será criado na próxima etapa.</p>
+                </div>
+            </section>
+        </aside>
+    </main>
+    <div id="mensagemSistema" class="mensagem-sistema"></div>
+    <script type="module" src="js/batalha.js"></script>
+</body>
+</html>

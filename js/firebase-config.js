@@ -1,10 +1,23 @@
-// firebase-config.js - Configuração centralizada do Firebase
-// Este arquivo gerencia a inicialização e configuração do Firebase para toda a aplicação
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+// firebase-config.js
+// Configuração centralizada do Firebase para toda a aplicação
 
-// Configuração do Firebase
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+
+import {
+  getAuth
+} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+
+import {
+  getFirestore
+} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+
+import {
+  getDatabase
+} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+
+// Configuração do projeto Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyCMWxGtooYe7UXzFop_FfCKu-M4ima5vMc",
   authDomain: "hospedagem-rpg.firebaseapp.com",
@@ -16,53 +29,82 @@ const firebaseConfig = {
   measurementId: "G-41LQB57W3X"
 };
 
-// Variáveis globais para instâncias do Firebase
-let app, auth, db;
+// Instâncias do Firebase
+let app;
+let auth;
+let db;
+let realtimeDb;
 
-// Função para inicializar o Firebase com tratamento de erros
+// Inicializa todos os serviços usados pelo projeto
 function initializeFirebase() {
   try {
-    // Inicializar o app do Firebase
-    app = initializeApp(firebaseConfig);
-    
-    // Inicializar Authentication
-    auth = getAuth(app);
-    
-    // Inicializar Firestore
-    db = getFirestore(app);
-    
-    console.log('Firebase inicializado com sucesso');
+    if (!app) {
+      app = initializeApp(firebaseConfig);
+    }
+
+    if (!auth) {
+      auth = getAuth(app);
+    }
+
+    if (!db) {
+      db = getFirestore(app);
+    }
+
+    if (!realtimeDb) {
+      realtimeDb = getDatabase(app);
+    }
+
+    console.log("Firebase inicializado com sucesso.");
+
     return true;
   } catch (error) {
-    console.error('Erro ao inicializar Firebase:', error);
+    console.error(
+      "Erro ao inicializar o Firebase:",
+      error
+    );
+
     return false;
   }
 }
 
-// Função para verificar se o Firebase está inicializado
+// Verifica se todos os serviços foram inicializados
 function isFirebaseInitialized() {
-  return app && auth && db;
+  return Boolean(
+    app &&
+    auth &&
+    db &&
+    realtimeDb
+  );
 }
 
-// Função para obter instâncias do Firebase (com verificação)
+// Retorna as instâncias do Firebase
 function getFirebaseInstances() {
   if (!isFirebaseInitialized()) {
-    console.warn('Firebase não foi inicializado. Tentando inicializar...');
+    console.warn(
+      "Firebase não inicializado. Tentando inicializar..."
+    );
+
     initializeFirebase();
   }
-  
-  return { app, auth, db };
+
+  return {
+    app,
+    auth,
+    db,
+    realtimeDb
+  };
 }
 
-// Inicializar Firebase automaticamente quando o módulo for carregado
+// Inicialização automática ao carregar o módulo
 initializeFirebase();
 
-// Exportar instâncias e funções úteis
-export { 
-  app, 
-  auth, 
-  db, 
-  initializeFirebase, 
-  isFirebaseInitialized, 
-  getFirebaseInstances 
+// Exportações para os demais arquivos do projeto
+export {
+  app,
+  auth,
+  db,
+  realtimeDb,
+  initializeFirebase,
+  isFirebaseInitialized,
+  getFirebaseInstances
 };
