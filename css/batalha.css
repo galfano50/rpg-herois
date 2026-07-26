@@ -334,4 +334,268 @@ body{
         min-height:410px;
         background-size:38px 38px;
     }
+
+    .painel-rolagens {
+        background: rgba(244, 230, 190, 0.96);
+        border: 3px solid #6f4a24;
+        border-radius: 12px;
+        box-shadow: 0 5px 14px rgba(44, 25, 10, 0.28);
+        overflow: hidden;
+    }
+
+    .titulo-painel {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 16px 18px;
+        color: #f5e5ba;
+        background: linear-gradient(135deg, #4b2d16, #74471f);
+        border-bottom: 3px solid #b2853c;
+    }
+
+    .titulo-painel > i {
+        width: 42px;
+        height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        font-size: 1.5rem;
+        color: #e5bc62;
+        background: rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(229, 188, 98, 0.55);
+        border-radius: 50%;
+    }
+
+    .titulo-painel h2 {
+        margin: 0;
+        font-family: "Pirata One", serif;
+        font-size: 1.7rem;
+        font-weight: normal;
+        letter-spacing: 1px;
+    }
+
+    .titulo-painel p {
+        margin: 3px 0 0;
+        color: #ddc995;
+        font-size: 0.88rem;
+    }
+
+    .status-rolagens {
+        padding: 9px 16px;
+        color: #69471f;
+        background: rgba(224, 196, 132, 0.45);
+        border-bottom: 1px solid rgba(111, 74, 36, 0.35);
+        font-size: 0.85rem;
+    }
+
+    .status-rolagens.conectado {
+        color: #315426;
+        background: rgba(124, 169, 91, 0.24);
+    }
+
+    .status-rolagens.erro {
+        color: #7f1f1f;
+        background: rgba(185, 68, 68, 0.18);
+    }
+
+    .lista-rolagens {
+        height: 310px;
+        padding: 12px;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: #8d622d rgba(111, 74, 36, 0.12);
+    }
+
+    .lista-rolagens::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .lista-rolagens::-webkit-scrollbar-track {
+        background: rgba(111, 74, 36, 0.12);
+    }
+
+    .lista-rolagens::-webkit-scrollbar-thumb {
+        background: #8d622d;
+        border-radius: 10px;
+    }
+
+    .rolagens-vazias {
+        min-height: 260px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #80643f;
+        text-align: center;
+        opacity: 0.8;
+    }
+
+    .rolagens-vazias i {
+        margin-bottom: 10px;
+        font-size: 2.6rem;
+    }
+
+    .rolagens-vazias p {
+        margin: 0;
+    }
+
+    .item-rolagem {
+        position: relative;
+        margin-bottom: 10px;
+        padding: 12px 14px;
+        color: #422b16;
+        background: linear-gradient(rgba(255, 250, 226, 0.9), rgba(239, 218, 169, 0.9));
+        border: 1px solid #aa7b38;
+        border-left: 5px solid #765020;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(54, 31, 11, 0.16);
+        animation: aparecerRolagem 0.25s ease;
+    }
+
+    .item-rolagem:last-child {
+        margin-bottom: 0;
+    }
+
+    .item-rolagem.critico {
+        border-left-color: #2f7a31;
+        background: linear-gradient(rgba(233, 248, 220, 0.95), rgba(203, 229, 178, 0.95));
+    }
+
+    .item-rolagem.falha-critica {
+        border-left-color: #9e2828;
+        background: linear-gradient(rgba(251, 226, 216, 0.95), rgba(233, 188, 171, 0.95));
+    }
+
+    .cabecalho-rolagem {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 10px;
+        margin-bottom: 7px;
+    }
+
+    .jogador-rolagem {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        min-width: 0;
+        color: #5b3718;
+        font-weight: bold;
+    }
+
+    .jogador-rolagem i {
+        color: #8a5c22;
+    }
+
+    .jogador-rolagem span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .horario-rolagem {
+        flex-shrink: 0;
+        color: #886d48;
+        font-size: 0.75rem;
+    }
+
+    .nome-personagem-rolagem {
+        margin-bottom: 7px;
+        color: #765020;
+        font-family: "IM Fell English SC", serif;
+        font-size: 1rem;
+        font-weight: bold;
+    }
+
+    .descricao-rolagem {
+        margin-bottom: 8px;
+        font-size: 0.92rem;
+    }
+
+    .resultado-rolagem {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .formula-rolagem {
+        padding: 4px 8px;
+        color: #60401e;
+        background: rgba(110, 73, 32, 0.1);
+        border: 1px solid rgba(110, 73, 32, 0.24);
+        border-radius: 5px;
+        font-family: monospace;
+        font-size: 0.85rem;
+    }
+
+    .dados-rolagem {
+        color: #705125;
+        font-size: 0.84rem;
+    }
+
+    .total-rolagem {
+        margin-left: auto;
+        color: #fff3ce;
+        background: #69431d;
+        border: 2px solid #b88b40;
+        border-radius: 7px;
+        padding: 5px 11px;
+        font-family: "Pirata One", serif;
+        font-size: 1.35rem;
+        line-height: 1;
+    }
+
+    .marcador-rolagem {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        margin-top: 8px;
+        padding: 3px 7px;
+        border-radius: 5px;
+        font-size: 0.78rem;
+        font-weight: bold;
+    }
+
+    .marcador-rolagem.critico {
+        color: #21551f;
+        background: rgba(75, 154, 67, 0.18);
+    }
+
+    .marcador-rolagem.falha-critica {
+        color: #7b1d1d;
+        background: rgba(181, 54, 54, 0.17);
+    }
+
+    @keyframes aparecerRolagem {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    }
+
+    @media (max-width: 700px) {
+    .lista-rolagens {
+        height: 280px;
+    }
+
+    .cabecalho-rolagem {
+        flex-direction: column;
+        gap: 3px;
+    }
+
+    .resultado-rolagem {
+        align-items: flex-start;
+    }
+
+    .total-rolagem {
+        margin-left: 0;
+    }
+    }
 }
